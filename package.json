@@ -1,0 +1,19 @@
+{
+  "name": "messaging-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NestorNebula/messaging-app.git"
+  },
+  "author": "Noa Houssier",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NestorNebula/messaging-app/issues"
+  },
+  "homepage": "https://github.com/NestorNebula/messaging-app#readme"
+}
