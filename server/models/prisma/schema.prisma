@@ -8,13 +8,16 @@ datasource db {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  username String    @unique @db.VarChar(30)
-  email    String    @unique @db.VarChar(255)
-  password String    @db.VarChar(255)
-  profile  Profile?
-  messages Message[]
-  chats    Chat[]
+  id        Int       @id @default(autoincrement())
+  username  String    @unique @db.VarChar(30)
+  email     String    @unique @db.VarChar(255)
+  password  String    @db.VarChar(255)
+  online    Boolean   @default(false)
+  profile   Profile?
+  messages  Message[]
+  chats     Chat[]
+  followers User[]    @relation("FriendsList")
+  friends   User[]    @relation("FriendsList")
 }
 
 model Profile {
@@ -28,7 +31,8 @@ model Profile {
 
 model Message {
   id           Int      @id @default(autoincrement())
-  content      String
+  content      String?
+  file         String?  @db.VarChar(255)
   creationDate DateTime @default(now())
   user         User     @relation(fields: [userId], references: [id])
   userId       Int
