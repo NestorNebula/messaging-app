@@ -2,6 +2,7 @@ const { request, app } = require('./setup');
 const router = require('../routes/auth');
 const { getFakeUser } = require('../helpers/faker');
 const bcrypt = require('bcrypt');
+const jwt = require('../helpers/jwt');
 
 app.use('/', router);
 
@@ -71,5 +72,27 @@ describe('POST login', () => {
       .then((res) => {
         expect(res.statusCode).toBe(400);
       });
+  });
+});
+
+describe.skip('GET refresh', () => {
+  it('returns token when response has refresh token', () => {
+    return request(app)
+      .get('/refresh')
+      .set('Cookie', [`refresh="${jwt.getRefreshToken({ id: user.id })}"`])
+      .then((res) => {
+        expect(res.headers['set-cookie'][0]).not.toBeNull();
+      });
+  });
+
+  it('returns 401 when the refresh token is invalid', (done) => {
+    request(app)
+      .get('/refresh')
+      .set('Cookie', [`refresh="${jwt.getRefreshToken({})}"`])
+      .expect(401, done);
+  });
+
+  it('returns 401 when no refresh token is provided', (done) => {
+    request(app).get('/refresh').expect(401, done);
   });
 });
