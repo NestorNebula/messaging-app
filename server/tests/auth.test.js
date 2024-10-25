@@ -23,6 +23,6 @@ describe('POST signup', () => {
         password: user.password,
       })
       .type('form')
-      .expect(201, done());
+      .expect(201, done);
   });
 });
