@@ -30,6 +30,15 @@ const getUserByEmail = async (email) => {
   return user;
 };
 
+const getUserByUsermail = async (username) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      OR: [{ username }, { email: username }],
+    },
+  });
+  return user;
+};
+
 const createUser = async ({ username, email, password, avatar }) => {
   const user = await prisma.user.create({
     data: {
@@ -53,4 +62,10 @@ const createUser = async ({ username, email, password, avatar }) => {
 
 // Chat queries
 
-module.exports = { getUser, getUserByUsername, getUserByEmail, createUser };
+module.exports = {
+  getUser,
+  getUserByUsername,
+  getUserByEmail,
+  getUserByUsermail,
+  createUser,
+};
