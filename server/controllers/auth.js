@@ -7,14 +7,16 @@ const jwt = require('../helpers/jwt');
 
 const signUp = [
   validateUser,
-  (req, res) => {
+  (req, res, next) => {
     const result = validationResult(req);
     if (!result.isEmpty()) {
       return res.status(400).json({ errors: result.array() });
     }
     bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
       if (err) {
-        throw new Sperror('Server error', 'Error during password hash.', 500);
+        return next(
+          new Sperror('Server error', 'Error during password hash.', 500)
+        );
       }
       const user = await prisma.createUser({
         username: req.body.username,
@@ -23,20 +25,26 @@ const signUp = [
         avatar: 'default.png',
       });
       if (!user) {
-        throw new Sperror('Server error', 'Error when creating user.', 500);
+        return next(
+          new Sperror('Server error', 'Error when creating user.', 500)
+        );
       }
       res.sendStatus(201);
     });
   },
 ];
 
-const logIn = async (req, res) => {
+const logIn = async (req, res, next) => {
   const user = await prisma.getUserByUsermail(req.body.username);
   if (!user)
-    throw new Sperror('User not found.', 'Incorrect username/email', 400);
+    return next(
+      new Sperror('User not found.', 'Incorrect username/email', 400)
+    );
   const match = await bcrypt.compare(req.body.password, user.password);
   if (!match)
-    throw new Sperror('Incorrect password', 'The password is incorrect', 400);
+    return next(
+      new Sperror('Incorrect password', 'The password is incorrect', 400)
+    );
   const token = jwt.getToken({ id: user.id });
   const refreshToken = jwt.getRefreshToken({ id: user.id });
   const date = new Date(Date.now());
