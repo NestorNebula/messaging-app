@@ -30,10 +30,27 @@ const getUserByEmail = async (email) => {
   return user;
 };
 
+const createUser = async ({ username, email, password, avatar }) => {
+  const user = await prisma.user.create({
+    data: {
+      username,
+      email,
+      password,
+      profile: {
+        create: {
+          displayName: username,
+          avatar,
+        },
+      },
+    },
+  });
+  return user;
+};
+
 // Profile queries
 
 // Message queries
 
 // Chat queries
 
-module.exports = { getUser, getUserByUsername, getUserByEmail };
+module.exports = { getUser, getUserByUsername, getUserByEmail, createUser };
