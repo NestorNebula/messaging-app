@@ -3,9 +3,11 @@ const app = express();
 require('dotenv').config();
 const routes = require('./routes/routes');
 const Sperror = require('sperror');
+const cookieParser = require('cookie-parser');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.use('/auth', routes.auth);
 app.use('/users', routes.user);
