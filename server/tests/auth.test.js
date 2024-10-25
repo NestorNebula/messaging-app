@@ -9,6 +9,12 @@ jest.mock('../models/queries', () => {
     createUser: (user) => {
       return user;
     },
+    getUserByUsername: () => {
+      return null;
+    },
+    getUserByEmail: () => {
+      return null;
+    },
   };
 });
 
@@ -24,5 +30,13 @@ describe('POST signup', () => {
       })
       .type('form')
       .expect(201, done);
+  });
+
+  it("returns 400 code when data aren't correct", (done) => {
+    request(app)
+      .post('/signup')
+      .send({ username: 'username', email: 'email@email.com', password: 'pwd' })
+      .type('form')
+      .expect(400, done);
   });
 });
