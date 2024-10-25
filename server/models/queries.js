@@ -23,10 +23,17 @@ const getUserByUsername = async (username) => {
   return user;
 };
 
+const getUserByEmail = async (email) => {
+  const user = await prisma.user.findFirst({
+    where: { email },
+  });
+  return user;
+};
+
 // Profile queries
 
 // Message queries
 
 // Chat queries
 
-module.exports = { getUser, getUserByUsername };
+module.exports = { getUser, getUserByUsername, getUserByEmail };
