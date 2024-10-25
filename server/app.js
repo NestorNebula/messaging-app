@@ -4,16 +4,34 @@ require('dotenv').config();
 const routes = require('./routes/routes');
 const Sperror = require('sperror');
 const cookieParser = require('cookie-parser');
+const passport = require('passport');
+require('./helpers/passport');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use('/auth', routes.auth);
-app.use('/users', routes.user);
-app.use('/profiles', routes.profile);
-app.use('/messages', routes.message);
-app.use('/chats', routes.chat);
+app.use(
+  '/users',
+  passport.authenticate('jwt', { session: false }),
+  routes.user
+);
+app.use(
+  '/profiles',
+  passport.authenticate('jwt', { session: false }),
+  routes.profile
+);
+app.use(
+  '/messages',
+  passport.authenticate('jwt', { session: false }),
+  routes.message
+);
+app.use(
+  '/chats',
+  passport.authenticate('jwt', { session: false }),
+  routes.chat
+);
 
 app.use((req, res, next) => {
   next(new Sperror('Not Found', "The resource couln't be found.", 404));
