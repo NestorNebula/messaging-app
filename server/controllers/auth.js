@@ -37,9 +37,7 @@ const signUp = [
 const logIn = async (req, res, next) => {
   const user = await prisma.getUserByUsermail(req.body.username);
   if (!user)
-    return next(
-      new Sperror('User not found.', 'Incorrect username/email', 400)
-    );
+    return next(new Sperror('User not found', 'Incorrect username/email', 400));
   const match = await bcrypt.compare(req.body.password, user.password);
   if (!match)
     return next(
@@ -65,6 +63,33 @@ const logIn = async (req, res, next) => {
   res.json({ id: user.id });
 };
 
-const refresh = () => {};
+const refresh = (req, res, next) => {
+  const refreshToken = req.cookies['refresh'];
+  if (!refreshToken)
+    return next(
+      new Sperror(
+        'No refresh token',
+        "Can't refresh token without refreshToken.",
+        401
+      )
+    );
+  const result = jwt.verifyRefreshToken(refreshToken);
+  if (!result)
+    return next(
+      new Sperror(
+        'Invalid refresh token',
+        'The provided refresh token is invalid.',
+        401
+      )
+    );
+  const token = jwt.getToken({ id: result });
+  res.cookie('token', token, {
+    httpOnly: true,
+    maxAge: 900000,
+    sameSite: 'none',
+    secure: true,
+  });
+  return res.json({ id: result });
+};
 
 module.exports = { signUp, logIn, refresh };
