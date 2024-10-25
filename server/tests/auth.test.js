@@ -75,7 +75,7 @@ describe('POST login', () => {
   });
 });
 
-describe.skip('GET refresh', () => {
+describe('GET refresh', () => {
   it('returns token when response has refresh token', () => {
     return request(app)
       .get('/refresh')
