@@ -19,8 +19,8 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
   err instanceof Sperror
-    ? res.json({ error: err })
-    : res.json({
+    ? res.status(err.statusCode).json({ error: err })
+    : res.status(500).json({
         error: new Sperror(
           'Server error',
           'The app faced an unexpected error.',
