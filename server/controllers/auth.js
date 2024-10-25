@@ -3,6 +3,7 @@ const { validateUser } = require('../helpers/validation');
 const bcrypt = require('bcrypt');
 const Sperror = require('sperror');
 const prisma = require('../models/queries');
+const jwt = require('../helpers/jwt');
 
 const signUp = [
   validateUser,
@@ -29,7 +30,32 @@ const signUp = [
   },
 ];
 
-const logIn = () => {};
+const logIn = async (req, res) => {
+  const user = await prisma.getUserByUsermail(req.body.username);
+  if (!user)
+    throw new Sperror('User not found.', 'Incorrect username/email', 400);
+  const match = await bcrypt.compare(req.body.password, user.password);
+  if (!match)
+    throw new Sperror('Incorrect password', 'The password is incorrect', 400);
+  const token = jwt.getToken({ id: user.id });
+  const refreshToken = jwt.getRefreshToken({ id: user.id });
+  const date = new Date(Date.now());
+  date.setDate(date.getDate() + 7);
+  res.cookie('token', token, {
+    httpOnly: true,
+    maxAge: 900000,
+    sameSite: 'none',
+    secure: true,
+  });
+  res.cookie('refresh', refreshToken, {
+    httpOnly: true,
+    expires: date,
+    sameSite: 'none',
+    secure: true,
+    path: '/auth',
+  });
+  res.json({ id: user.id });
+};
 
 const refresh = () => {};
 
