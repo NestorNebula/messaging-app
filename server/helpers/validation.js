@@ -14,6 +14,8 @@ const validateUser = [
     .trim()
     .blacklist('<>')
     .notEmpty()
+    .isEmail()
+    .withMessage("Email isn't a valid email.")
     .custom(async (email) => {
       const existingEmail = await prisma.getUserByEmail(email);
       if (existingEmail) throw new Error('Email already taken.');
