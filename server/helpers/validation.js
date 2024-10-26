@@ -55,4 +55,16 @@ const validateUpdateUser = [
     .withMessage('Username must have between 8 and 30 characters.'),
 ];
 
-module.exports = { validateUser, validateUpdateUser };
+const validateProfile = [
+  body('displayName')
+    .trim()
+    .escape()
+    .notEmpty()
+    .isLength({ max: 30 })
+    .withMessage('Display name must have a maximum of 30 characters.'),
+  body('avatar').trim().blacklist('<>'),
+  body('bio').trim().escape(),
+  body('link').trim().escape(),
+];
+
+module.exports = { validateUser, validateUpdateUser, validateProfile };
