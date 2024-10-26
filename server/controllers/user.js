@@ -49,4 +49,6 @@ const putUser = [
   },
 ];
 
-module.exports = { getUser, putUser };
+const getUserFriends = () => {};
+
+module.exports = { getUser, putUser, getUserFriends };
