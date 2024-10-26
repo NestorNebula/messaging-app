@@ -77,6 +77,13 @@ const updateUser = async (id, { username, email, password }) => {
 
 // Profile queries
 
+const getProfile = async (userId) => {
+  const profile = await prisma.profile.findUnique({
+    where: { userId },
+  });
+  return profile;
+};
+
 // Message queries
 
 // Chat queries
@@ -89,4 +96,5 @@ module.exports = {
   getUserByUsermail,
   createUser,
   updateUser,
+  getProfile,
 };
