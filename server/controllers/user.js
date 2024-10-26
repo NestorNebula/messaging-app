@@ -1,5 +1,8 @@
 const prisma = require('../models/queries');
 const Sperror = require('sperror');
+const bcrypt = require('bcrypt');
+const { validationResult } = require('express-validator');
+const { validateUpdateUser } = require('../helpers/validation');
 
 const getUser = async (req, res, next) => {
   const requestedUserId = +req.params.userId;
@@ -13,6 +16,37 @@ const getUser = async (req, res, next) => {
   res.json({ user });
 };
 
-const putUser = () => {};
+const putUser = [
+  validateUpdateUser,
+  async (req, res, next) => {
+    const userIdToUpdate = +req.params.userId;
+    if (req.user.id !== userIdToUpdate) {
+      return next(new Sperror('Forbidden', "You can't update this data.", 403));
+    }
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+      return res.status(400).json({ errors: result.array() });
+    }
+    const userToUpdate = await prisma.getUserInformations(userIdToUpdate);
+    if (!userToUpdate) {
+      return next(new Sperror('Not Found', "Couldn't found the user.", 404));
+    }
+    let password = null;
+    if (req.body.password) {
+      password = bcrypt.hashSync(req.body.password, 10);
+    }
+    const updatedUser = await prisma.updateUser(userIdToUpdate, {
+      username: req.body.username,
+      email: req.body.email,
+      password: password || userToUpdate.password,
+    });
+    if (!updatedUser) {
+      return next(
+        new Sperror('Server Error', 'Error when updating user.', 500)
+      );
+    }
+    res.json({ user: updatedUser });
+  },
+];
 
 module.exports = { getUser, putUser };
