@@ -54,7 +54,7 @@ describe('GET profile', () => {
   });
 });
 
-describe.skip('GET profiles', () => {
+describe('GET profiles', () => {
   app.use('/', router);
   it('returns all profiles without the user profile itself', () => {
     return request(app)
@@ -62,5 +62,50 @@ describe.skip('GET profiles', () => {
       .then((res) => {
         expect(res.body.profiles.length).toBe(2);
       });
+  });
+});
+
+describe('PUT profile', () => {
+  app.use('/', userRouter);
+  it('returns updated profile after successful update', () => {
+    return request(app)
+      .put(`/${user.id}/profile`)
+      .send({
+        displayName: mockProfiles[2].displayName,
+        avatar: mockProfiles[2].avatar,
+        bio: 'This is a new bio.',
+        link: mockProfiles[2].link,
+      })
+      .type('form')
+      .then((res) => {
+        expect(res.profile.displayName).toBe(mockProfiles[2].displayName);
+        expect(res.profile.bio).toBe('This is a new bio.');
+      });
+  });
+
+  it('returns 403 when trying to update other user profile', (done) => {
+    request(app)
+      .put(`/${mockProfiles[0].userId}/profile`)
+      .send({
+        displayName: mockProfiles[2].displayName,
+        avatar: mockProfiles[2].avatar,
+        bio: 'This is a new bio.',
+        link: mockProfiles[2].link,
+      })
+      .type('form')
+      .expect(403, done);
+  });
+
+  it('returns 400 when provided data is invalid', (done) => {
+    request(app)
+      .put(`/${user.id}/profile`)
+      .send({
+        displayName: 'mockProfiles[2].displayName.false',
+        avatar: mockProfiles[2].avatar,
+        bio: 'This is a new bio.',
+        link: mockProfiles[2].link,
+      })
+      .type('form')
+      .expect(400, done);
   });
 });
