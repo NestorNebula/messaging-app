@@ -16,6 +16,14 @@ app.use('/', (req, res, next) => {
   next();
 });
 
+jest.mock('../models/queries', () => {
+  return {
+    getProfile: (userId) => {
+      return mockProfiles.find((profile) => profile.userId === userId);
+    },
+  };
+});
+
 describe('GET profile', () => {
   app.use('/', userRouter);
   it('returns own requested profile', () => {
@@ -35,7 +43,7 @@ describe('GET profile', () => {
   });
 
   it("returns 404 when profile doesn't exist", (done) => {
-    return request(app)
+    request(app)
       .get(`/${mockProfiles[1].userId + 100}/profile`)
       .expect(404, done);
   });
