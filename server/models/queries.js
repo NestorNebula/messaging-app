@@ -16,6 +16,13 @@ const getUser = async (id) => {
   return user;
 };
 
+const getUserInformations = async (id) => {
+  const user = await prisma.user.findUnique({
+    where: { id },
+  });
+  return user;
+};
+
 const getUserByUsername = async (username) => {
   const user = await prisma.user.findFirst({
     where: { username },
@@ -76,6 +83,7 @@ const updateUser = async (id, { username, email, password }) => {
 
 module.exports = {
   getUser,
+  getUserInformations,
   getUserByUsername,
   getUserByEmail,
   getUserByUsermail,
