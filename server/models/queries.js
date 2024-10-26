@@ -56,6 +56,18 @@ const createUser = async ({ username, email, password, avatar }) => {
   return user;
 };
 
+const updateUser = async (id, { username, email, password }) => {
+  const user = await prisma.user.update({
+    where: { id },
+    data: {
+      username,
+      email,
+      password,
+    },
+  });
+  return user;
+};
+
 // Profile queries
 
 // Message queries
@@ -68,4 +80,5 @@ module.exports = {
   getUserByEmail,
   getUserByUsermail,
   createUser,
+  updateUser,
 };
