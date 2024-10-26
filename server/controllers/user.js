@@ -49,6 +49,16 @@ const putUser = [
   },
 ];
 
-const getUserFriends = () => {};
+const getUserFriends = async (req, res, next) => {
+  const userId = +req.params.userId;
+  if (req.user.id !== userId) {
+    return next(new Sperror('Forbidden', "You can't access this data.", 403));
+  }
+  const friends = await prisma.getUserFriends(userId);
+  if (!friends) {
+    return next(new Sperror('Not Found', "Couldn't found the data.", 404));
+  }
+  res.json({ friends });
+};
 
 module.exports = { getUser, putUser, getUserFriends };
