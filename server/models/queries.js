@@ -84,6 +84,27 @@ const getProfile = async (userId) => {
   return profile;
 };
 
+const getAllProfiles = async ({ userId, limit }) => {
+  const profiles = await prisma.profile.findMany({
+    where: {
+      NOT: {
+        user: {
+          id: userId,
+        },
+      },
+    },
+    orderBy: {
+      user: {
+        followers: {
+          _count: 'desc',
+        },
+      },
+    },
+    take: limit,
+  });
+  return profiles;
+};
+
 // Message queries
 
 // Chat queries
@@ -97,4 +118,5 @@ module.exports = {
   createUser,
   updateUser,
   getProfile,
+  getAllProfiles,
 };
