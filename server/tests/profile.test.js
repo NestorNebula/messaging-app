@@ -48,3 +48,14 @@ describe('GET profile', () => {
       .expect(404, done);
   });
 });
+
+describe('GET profiles', () => {
+  app.use('/', router);
+  it('returns all profiles without the user profile itself', () => {
+    return request(app)
+      .get('/')
+      .then((res) => {
+        expect(res.body.profiles.length).toBe(2);
+      });
+  });
+});
