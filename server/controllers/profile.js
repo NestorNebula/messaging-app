@@ -9,7 +9,16 @@ const getProfile = async (req, res, next) => {
   res.json({ profile });
 };
 
-const getProfiles = () => {};
+const getProfiles = async (req, res, next) => {
+  const profiles = await prisma.getAllProfiles({
+    userId: req.user.id,
+    limit: 100,
+  });
+  if (!profiles.length) {
+    return next(new Sperror('Not Found', "Couldn't find any profile.", 404));
+  }
+  res.json({ profiles });
+};
 
 const putProfile = () => {};
 
