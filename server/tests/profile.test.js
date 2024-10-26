@@ -15,10 +15,9 @@ app.use('/', (req, res, next) => {
   req.user = user;
   next();
 });
-app.use('/:userId', userRouter);
-app.use('/', router);
 
 describe('GET profile', () => {
+  app.use('/', userRouter);
   it('returns own requested profile', () => {
     return request(app)
       .get(`/${user.id}/profile`)
@@ -29,7 +28,7 @@ describe('GET profile', () => {
 
   it('returns other user profile', () => {
     return request(app)
-      .get(`/${mockProfiles[0].userId}`)
+      .get(`/${mockProfiles[0].userId}/profile`)
       .then((res) => {
         expect(res.body.profile).toEqual(mockProfiles[0]);
       });
@@ -37,7 +36,7 @@ describe('GET profile', () => {
 
   it("returns 404 when profile doesn't exist", (done) => {
     return request(app)
-      .get(`/${mockProfiles[1].userId + 100}`)
+      .get(`/${mockProfiles[1].userId + 100}/profile`)
       .expect(404, done);
   });
 });
