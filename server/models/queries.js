@@ -46,6 +46,16 @@ const getUserByUsermail = async (username) => {
   return user;
 };
 
+const getUserFriends = async (userId) => {
+  const friends = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      friends: true,
+    },
+  });
+  return friends;
+};
+
 const createUser = async ({ username, email, password, avatar }) => {
   const user = await prisma.user.create({
     data: {
@@ -125,6 +135,7 @@ module.exports = {
   getUserByUsername,
   getUserByEmail,
   getUserByUsermail,
+  getUserFriends,
   createUser,
   updateUser,
   getProfile,
