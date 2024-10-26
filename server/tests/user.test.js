@@ -5,6 +5,7 @@ const { getFakeUser, getFakeFriend } = require('../helpers/faker');
 const user = getFakeUser();
 const mockUser = user;
 const friends = [getFakeFriend(), getFakeFriend(), getFakeFriend()];
+const mockFriends = friends;
 
 app.use('/', (req, res, next) => {
   req.user = user;
@@ -25,6 +26,9 @@ jest.mock('../models/queries', () => {
     },
     getUserByEmail: (email) => {
       return email === mockUser.email ? mockUser : null;
+    },
+    getUserFriends: () => {
+      return mockFriends;
     },
     updateUser: (id, newUser) => {
       return {
@@ -87,7 +91,7 @@ describe('GET user friends', () => {
     return request(app)
       .get(`/${user.id}/friends`)
       .then((res) => {
-        expect(res.body.friends.length).toEqual(friends);
+        expect(res.body.friends).toEqual(friends);
       });
   });
 
