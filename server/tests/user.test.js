@@ -1,9 +1,10 @@
 const { request, app } = require('./setup');
 const router = require('../routes/user');
-const { getFakeUser } = require('../helpers/faker');
+const { getFakeUser, getFakeFriend } = require('../helpers/faker');
 
 const user = getFakeUser();
 const mockUser = user;
+const friends = [getFakeFriend(), getFakeFriend(), getFakeFriend()];
 
 app.use('/', (req, res, next) => {
   req.user = user;
@@ -78,5 +79,21 @@ describe('PUT user', () => {
       .send({ username: 'new', email: user.email })
       .type('form')
       .expect(400, done);
+  });
+});
+
+describe('GET user friends', () => {
+  it('returns user friends', () => {
+    return request(app)
+      .get(`/${user.id}/friends`)
+      .then((res) => {
+        expect(res.body.friends.length).toEqual(friends);
+      });
+  });
+
+  it("returns 403 when trying to access other user's friends", (done) => {
+    request(app)
+      .get(`/${user.id + 1}/friends`)
+      .expect(403, done);
   });
 });
