@@ -89,8 +89,8 @@ describe('PUT profile', () => {
       })
       .type('form')
       .then((res) => {
-        expect(res.profile.displayName).toBe(mockProfiles[2].displayName);
-        expect(res.profile.bio).toBe('This is a new bio.');
+        expect(res.body.profile.displayName).toBe(mockProfiles[2].displayName);
+        expect(res.body.profile.bio).toBe('This is a new bio.');
       });
   });
 
