@@ -34,3 +34,32 @@ describe('GET user', () => {
       .expect(403, done);
   });
 });
+
+describe('PUT user', () => {
+  it('returns updated user', () => {
+    return request(app)
+      .put(`/${user.id}`)
+      .send({ username: user.username, email: 'mynew@email.com' })
+      .type('form')
+      .then((res) => {
+        expect(res.body.user.username).toBe(user.username);
+        expect(res.body.user.email).toBe('mynew@email.com');
+      });
+  });
+
+  it('returns 403 when trying to update another user', (done) => {
+    request(app)
+      .put(`/${user.id} + 1`)
+      .send({ username: user.username, email: 'mynewemail.com' })
+      .type('form')
+      .expect(403, done);
+  });
+
+  it('returns 400 when incorrect data is provided', (done) => {
+    request(app)
+      .put(`/${user.id}`)
+      .send({ username: 'new', email: user.email })
+      .type('form')
+      .expect(400, done);
+  });
+});
