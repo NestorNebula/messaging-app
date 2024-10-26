@@ -23,4 +23,8 @@ const getFakeProfile = (
   };
 };
 
-module.exports = { getFakeUser, getFakeProfile };
+const getFakeFriend = () => {
+  return getFakeUser();
+};
+
+module.exports = { getFakeUser, getFakeProfile, getFakeFriend };
