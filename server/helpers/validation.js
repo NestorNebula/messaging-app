@@ -6,6 +6,8 @@ const validateUser = [
     .trim()
     .blacklist('<>')
     .notEmpty()
+    .isLength({ max: 30 })
+    .withMessage('Username must a maximum of 30 characters.')
     .custom(async (username) => {
       const existingUser = await prisma.getUserByUsername(username);
       if (existingUser) throw new Error('Username already taken.');
@@ -23,8 +25,8 @@ const validateUser = [
   body('password')
     .trim()
     .notEmpty()
-    .isLength({ min: 8, max: 30 })
-    .withMessage('Username must have between 8 and 30 characters.'),
+    .isLength({ min: 8 })
+    .withMessage('Password must have at least 8 characters.'),
 ];
 
 const validateUpdateUser = [
