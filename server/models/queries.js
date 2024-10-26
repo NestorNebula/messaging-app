@@ -105,6 +105,16 @@ const getAllProfiles = async ({ userId, limit }) => {
   return profiles;
 };
 
+const updateProfile = async (userId, { displayName, avatar, bio, link }) => {
+  const profile = await prisma.profile.update({
+    where: {
+      userId,
+    },
+    data: { displayName, avatar, bio, link },
+  });
+  return profile;
+};
+
 // Message queries
 
 // Chat queries
@@ -119,4 +129,5 @@ module.exports = {
   updateUser,
   getProfile,
   getAllProfiles,
+  updateProfile,
 };
