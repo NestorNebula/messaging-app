@@ -26,6 +26,17 @@ jest.mock('../models/queries', () => {
         (profile, index) => profile.userId !== userId && index < limit
       );
     },
+    updateProfile: (userId, updateProfile) => {
+      const profileToUpdate = mockProfiles.find(
+        (profile) => profile.userId === userId
+      );
+      if (!profileToUpdate) return false;
+      profileToUpdate.displayName = updateProfile.displayName;
+      profileToUpdate.avatar = updateProfile.avatar;
+      profileToUpdate.bio = updateProfile.bio;
+      profileToUpdate.link = updateProfile.link;
+      return profileToUpdate;
+    },
   };
 });
 
