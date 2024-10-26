@@ -27,4 +27,32 @@ const validateUser = [
     .withMessage('Username must have between 8 and 30 characters.'),
 ];
 
-module.exports = { validateUser };
+const validateUpdateUser = [
+  body('username')
+    .trim()
+    .blacklist('<>')
+    .notEmpty()
+    .custom(async (username, { req }) => {
+      const existingUser = await prisma.getUserByUsername(username);
+      if (existingUser && req.user.id !== existingUser.id)
+        throw new Error('Username already taken.');
+    }),
+  body('email')
+    .trim()
+    .blacklist('<>')
+    .notEmpty()
+    .isEmail()
+    .withMessage("Email isn't a valid email.")
+    .custom(async (email, { req }) => {
+      const existingUser = await prisma.getUserByEmail(email);
+      if (existingUser && req.user.id !== existingEmail.id)
+        throw new Error('Email already taken.');
+    }),
+  body('password')
+    .trim()
+    .optional()
+    .isLength({ min: 8, max: 30 })
+    .withMessage('Username must have between 8 and 30 characters.'),
+];
+
+module.exports = { validateUser, validateUpdateUser };
