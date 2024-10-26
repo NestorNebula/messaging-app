@@ -22,6 +22,9 @@ jest.mock('../models/queries', () => {
     getUserByUsername: (username) => {
       return username === mockUser.username ? mockUser : null;
     },
+    getUserByEmail: (email) => {
+      return email === mockUser.email ? mockUser : null;
+    },
     updateUser: (id, newUser) => {
       return {
         id: id,
