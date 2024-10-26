@@ -16,6 +16,20 @@ jest.mock('../models/queries', () => {
     getUser: () => {
       return mockUser;
     },
+    getUserInformations: () => {
+      return mockUser;
+    },
+    getUserByUsername: (username) => {
+      return username === mockUser.username ? mockUser : null;
+    },
+    updateUser: (id, newUser) => {
+      return {
+        id: id,
+        username: newUser.username,
+        email: newUser.email,
+        password: newUser.password || mockUser.password,
+      };
+    },
   };
 });
 
@@ -49,7 +63,7 @@ describe('PUT user', () => {
 
   it('returns 403 when trying to update another user', (done) => {
     request(app)
-      .put(`/${user.id} + 1`)
+      .put(`/${user.id + 1}`)
       .send({ username: user.username, email: 'mynewemail.com' })
       .type('form')
       .expect(403, done);
