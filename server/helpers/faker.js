@@ -12,13 +12,13 @@ const getFakeUser = () => {
 
 const getFakeProfile = (
   userId = faker.number.int({ max: 100 }),
-  name = faker.person.firstName
+  name = faker.person.firstName()
 ) => {
   return {
     displayName: name,
     avatar: null,
     bio: faker.person.bio(),
-    link: faker.internet.url,
+    link: faker.internet.url(),
     userId,
   };
 };
