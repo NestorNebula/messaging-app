@@ -36,3 +36,20 @@ describe('GET chats', () => {
     request(app).get(`/${mockChats[1].users[0].id}`).expect(403, done);
   });
 });
+
+describe('POST chat', () => {
+  app.use('/', router);
+  const userTwo = getFakeUser();
+  it('returns created chat', () => {
+    return request(app)
+      .post('/')
+      .send({ users: [user.id, userTwo.id] })
+      .type('form')
+      .expect(201)
+      .then((res) => {
+        expect(res.body.chat.users.length).toBe(2);
+        expect(res.body.chat.users[0].username).toBe(user.username);
+        expect(res.body.chat.users[1].username).toBe(userTwo.username);
+      });
+  });
+});
