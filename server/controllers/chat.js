@@ -13,7 +13,21 @@ const getChats = async (req, res, next) => {
   res.json({ chats });
 };
 
-const postChat = () => {};
+const postChat = async (req, res, next) => {
+  const usersArray = JSON.parse(req.body.users);
+  if (!Array.isArray(usersArray)) {
+    return next(
+      new Sperror(
+        'Bad Request',
+        'No user list provided for chat creation.',
+        400
+      )
+    );
+  }
+  usersArray.unshift(req.user.id);
+  const chat = await prisma.createChat(usersArray);
+  res.status(201).json({ chat });
+};
 
 const putChat = () => {};
 
