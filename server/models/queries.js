@@ -139,7 +139,10 @@ const getUserChats = async (userId) => {
     include: {
       messages: true,
       users: {
-        include: {
+        select: {
+          id: true,
+          username: true,
+          online: true,
           profile: true,
         },
       },
