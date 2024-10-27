@@ -162,6 +162,18 @@ const createChat = async (usersId = []) => {
   return chat;
 };
 
+const updateChat = async (chatId, usersId = []) => {
+  const chat = await prisma.chat.update({
+    where: { id: chatId },
+    data: {
+      users: {
+        connect: usersId.map((userId) => ({ id: userId })),
+      },
+    },
+  });
+  return chat;
+};
+
 module.exports = {
   getUser,
   getUserInformations,
@@ -176,4 +188,5 @@ module.exports = {
   updateProfile,
   getUserChats,
   createChat,
+  updateChat,
 };
