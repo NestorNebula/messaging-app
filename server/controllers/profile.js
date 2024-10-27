@@ -16,8 +16,10 @@ const getProfiles = async (req, res, next) => {
     userId: req.user.id,
     limit: 100,
   });
-  if (!profiles.length) {
-    return next(new Sperror('Not Found', "Couldn't find any profile.", 404));
+  if (!profiles) {
+    return next(
+      new Sperror('Server Error', 'Error when fetching profiles.', 500)
+    );
   }
   res.json({ profiles });
 };
