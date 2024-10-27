@@ -12,6 +12,16 @@ app.use('/', (req, res, next) => {
   next();
 });
 
+jest.mock('../models/queries', () => {
+  return {
+    getUserChats: () => {
+      return mockChats.filter((chat) => {
+        return chat.users.some((user) => user.id === mockUser.id);
+      });
+    },
+  };
+});
+
 describe('GET chats', () => {
   app.use('/', userRouter);
   it("returns user's chats", () => {
