@@ -46,12 +46,12 @@ describe('GET chats', () => {
   });
 });
 
-describe.skip('POST chat', () => {
+describe('POST chat', () => {
   app.use('/', router);
   it('returns created chat', () => {
     return request(app)
       .post('/')
-      .send({ users: [userTwo.id] })
+      .send({ users: JSON.stringify([userTwo.id]) })
       .type('form')
       .expect(201)
       .then((res) => {
