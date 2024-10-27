@@ -28,6 +28,14 @@ jest.mock('../models/queries', () => {
       );
       return fakeChat;
     },
+    updateChat: (chatId, usersId) => {
+      const chat = mockChats.find((chat) => chat.id === chatId);
+      if (!chat) return;
+      usersId.forEach((userId) =>
+        chat.users.push(mockUsers.find((u) => u.id === userId))
+      );
+      return chat;
+    },
   };
 });
 
