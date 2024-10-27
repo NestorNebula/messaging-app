@@ -32,8 +32,8 @@ jest.mock('../models/queries', () => {
 });
 
 describe('GET chats', () => {
-  app.use('/', userRouter);
   it("returns user's chats", () => {
+    app.use('/', userRouter);
     return request(app)
       .get(`/${user.id}/chats`)
       .then((res) => {
@@ -42,6 +42,7 @@ describe('GET chats', () => {
   });
 
   it("returns 403 when trying to access other user's chats", (done) => {
+    app.use('/', userRouter);
     request(app).get(`/${mockChats[1].users[0].id}`).expect(403, done);
   });
 });
@@ -58,6 +59,21 @@ describe('POST chat', () => {
         expect(res.body.chat.users.length).toBe(2);
         expect(res.body.chat.users[0].username).toBe(user.username);
         expect(res.body.chat.users[1].username).toBe(userTwo.username);
+      });
+  });
+});
+
+describe('PUT chat', () => {
+  app.use('/', router);
+  it('returns chat with added user', () => {
+    return request(app)
+      .put(`/${mockChats[1].id}`)
+      .send({ users: JSON.stringify([user.id]) })
+      .type('form')
+      .then((res) => {
+        expect(
+          res.body.chat.users.some((usr) => usr.id === user.id)
+        ).toBeTruthy();
       });
   });
 });
