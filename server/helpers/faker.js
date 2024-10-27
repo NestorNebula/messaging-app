@@ -27,4 +27,13 @@ const getFakeFriend = () => {
   return getFakeUser();
 };
 
-module.exports = { getFakeUser, getFakeProfile, getFakeFriend };
+const getFakeChat = (user) => {
+  return {
+    id: faker.number.int({ max: 1000 }),
+    creationDate: new Date(Date.now()),
+    updatedAt: new Date(Date.now()),
+    users: user ? [user, getFakeUser()] : [getFakeUser(), getFakeUser()],
+  };
+};
+
+module.exports = { getFakeUser, getFakeProfile, getFakeFriend, getFakeChat };
