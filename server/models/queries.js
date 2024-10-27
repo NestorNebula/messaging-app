@@ -129,6 +129,25 @@ const updateProfile = async (userId, { displayName, avatar, bio, link }) => {
 
 // Chat queries
 
+const getUserChats = async (userId) => {
+  const chats = await prisma.chat.findMany({
+    where: {
+      users: {
+        some: { id: userId },
+      },
+    },
+    include: {
+      messages: true,
+      users: {
+        include: {
+          profile: true,
+        },
+      },
+    },
+  });
+  return chats;
+};
+
 module.exports = {
   getUser,
   getUserInformations,
@@ -141,4 +160,5 @@ module.exports = {
   getProfile,
   getAllProfiles,
   updateProfile,
+  getUserChats,
 };
