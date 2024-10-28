@@ -1,6 +1,11 @@
 const { request, app } = require('./setup');
 const router = require('../routes/user');
 const { getFakeUser, getFakeFriend } = require('../helpers/faker');
+const {
+  connectUserFriend,
+  getUserFriends,
+  disconnectUserFriend,
+} = require('../models/queries');
 
 const user = getFakeUser();
 const mockUser = user;
@@ -44,6 +49,17 @@ jest.mock('../models/queries', () => {
       if (!user) return null;
       user.online = status;
       return user;
+    },
+    connectUserFriend: (id, friendId) => {
+      const friends = [...mockFriends];
+      if (friendId === mockNewFriend.id) {
+        friends.push(mockNewFriend);
+      }
+      return friends;
+    },
+    disconnectUserFriend: (id, friendId) => {
+      const friends = mockFriends.filter((friend) => friend.id !== friendId);
+      return friends;
     },
   };
 });
@@ -123,6 +139,7 @@ describe('PUT user friends', () => {
     return request(app)
       .put(`/${user.id}/friends`)
       .send({ type: 'add', friendId: mockNewFriend.id })
+      .type('form')
       .then((res) => {
         const friendsCount = res.body.friends.length;
         expect(friendsCount).toBe(mockFriends.length + 1);
@@ -133,7 +150,8 @@ describe('PUT user friends', () => {
   it('returns updated friendlist after removing friend', () => {
     return request(app)
       .put(`/${user.id}/friends`)
-      .send({ type: 'remove', friendId: mockFriends[2] })
+      .send({ type: 'remove', friendId: mockFriends[2].id })
+      .type('form')
       .then((res) => {
         expect(res.body.friends.length).toBe(mockFriends.length - 1);
         expect(
@@ -146,6 +164,7 @@ describe('PUT user friends', () => {
     request(app)
       .put(`/${user.id + 1}/friends`)
       .send({ type: 'remove', friendId: user.id })
+      .type('form')
       .expect(403, done);
   });
 });
