@@ -29,7 +29,22 @@ const postMessage = async (req, res, next) => {
   res.status(201).json({ message });
 };
 
-const putMessage = () => {};
+const putMessage = async (req, res, next) => {
+  const message = await prisma.getMessage(+req.params.messageId);
+  if (!message) {
+    return next(
+      new Sperror('Not Found', "The message couldn't be found.", 404)
+    );
+  }
+  if (message.userId !== req.user.id) {
+    return next(new Sperror('Forbidden', "You can't update this data.", 403));
+  }
+  const updatedMessage = await prisma.updateMessage(
+    message.id,
+    req.body.content
+  );
+  res.json({ message: updatedMessage });
+};
 
 const deleteMessage = () => {};
 
