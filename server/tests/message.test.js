@@ -33,6 +33,14 @@ jest.mock('../models/queries', () => {
     createMessage: ({ chatId, userId, content, file }) => {
       return mockRandomMessage({ content, file, userId, chatId });
     },
+    getMessage: (id) => {
+      return mockMessages.find((msg) => msg.id === id);
+    },
+    updateMessage: (id, content) => {
+      const msg = mockMessages.find((msg) => msg.id === id);
+      msg.content = content;
+      return msg;
+    },
   };
 });
 
@@ -69,7 +77,9 @@ describe('PUT message', () => {
       .send({ content: 'Content updated.' })
       .type('form')
       .then((res) => {
-        expect(res.body.message.creationDate).toBe(message.creationDate);
+        expect(Date(res.body.message.creationDate).toString()).toBe(
+          message.creationDate.toString()
+        );
         expect(res.body.message.content).toBe('Content updated.');
       });
   });
