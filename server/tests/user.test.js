@@ -5,6 +5,7 @@ const { getFakeUser, getFakeFriend } = require('../helpers/faker');
 const user = getFakeUser();
 const mockUser = user;
 const friends = [getFakeFriend(), getFakeFriend(), getFakeFriend()];
+const mockNewFriend = getFakeFriend();
 const mockFriends = friends;
 
 app.use('/', (req, res, next) => {
@@ -113,6 +114,38 @@ describe('GET user friends', () => {
   it("returns 403 when trying to access other user's friends", (done) => {
     request(app)
       .get(`/${user.id + 1}/friends`)
+      .expect(403, done);
+  });
+});
+
+describe('PUT user friends', () => {
+  it('returns updated friendlist after adding friend', () => {
+    return request(app)
+      .put(`/${user.id}/friends`)
+      .send({ type: 'add', friendId: mockNewFriend.id })
+      .then((res) => {
+        const friendsCount = res.body.friends.length;
+        expect(friendsCount).toBe(mockFriends.length + 1);
+        expect(res.body.friends[friendsCount - 1]).toEqual(mockNewFriend);
+      });
+  });
+
+  it('returns updated friendlist after removing friend', () => {
+    return request(app)
+      .put(`/${user.id}/friends`)
+      .send({ type: 'remove', friendId: mockFriends[2] })
+      .then((res) => {
+        expect(res.body.friends.length).toBe(mockFriends.length - 1);
+        expect(
+          res.body.friends.find((friend) => friend.id === mockFriends[2].id)
+        ).toBeUndefined();
+      });
+  });
+
+  it("returns 403 when trying to update another user's friends", (done) => {
+    request(app)
+      .put(`/${user.id + 1}/friends`)
+      .send({ type: 'remove', friendId: user.id })
       .expect(403, done);
   });
 });
