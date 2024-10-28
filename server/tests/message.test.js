@@ -10,7 +10,14 @@ const {
 const user = getFakeUser();
 const chat = getFakeChat(user);
 const mockChats = [chat, getFakeChat(), getFakeChat()];
+const message = getFakeMessage({
+  content: 'This is a fake message.',
+  file: null,
+  userId: user.id,
+  chatId: chat.id,
+});
 const mockRandomMessage = getFakeMessage;
+const mockMessages = [message, getFakeMessage({}), getFakeMessage({})];
 app.use('/', (req, res, next) => {
   req.user = user;
   next();
@@ -29,7 +36,7 @@ jest.mock('../models/queries', () => {
   };
 });
 
-describe.skip('POST message', () => {
+describe('POST message', () => {
   it('returns created message', () => {
     app.use('/', chatRouter);
     return request(app)
@@ -49,6 +56,28 @@ describe.skip('POST message', () => {
     request(app)
       .post(`/${chat.id}/messages`)
       .send({})
+      .type('form')
+      .expect(400, done);
+  });
+});
+
+describe('PUT message', () => {
+  app.use('/', router);
+  it('returns updated message', () => {
+    return request(app)
+      .put(`/${message.id}`)
+      .send({ content: 'Content updated.' })
+      .type('form')
+      .then((res) => {
+        expect(res.body.message.creationDate).toBe(message.creationDate);
+        expect(res.body.message.content).toBe('Content updated.');
+      });
+  });
+
+  it("returns 400 when trying to edit someone else's message", (done) => {
+    request(app)
+      .put(`/${mockMessages[2].id}`)
+      .send({ content: "Trying to update someone else's message." })
       .type('form')
       .expect(400, done);
   });
