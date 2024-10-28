@@ -127,6 +127,13 @@ const updateProfile = async (userId, { displayName, avatar, bio, link }) => {
 
 // Message queries
 
+const getMessage = async (id) => {
+  const message = await prisma.message.findUnique({
+    where: { id },
+  });
+  return message;
+};
+
 const createMessage = async ({ chatId, userId, content, file }) => {
   const message = await prisma.message.create({
     data: {
@@ -206,6 +213,7 @@ module.exports = {
   getProfile,
   getAllProfiles,
   updateProfile,
+  getMessage,
   createMessage,
   getUserChats,
   createChat,
