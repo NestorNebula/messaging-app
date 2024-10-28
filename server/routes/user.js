@@ -8,6 +8,7 @@ router.put('/:userId', controller.putUser);
 router.get('/:userId/friends', controller.getUserFriends);
 router.get('/:userId/profile', profileController.getProfile);
 router.put('/:userId/profile', profileController.putProfile);
+router.put('/:userId/status', controller.putUserStatus);
 router.get('/:userId/chats', chatController.getChats);
 
 module.exports = router;

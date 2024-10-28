@@ -49,6 +49,8 @@ const putUser = [
   },
 ];
 
+const putUserStatus = () => {};
+
 const getUserFriends = async (req, res, next) => {
   const userId = +req.params.userId;
   if (req.user.id !== userId) {
@@ -61,4 +63,4 @@ const getUserFriends = async (req, res, next) => {
   res.json({ friends });
 };
 
-module.exports = { getUser, putUser, getUserFriends };
+module.exports = { getUser, putUser, putUserStatus, getUserFriends };
