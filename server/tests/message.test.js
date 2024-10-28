@@ -74,11 +74,11 @@ describe('PUT message', () => {
       });
   });
 
-  it("returns 400 when trying to edit someone else's message", (done) => {
+  it("returns 403 when trying to edit someone else's message", (done) => {
     request(app)
       .put(`/${mockMessages[2].id}`)
       .send({ content: "Trying to update someone else's message." })
       .type('form')
-      .expect(400, done);
+      .expect(403, done);
   });
 });
