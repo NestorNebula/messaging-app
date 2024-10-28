@@ -154,6 +154,16 @@ const createMessage = async ({ chatId, userId, content, file }) => {
   return message;
 };
 
+const updateMessage = async (id, content) => {
+  const message = await prisma.message.update({
+    where: { id },
+    data: {
+      content,
+    },
+  });
+  return message;
+};
+
 // Chat queries
 
 const getUserChats = async (userId) => {
@@ -215,6 +225,7 @@ module.exports = {
   updateProfile,
   getMessage,
   createMessage,
+  updateMessage,
   getUserChats,
   createChat,
   updateChat,
