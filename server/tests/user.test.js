@@ -86,6 +86,15 @@ describe('PUT user', () => {
   });
 });
 
+describe('PUT user status', () => {
+  it('returns 200 after updating status', (done) => {
+    request(app)
+      .put(`/${user.id}/status`)
+      .send({ online: true })
+      .expect(200, done);
+  });
+});
+
 describe('GET user friends', () => {
   it('returns user friends', () => {
     return request(app)
