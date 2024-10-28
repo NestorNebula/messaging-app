@@ -92,3 +92,19 @@ describe('PUT message', () => {
       .expect(403, done);
   });
 });
+
+describe('DELETE message', () => {
+  app.use('/', router);
+  it('deletes correct message', () => {
+    return request(app)
+      .delete(`/${message.id}`)
+      .expect(200)
+      .then(() => {
+        expect(mockMessages[0]).toBeUndefined();
+      });
+  });
+
+  it("returns 403 when trying to delete someone else's message", (done) => {
+    request(app).delete(`/${message.id}`).expect(403, done);
+  });
+});
