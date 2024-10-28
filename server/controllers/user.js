@@ -74,7 +74,30 @@ const getUserFriends = async (req, res, next) => {
   res.json({ friends });
 };
 
-const putUserFriends = () => {};
+const putUserFriends = async (req, res, next) => {
+  if (req.user.id !== +req.params.userId) {
+    return next(new Sperror('Forbidden', 'You cannot update this data.', 403));
+  }
+  if (req.body.type === 'add' || req.body.type === 'remove') {
+    const friends =
+      req.body.type === 'add'
+        ? await prisma.connectUserFriend(req.user.id, +req.body.friendId)
+        : await prisma.disconnectUserFriend(req.user.id, +req.body.friendId);
+    if (!friends) {
+      return next(
+        new Sperror('Server Error', 'Error when updating friends', 500)
+      );
+    }
+    return res.json({ friends });
+  }
+  next(
+    new Sperror(
+      'Bad Request',
+      'A type argument is needed to update this data.',
+      400
+    )
+  );
+};
 
 module.exports = {
   getUser,
