@@ -1,15 +1,19 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Signup from '../src/components/auth/signup/Signup';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
+import routes from '../src/routes/routes';
 
 beforeEach(() => {
-  render(<Signup />);
+  const router = createMemoryRouter(routes, {
+    initialEntries: ['/auth/login'],
+  });
+  render(<RouterProvider router={router} />);
 });
 
 describe('Signup', () => {
   it('renders form', () => {
-    expect(screen.queryByRole('form')).not.toBeNull();
+    expect(screen.queryByRole('form', { name: /sign up/i })).not.toBeNull();
   });
 
   it('display error message when typing incorrect values', async () => {
