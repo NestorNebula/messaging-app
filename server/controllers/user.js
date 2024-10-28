@@ -49,7 +49,18 @@ const putUser = [
   },
 ];
 
-const putUserStatus = () => {};
+const putUserStatus = async (req, res, next) => {
+  const updatedUser = await prisma.updateUserStatus(
+    req.user.id,
+    req.body.online
+  );
+  if (!updatedUser) {
+    return next(
+      new Sperror('Server Error', 'Error when updating status.', 500)
+    );
+  }
+  res.sendStatus(200);
+};
 
 const getUserFriends = async (req, res, next) => {
   const userId = +req.params.userId;
