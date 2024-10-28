@@ -95,6 +95,38 @@ const updateUserStatus = async (id, status) => {
   return user;
 };
 
+const connectUserFriend = async (id, friendId) => {
+  const friends = await prisma.user.update({
+    where: { id },
+    data: {
+      friends: {
+        connect: {
+          id: friendId,
+        },
+      },
+    },
+    select: {
+      friends: true,
+    },
+  });
+  return friends;
+};
+
+const disconnectUserFriend = async (id, friendId) => {
+  const friends = await prisma.user.update({
+    where: { id },
+    data: {
+      friends: {
+        disconnect: { id: friendId },
+      },
+    },
+    select: {
+      friends: true,
+    },
+  });
+  return friends;
+};
+
 // Profile queries
 
 const getProfile = async (userId) => {
@@ -237,6 +269,8 @@ module.exports = {
   createUser,
   updateUser,
   updateUserStatus,
+  connectUserFriend,
+  disconnectUserFriend,
   getProfile,
   getAllProfiles,
   updateProfile,
