@@ -37,14 +37,14 @@ const getFakeChat = (user) => {
   };
 };
 
-const getFakeMessage = ({ content, file }) => {
+const getFakeMessage = ({ content, file, userId, chatId }) => {
   return {
     id: faker.number.int({ max: 10000 }),
     content: content ?? faker.lorem.paragraph(),
     file: file ?? faker.string.binary(),
     creationDate: new Date(Date.now()),
-    userId: faker.number.int({ max: 100 }),
-    chatId: faker.number.int({ max: 1000 }),
+    userId: userId || faker.number.int({ max: 100 }),
+    chatId: chatId || faker.number.int({ max: 1000 }),
   };
 };
 
