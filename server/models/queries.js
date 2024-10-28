@@ -85,6 +85,16 @@ const updateUser = async (id, { username, email, password }) => {
   return user;
 };
 
+const updateUserStatus = async (id, status) => {
+  const user = await prisma.user.update({
+    where: { id },
+    data: {
+      online: status,
+    },
+  });
+  return user;
+};
+
 // Profile queries
 
 const getProfile = async (userId) => {
@@ -226,6 +236,7 @@ module.exports = {
   getUserFriends,
   createUser,
   updateUser,
+  updateUserStatus,
   getProfile,
   getAllProfiles,
   updateProfile,
