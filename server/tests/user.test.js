@@ -38,6 +38,12 @@ jest.mock('../models/queries', () => {
         password: newUser.password || mockUser.password,
       };
     },
+    updateUserStatus: (id, status) => {
+      const user = mockUser.id === id ? mockUser : null;
+      if (!user) return null;
+      user.online = status;
+      return user;
+    },
   };
 });
 
