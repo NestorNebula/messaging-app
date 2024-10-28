@@ -164,6 +164,12 @@ const updateMessage = async (id, content) => {
   return message;
 };
 
+const deleteMessage = async (id) => {
+  await prisma.message.delete({
+    where: { id },
+  });
+};
+
 // Chat queries
 
 const getUserChats = async (userId) => {
@@ -226,6 +232,7 @@ module.exports = {
   getMessage,
   createMessage,
   updateMessage,
+  deleteMessage,
   getUserChats,
   createChat,
   updateChat,
