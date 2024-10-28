@@ -74,4 +74,12 @@ const getUserFriends = async (req, res, next) => {
   res.json({ friends });
 };
 
-module.exports = { getUser, putUser, putUserStatus, getUserFriends };
+const putUserFriends = () => {};
+
+module.exports = {
+  getUser,
+  putUser,
+  putUserStatus,
+  getUserFriends,
+  putUserFriends,
+};
