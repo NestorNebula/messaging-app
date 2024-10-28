@@ -34,12 +34,16 @@ jest.mock('../models/queries', () => {
       return mockRandomMessage({ content, file, userId, chatId });
     },
     getMessage: (id) => {
-      return mockMessages.find((msg) => msg.id === id);
+      return mockMessages.find((msg) => msg && msg.id === id);
     },
     updateMessage: (id, content) => {
       const msg = mockMessages.find((msg) => msg.id === id);
       msg.content = content;
       return msg;
+    },
+    deleteMessage: (id) => {
+      const msgIndex = mockMessages.findIndex((msg) => msg && msg.id === id);
+      delete mockMessages[msgIndex];
     },
   };
 });
@@ -105,6 +109,6 @@ describe('DELETE message', () => {
   });
 
   it("returns 403 when trying to delete someone else's message", (done) => {
-    request(app).delete(`/${message.id}`).expect(403, done);
+    request(app).delete(`/${mockMessages[1].id}`).expect(403, done);
   });
 });
