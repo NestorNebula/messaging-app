@@ -18,7 +18,7 @@ function Input({
         onChange={update}
         value={value}
       />
-      <span>{validation.isValid ? validation.message : null}</span>
+      <span>{!validation.isValid ? validation.message : null}</span>
     </div>
   );
 }
