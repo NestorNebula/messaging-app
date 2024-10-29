@@ -8,7 +8,7 @@ const validateUsername = (username) => {
   if (username.length <= 2 || username.length > 30) {
     message += 'Username must have between 3 and 30 characters. ';
   }
-  const regex = new RegExp('^[a-z][a-z0-9-_.]*]$');
+  const regex = new RegExp('^[a-z][a-z0-9-_.]*$');
   message += testRegex(
     username,
     regex,
