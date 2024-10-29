@@ -1,5 +1,7 @@
 import App from '../App';
 import Auth from '../components/auth/Auth';
+import Signup from '../components/auth/signup/Signup';
+import { signUpAction } from '../helpers/actions';
 
 const routes = [
   {
@@ -9,6 +11,13 @@ const routes = [
   {
     path: '/auth',
     element: <Auth />,
+    children: [
+      {
+        path: 'signup',
+        element: <Signup />,
+        action: signUpAction,
+      },
+    ],
   },
 ];
 
