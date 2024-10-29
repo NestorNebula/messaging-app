@@ -12,13 +12,7 @@ beforeEach(() => {
   render(<RouterProvider router={router} />);
 });
 
-vi.mock('../src/helpers/actions', async () => {
-  const actual = await vi.importActual('../src/helpers/actions');
-  return {
-    ...actual,
-    signUpAction: vi.fn(() => {}),
-  };
-});
+vi.mock('../src/helpers/actions', { spy: true });
 
 const typeWrongData = async (user) => {
   const usernameInput = screen.getByRole('textbox', { name: /username/i });
@@ -51,6 +45,8 @@ describe('Signup', () => {
     await user.click(button);
     expect(signUpAction).not.toHaveBeenCalled();
     await typeWrongData(user);
+    const emailInput = screen.getByRole('textbox', { name: /email/i });
+    await user.type(emailInput, 'email@email.com');
     await user.click(button);
     expect(signUpAction).not.toHaveBeenCalled();
   });
