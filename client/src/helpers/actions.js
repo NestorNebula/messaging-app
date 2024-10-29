@@ -33,6 +33,7 @@ const logInAction = async ({ request }) => {
   if (fetch.error) {
     return { error: fetch.result.error };
   }
+  localStorage.setItem('id', fetch.result.id);
   return redirect('/');
 };
 
