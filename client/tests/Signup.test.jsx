@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import routes from '../src/routes/routes';
 import { signUpAction } from '../src/helpers/actions';
+import { asyncFetch } from '../src/helpers/fetch';
 
 beforeEach(() => {
   const router = createMemoryRouter(routes, {
@@ -13,6 +14,7 @@ beforeEach(() => {
 });
 
 vi.mock('../src/helpers/actions', { spy: true });
+vi.mock('../src/helpers/fetch', { spy: true });
 
 const typeWrongData = async (user) => {
   const usernameInput = screen.getByRole('textbox', { name: /username/i });
@@ -23,6 +25,17 @@ const typeWrongData = async (user) => {
   await user.type(pwdInput, 'pwd');
   const confirmInput = screen.getByLabelText(/confirm/i);
   await user.type(confirmInput, 'pasword');
+};
+
+const typeCorrectData = async (user) => {
+  const usernameInput = screen.getByRole('textbox', { name: /username/i });
+  await user.type(usernameInput, 'username');
+  const emailInput = screen.getByRole('textbox', { name: /email/i });
+  await user.type(emailInput, 'email@email.com');
+  const pwdInput = screen.getByLabelText('password');
+  await user.type(pwdInput, 'password');
+  const confirmInput = screen.getByLabelText(/confirm/i);
+  await user.type(confirmInput, 'password');
 };
 
 describe('Signup', () => {
@@ -49,5 +62,42 @@ describe('Signup', () => {
     await user.type(emailInput, 'email@email.com');
     await user.click(button);
     expect(signUpAction).not.toHaveBeenCalled();
+  });
+
+  it('redirects to login after successful signup', async () => {
+    asyncFetch.mockImplementationOnce(() => {
+      return {
+        result: {
+          statusCode: 201,
+        },
+        error: false,
+      };
+    });
+    const user = userEvent.setup();
+    await typeCorrectData(user);
+    const button = screen.getByRole('button', { name: /sign up/i });
+    await user.click(button);
+    expect(screen.queryByRole('form', { name: /log in/i })).not.toBeNull();
+  });
+
+  it('renders sign up with errors after unsuccessful signup', async () => {
+    asyncFetch.mockImplementationOnce(() => {
+      return {
+        result: {
+          errors: [
+            {
+              msg: 'Username already taken.',
+            },
+          ],
+        },
+        error: true,
+      };
+    });
+    const user = userEvent.setup();
+    await typeCorrectData(user);
+    const button = screen.getByRole('button', { name: /sign up/i });
+    await user.click(button);
+    expect(screen.queryByRole('form', { name: /sign up/i })).not.toBeNull();
+    expect(screen.queryByText(/username already taken/i)).not.toBeNull();
   });
 });
