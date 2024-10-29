@@ -22,7 +22,7 @@ describe('Login', () => {
     await user.type(usermailInput, 'Username');
     const passwordInput = screen.getByLabelText(/password/i);
     await user.type(passwordInput, 'pwd');
-    expect(screen.queryByText(/username\/email must/)).not.toBeNull();
-    expect(screen.queryByText(/password must/)).not.toBeNull();
+    expect(screen.queryByText(/username\/email must/i)).not.toBeNull();
+    expect(screen.queryByText(/password must/i)).not.toBeNull();
   });
 });
