@@ -17,22 +17,27 @@ vi.mock('../src/helpers/actions', { spy: true });
 vi.mock('../src/helpers/fetch', { spy: true });
 
 const typeWrongData = async (user) => {
-  const usermailInput = screen.getByRole('textbox', { name: /username/i });
+  const usermailInput = await screen.findByRole('textbox', {
+    name: /username/i,
+  });
   await user.type(usermailInput, 'Username');
   const passwordInput = screen.getByLabelText(/password/i);
   await user.type(passwordInput, 'pwd');
 };
 
 const typeCorrectData = async (user) => {
-  const usermailInput = screen.getByRole('textbox', { name: /username/i });
+  const usermailInput = await screen.findByRole('textbox', {
+    name: /username/i,
+  });
   await user.type(usermailInput, 'username');
   const passwordInput = screen.getByLabelText(/password/i);
   await user.type(passwordInput, 'password');
 };
 
 describe('Login Form', () => {
-  it('renders form', () => {
-    expect(screen.queryByRole('form', { name: /log in/i })).not.toBeNull();
+  it('renders form', async () => {
+    const form = await screen.findByRole('form', { name: /log in/i });
+    expect(form).not.toBeNull();
   });
 
   it('displays error messages when typing incorrect values', async () => {
@@ -46,7 +51,7 @@ describe('Login Form', () => {
 describe('Login Action', () => {
   it("doesn't send form while data is incorrect", async () => {
     const user = userEvent.setup();
-    const button = screen.getByRole('button', { name: /log in/i });
+    const button = await screen.findByRole('button', { name: /log in/i });
     await user.click(button);
     await typeWrongData(user);
     await user.click(button);

@@ -17,7 +17,9 @@ vi.mock('../src/helpers/actions', { spy: true });
 vi.mock('../src/helpers/fetch', { spy: true });
 
 const typeWrongData = async (user) => {
-  const usernameInput = screen.getByRole('textbox', { name: /username/i });
+  const usernameInput = await screen.findByRole('textbox', {
+    name: /username/i,
+  });
   await user.type(usernameInput, 'thisisaverylongusernamethatcannotbeaccepted');
   const emailInput = screen.getByRole('textbox', { name: /email/i });
   await user.type(emailInput, 'email');
@@ -28,7 +30,9 @@ const typeWrongData = async (user) => {
 };
 
 const typeCorrectData = async (user) => {
-  const usernameInput = screen.getByRole('textbox', { name: /username/i });
+  const usernameInput = await screen.findByRole('textbox', {
+    name: /username/i,
+  });
   await user.type(usernameInput, 'username');
   const emailInput = screen.getByRole('textbox', { name: /email/i });
   await user.type(emailInput, 'email@email.com');
@@ -39,8 +43,9 @@ const typeCorrectData = async (user) => {
 };
 
 describe('Signup Form', () => {
-  it('renders form', () => {
-    expect(screen.queryByRole('form', { name: /sign up/i })).not.toBeNull();
+  it('renders form', async () => {
+    const form = await screen.findByRole('form', { name: /sign up/i });
+    expect(form).not.toBeNull();
   });
 
   it('displays error messages when typing incorrect values', async () => {
@@ -56,7 +61,7 @@ describe('Signup Form', () => {
 describe('Signup Action', () => {
   it("doesn't send form while data is incorrect", async () => {
     const user = userEvent.setup();
-    const button = screen.getByRole('button', { name: /sign up/i });
+    const button = await screen.findByRole('button', { name: /sign up/i });
     await user.click(button);
     expect(signUpAction).not.toHaveBeenCalled();
     await typeWrongData(user);
