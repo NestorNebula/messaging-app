@@ -24,6 +24,17 @@ const validateEmail = (email) => {
   return message;
 };
 
+const validateUsermail = (usermail) => {
+  let message = '';
+  const regex = new RegExp('^[a-z][a-z0-9-_.@]*$');
+  message += testRegex(
+    usermail,
+    regex,
+    'Username/Email must start with a letter, be lowercase and can only contain letters, numbers, dashes and points.'
+  );
+  return message;
+};
+
 const validatePassword = (password) => {
   let message = '';
   const regex = new RegExp('^[\\S]{8,}$');
@@ -45,6 +56,7 @@ const validatePasswordsMatch = (password, confirmPwd) => {
 export {
   validateUsername,
   validateEmail,
+  validateUsermail,
   validatePassword,
   validatePasswordsMatch,
 };
