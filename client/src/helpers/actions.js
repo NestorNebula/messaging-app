@@ -20,4 +20,20 @@ const signUpAction = async ({ request }) => {
   return redirect('/auth/login');
 };
 
-export { signUpAction };
+const logInAction = async ({ request }) => {
+  const data = await request.formData();
+  const fetch = await asyncFetch({
+    path: 'auth/login',
+    method: 'post',
+    body: {
+      username: data.get('username'),
+      password: data.get('password'),
+    },
+  });
+  if (fetch.error) {
+    return { error: fetch.result.error };
+  }
+  return redirect('/');
+};
+
+export { signUpAction, logInAction };
