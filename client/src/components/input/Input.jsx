@@ -17,6 +17,7 @@ function Input({
         type={type}
         onChange={update}
         value={value}
+        required
       />
       <span>{!validation.isValid ? validation.message : null}</span>
     </div>
