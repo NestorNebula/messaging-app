@@ -1,4 +1,4 @@
-import { Form } from 'react-router-dom';
+import { Form, useActionData } from 'react-router-dom';
 import { useInput } from '../../../hooks/useInput';
 import Input from '../../input/Input';
 import {
@@ -7,6 +7,7 @@ import {
 } from '../../../helpers/inputValidation';
 
 function Login() {
+  const result = useActionData();
   const {
     value: usermail,
     validation: usermailValidation,
@@ -22,6 +23,7 @@ function Login() {
 
   return (
     <Form method="post" aria-label="log in">
+      {result && <div>{result.error.message}</div>}
       <Input
         name="username"
         value={usermail}
