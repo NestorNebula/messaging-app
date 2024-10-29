@@ -17,6 +17,8 @@ function Login() {
     validation: passwordValidation,
     updateValue: updatePassword,
   } = useInput(validatePassword);
+  const validations = [usermailValidation, passwordValidation];
+  const valid = validations.every((validation) => validation.isValid);
 
   return (
     <Form method="post" aria-label="log in">
@@ -34,7 +36,7 @@ function Login() {
         validation={passwordValidation}
         type="password"
       />
-      <button>Log In</button>
+      <button type={valid ? 'submit' : 'button'}>Log In</button>
     </Form>
   );
 }
