@@ -1,4 +1,4 @@
-import { Form } from 'react-router-dom';
+import { Form, useActionData } from 'react-router-dom';
 import { useInput } from '../../../hooks/useInput';
 import Input from '../../input/Input';
 import {
@@ -9,6 +9,7 @@ import {
 } from '../../../helpers/inputValidation';
 
 function Signup() {
+  const result = useActionData();
   const {
     value: username,
     validation: usernameValidation,
@@ -47,6 +48,14 @@ function Signup() {
 
   return (
     <Form method="post" aria-label="sign up">
+      {result && result.error && <div>{result.error.message}</div>}
+      {result && result.errors && (
+        <div>
+          {result.errors.map((err, index) => (
+            <div key={index}>{err.msg}</div>
+          ))}
+        </div>
+      )}
       <Input
         name="username"
         value={username}
