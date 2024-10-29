@@ -37,12 +37,12 @@ const signUp = [
 const logIn = async (req, res, next) => {
   const user = await prisma.getUserByUsermail(req.body.username);
   if (!user)
-    return next(new Sperror('User not found', 'Incorrect username/email', 400));
+    return next(
+      new Sperror('User not found', 'Incorrect username/email.', 400)
+    );
   const match = await bcrypt.compare(req.body.password, user.password);
   if (!match)
-    return next(
-      new Sperror('Incorrect password', 'The password is incorrect', 400)
-    );
+    return next(new Sperror('Incorrect password', 'Incorrect password.', 400));
   const token = jwt.getToken({ id: user.id });
   const refreshToken = jwt.getRefreshToken({ id: user.id });
   const date = new Date(Date.now());
