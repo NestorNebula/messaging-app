@@ -31,6 +31,20 @@ function Signup() {
   } = useInput(validatePassword);
   const passwordMatchValidation = validatePasswordsMatch(password, confirm);
 
+  const checkSubmitValidity = () => {
+    const validations = [
+      usernameValidation,
+      emailValidation,
+      passwordValidation,
+      confirmValidation,
+    ];
+    return (
+      validations.every((validation) => validation.isValid) &&
+      !passwordMatchValidation
+    );
+  };
+  const valid = checkSubmitValidity();
+
   return (
     <Form method="post" aria-label="sign up">
       <Input
@@ -62,7 +76,7 @@ function Signup() {
         label="Confirm Password"
       />
       {passwordMatchValidation && <div>{passwordMatchValidation}</div>}
-      <button>Sign Up</button>
+      <button type={valid ? 'submit' : 'button'}>Sign Up</button>
     </Form>
   );
 }
