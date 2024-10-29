@@ -1,7 +1,8 @@
 import App from '../App';
 import Auth from '../components/auth/Auth';
 import Signup from '../components/auth/signup/Signup';
-import { signUpAction } from '../helpers/actions';
+import Login from '../components/auth/login/Login';
+import { signUpAction, logInAction } from '../helpers/actions';
 
 const routes = [
   {
@@ -16,6 +17,11 @@ const routes = [
         path: 'signup',
         element: <Signup />,
         action: signUpAction,
+      },
+      {
+        path: 'login',
+        element: <Login />,
+        action: logInAction,
       },
     ],
   },
