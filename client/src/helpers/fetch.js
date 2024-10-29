@@ -15,9 +15,9 @@ const getAPIUrl = () => {
   return API_URL;
 };
 
-const asyncFetch = async ({ url, method, body }) => {
+const asyncFetch = async ({ path, method, body }) => {
   const response = await fetch(
-    `${getAPIUrl()}/${url}`,
+    `${getAPIUrl()}/${path}`,
     getFetchOptions(method, body)
   );
   const result = await response.json();
