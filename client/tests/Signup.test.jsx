@@ -38,7 +38,7 @@ const typeCorrectData = async (user) => {
   await user.type(confirmInput, 'password');
 };
 
-describe('Signup', () => {
+describe('Signup Form', () => {
   it('renders form', () => {
     expect(screen.queryByRole('form', { name: /sign up/i })).not.toBeNull();
   });
@@ -51,7 +51,9 @@ describe('Signup', () => {
     expect(screen.queryAllByText(/password must have/i).length).toBe(2);
     expect(screen.queryByText(/passwords don't match/i)).not.toBeNull();
   });
+});
 
+describe('Signup Action', () => {
   it("doesn't send form while data is incorrect", async () => {
     const user = userEvent.setup();
     const button = screen.getByRole('button', { name: /sign up/i });
