@@ -5,6 +5,7 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import routes from '../src/routes/routes';
 import { logInAction } from '../src/helpers/actions';
 import { asyncFetch } from '../src/helpers/fetch';
+import { getFakeUser } from '../src/helpers/faker';
 
 beforeEach(() => {
   const router = createMemoryRouter(routes, {
@@ -20,7 +21,7 @@ vi.mock('../src/helpers/loaders', async () => {
   return {
     ...actual,
     appLoader: () => {
-      return null;
+      return { user: getFakeUser() };
     },
   };
 });
