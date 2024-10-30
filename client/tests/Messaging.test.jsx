@@ -61,6 +61,6 @@ describe('Messaging Sidebar', () => {
 
   it('renders first chat messages', () => {
     const recent = getRecentChat(mockChats);
-    expect(screen.queryByText(recent.messages[0])).not.toBeNull();
+    expect(screen.queryByText(recent.messages[0].content)).not.toBeNull();
   });
 });
