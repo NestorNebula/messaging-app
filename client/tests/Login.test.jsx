@@ -25,6 +25,13 @@ vi.mock('../src/helpers/loaders', async () => {
     },
   };
 });
+vi.mock('../src/hooks/useData', () => {
+  return {
+    useData: () => {
+      return { data: null, error: 'Nothing to render.', loading: false };
+    },
+  };
+});
 
 const typeWrongData = async (user) => {
   const usermailInput = await screen.findByRole('textbox', {
