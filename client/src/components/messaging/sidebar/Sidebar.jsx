@@ -3,7 +3,7 @@ import Error from '../../elements/Error';
 import Loading from '../../elements/Loading';
 import PropTypes from 'prop-types';
 
-function Sidebar({ chats, error, loading, userId }) {
+function Sidebar({ chats, error, loading, userId, updateActualChat }) {
   return (
     <aside>
       <div>Messages</div>
@@ -15,14 +15,20 @@ function Sidebar({ chats, error, loading, userId }) {
         ) : (
           chats.sort(sortChats) &&
           chats.map((chat) => (
-            <div key={chat.id}>
+            <button
+              aria-label={`open chat with ${chat.users.map(
+                (usr) => !checkIdMatch(usr) && `${usr.username} `
+              )}`}
+              onClick={() => updateActualChat(chat.id)}
+              key={chat.id}
+            >
               <div>
                 {chat.users.map((usr) => {
                   return checkIdMatch(usr.id, userId) ? null : (
                     <img
                       key={`${usr.username}'s avatar`}
                       src={`avatars/${usr.avatar}`}
-                      alt={`${usr.username}'s avatar`}
+                      alt=""
                     />
                   );
                 })}
@@ -36,7 +42,7 @@ function Sidebar({ chats, error, loading, userId }) {
                   );
                 })}
               </div>
-            </div>
+            </button>
           ))
         )}
       </div>
@@ -49,6 +55,7 @@ Sidebar.propTypes = {
   error: PropTypes.string,
   loading: PropTypes.bool,
   userId: PropTypes.number.isRequired,
+  updateActualChat: PropTypes.func.isRequired,
 };
 
 export default Sidebar;
