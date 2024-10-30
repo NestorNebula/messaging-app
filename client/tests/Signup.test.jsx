@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import routes from '../src/routes/routes';
 import { signUpAction } from '../src/helpers/actions';
-import { asyncFetch } from '../src/helpers/fetch';
+import { asyncResponseFetch, getResponseJSON } from '../src/helpers/fetch';
 
 beforeEach(() => {
   const router = createMemoryRouter(routes, {
@@ -72,10 +72,10 @@ describe('Signup Action', () => {
   });
 
   it('redirects to login after successful signup', async () => {
-    asyncFetch.mockImplementationOnce(() => {
+    asyncResponseFetch.mockImplementationOnce(() => {
       return {
-        result: {
-          statusCode: 201,
+        response: {
+          status: 201,
         },
         error: false,
       };
@@ -88,9 +88,10 @@ describe('Signup Action', () => {
   });
 
   it('renders sign up with errors after unsuccessful signup', async () => {
-    asyncFetch.mockImplementationOnce(() => {
+    asyncResponseFetch.mockImplementationOnce(() => {
       return {
-        result: {
+        response: {
+          status: 400,
           errors: [
             {
               msg: 'Username already taken.',
@@ -98,6 +99,11 @@ describe('Signup Action', () => {
           ],
         },
         error: true,
+      };
+    });
+    getResponseJSON.mockImplementationOnce((response) => {
+      return {
+        result: response,
       };
     });
     const user = userEvent.setup();
