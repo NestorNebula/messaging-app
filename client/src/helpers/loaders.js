@@ -23,7 +23,7 @@ const appLoader = async () => {
       localStorage.setItem('id', refreshFetch.result.id);
     } else {
       const { result } = await getResponseJSON(fetch.response);
-      user = result;
+      user = result.user;
     }
     if (user) break;
     count++;
