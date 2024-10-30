@@ -45,12 +45,16 @@ describe('Messaging', () => {
   });
 
   it('renders all chats', () => {
-    expect(screen.queryAllByAltText(/avatar/i).length).toBe(mockChats.length);
+    expect(screen.queryAllByRole('button', { name: /open/i }).length).toBe(
+      mockChats.length
+    );
   });
 
   it('renders chats in order', () => {
     const recent = getRecentChat(mockChats);
-    expect(screen.queryAllByAltText(/avatar/i)[0].alt).toMatch(recent.users[1]);
+    expect(
+      screen.queryAllByRole('button', { name: /open/i })[0].ariaLabel
+    ).toMatch(recent.users[1]);
   });
 
   it('renders first chat messages', () => {
