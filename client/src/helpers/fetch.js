@@ -27,4 +27,20 @@ const asyncFetch = async ({ path, method, body }) => {
   return { result, error: false };
 };
 
-export { asyncFetch };
+const asyncResponseFetch = async ({ path, method, body }) => {
+  const response = await fetch(
+    `${getAPIUrl()}/${path}`,
+    getFetchOptions(method, body)
+  );
+  if (response.status >= 400) {
+    return { response, error: true };
+  }
+  return { response, error: false };
+};
+
+const getResponseJSON = async (response) => {
+  const result = await response.json();
+  return { result };
+};
+
+export { asyncFetch, asyncResponseFetch, getResponseJSON };

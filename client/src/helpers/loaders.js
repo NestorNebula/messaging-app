@@ -1,5 +1,5 @@
 import { redirect } from 'react-router-dom';
-import { asyncFetch } from './fetch';
+import { asyncFetch, asyncResponseFetch, getResponseJSON } from './fetch';
 
 const appLoader = async () => {
   const userId = localStorage.getItem('id');
@@ -7,7 +7,10 @@ const appLoader = async () => {
   let user = null;
   let count = 0;
   while (count < 2) {
-    const fetch = await asyncFetch({ path: `users/${userId}`, method: 'get' });
+    const fetch = await asyncResponseFetch({
+      path: `users/${userId}`,
+      method: 'get',
+    });
     if (fetch.error) {
       const refreshFetch = await asyncFetch({
         path: 'auth/refresh',
@@ -19,7 +22,8 @@ const appLoader = async () => {
       }
       localStorage.setItem('id', refreshFetch.result.id);
     } else {
-      user = fetch.result;
+      const { result } = await getResponseJSON(fetch.response);
+      user = result;
     }
     if (user) break;
     count++;
