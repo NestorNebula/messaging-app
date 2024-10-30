@@ -6,7 +6,7 @@ import { getFakeUser, getFakeChats } from '../src/helpers/faker';
 import { useData } from '../src/hooks/useData';
 
 const mockUser = getFakeUser();
-const mockChats = getFakeChats();
+const mockChats = getFakeChats(mockUser.id);
 
 beforeEach(async () => {
   const router = createMemoryRouter(routes, {
@@ -33,7 +33,7 @@ useData.mockImplementation(() => {
 const getRecentChat = (chats) => {
   const recent = chats.reduce(
     (value, current) =>
-      (value = current.creationDate > value.creationDate ? current : value),
+      (value = current.updatedAt > value.createdAt ? current : value),
     chats[0]
   );
   return recent;
