@@ -15,6 +15,15 @@ beforeEach(() => {
 
 vi.mock('../src/helpers/actions', { spy: true });
 vi.mock('../src/helpers/fetch', { spy: true });
+vi.mock('../src/helpers/loaders', async () => {
+  const actual = await vi.importActual('../src/helpers/loaders');
+  return {
+    ...actual,
+    appLoader: () => {
+      return null;
+    },
+  };
+});
 
 const typeWrongData = async (user) => {
   const usermailInput = await screen.findByRole('textbox', {
