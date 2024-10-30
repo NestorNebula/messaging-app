@@ -2,6 +2,7 @@ import App from '../App';
 import Auth from '../components/auth/Auth';
 import Signup from '../components/auth/signup/Signup';
 import Login from '../components/auth/login/Login';
+import { authLoader } from '../helpers/loaders';
 import { signUpAction, logInAction } from '../helpers/actions';
 
 const routes = [
@@ -12,6 +13,7 @@ const routes = [
   {
     path: '/auth',
     element: <Auth />,
+    loader: authLoader,
     children: [
       {
         path: 'signup',
