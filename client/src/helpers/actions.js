@@ -1,9 +1,9 @@
 import { redirect } from 'react-router-dom';
-import { asyncFetch } from './fetch';
+import { asyncFetch, asyncResponseFetch, getResponseJSON } from './fetch';
 
 const signUpAction = async ({ request }) => {
   const data = await request.formData();
-  const fetch = await asyncFetch({
+  const fetch = await asyncResponseFetch({
     path: 'auth/signup',
     method: 'post',
     body: {
@@ -13,9 +13,8 @@ const signUpAction = async ({ request }) => {
     },
   });
   if (fetch.error) {
-    return fetch.result.errors
-      ? { errors: fetch.result.errors }
-      : { error: fetch.result.error };
+    const { result } = await getResponseJSON(fetch.response);
+    return result.errors ? { errors: result.errors } : { error: result.error };
   }
   return redirect('/auth/login');
 };
