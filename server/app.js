@@ -3,10 +3,12 @@ const app = express();
 require('dotenv').config();
 const routes = require('./routes/routes');
 const Sperror = require('sperror');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 require('./helpers/passport');
 
+app.use(cors({ credentials: true, origin: process.env.ORIGIN }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
