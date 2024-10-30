@@ -72,6 +72,7 @@ describe('Login Action', () => {
     const button = screen.getByRole('button', { name: /log in/i });
     await user.click(button);
     expect(screen.queryByRole('form', { name: /log in/i })).toBeNull();
+    localStorage.removeItem('id');
   });
 
   it('renders login with errors after unsuccessful login', async () => {
