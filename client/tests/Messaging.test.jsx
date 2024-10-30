@@ -39,11 +39,13 @@ const getRecentChat = (chats) => {
   return recent;
 };
 
-describe('Messaging', () => {
+describe('Messaging Sidebar', () => {
   it('renders Messaging as App index route', () => {
-    expect(screen.queryByText(/messages/i)).not.toBeNull();
+    expect(screen.queryByAltText(/messages/i)).not.toBeNull();
   });
+});
 
+describe('Messaging Sidebar', () => {
   it('renders all chats', () => {
     expect(screen.queryAllByRole('button', { name: /open/i }).length).toBe(
       mockChats.length
