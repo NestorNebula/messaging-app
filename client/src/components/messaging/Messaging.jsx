@@ -4,6 +4,10 @@ function Messaging() {
       <header>
         <img src="" alt="messages page" />
       </header>
+      <section>
+        <div>Messages</div>
+        <div></div>
+      </section>
     </main>
   );
 }
