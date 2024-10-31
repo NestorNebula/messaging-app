@@ -1,5 +1,10 @@
 import { redirect } from 'react-router-dom';
-import { asyncFetch, asyncResponseFetch, getResponseJSON } from './fetch';
+import {
+  asyncFetch,
+  asyncResponseFetch,
+  getResponseJSON,
+  getFetchError,
+} from './fetch';
 
 const signUpAction = async ({ request }) => {
   const data = await request.formData();
@@ -40,7 +45,27 @@ const messagingAction = async ({ request }) => {
   const data = await request.formData();
   const intent = data.get('intent');
   if (intent === 'send') {
-    // TODO
+    const hasFile = !!data.get('file');
+    const fetch = await asyncResponseFetch({
+      path: `/chats/${data.get('chatId')}/messages`,
+      method: 'post',
+      body: {
+        content: data.get('message'),
+        hasFile,
+        image: hasFile && data.get('file'),
+      },
+    });
+    if (fetch.error) {
+      return await getFetchError(
+        fetch,
+        "Couldn't send message. Please reload the page."
+      );
+    }
+    const { result } = await getResponseJSON(fetch.response);
+    return {
+      success: true,
+      message: result.message,
+    };
   }
 };
 
