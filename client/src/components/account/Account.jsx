@@ -3,6 +3,7 @@ import { MessagingContext } from '../../context/MessagingContext';
 import { useData } from '../../hooks/useData';
 import Error from '../elements/Error';
 import Loading from '../elements/Loading';
+import Profile from '../profile/Profile';
 
 function Account() {
   const { user } = useContext(MessagingContext);
@@ -19,13 +20,7 @@ function Account() {
       ) : loading ? (
         <Loading contentName="account" />
       ) : (
-        <section>
-          <img src={`avatars/${profile.avatar}`} alt="" />
-          <div>@{profile.user.username}</div>
-          <div>{profile.displayName}</div>
-          <div>{profile.bio}</div>
-          <div>{profile.link}</div>
-        </section>
+        <Profile profile={profile} />
       )}
     </>
   );
