@@ -4,6 +4,7 @@ import { useData } from '../../hooks/useData';
 import { sortMessages } from '../../helpers/messagingUtils';
 import Sidebar from './sidebar/Sidebar';
 import Message from './message/Message';
+import MessageForm from './message/MessageForm';
 
 function Messaging() {
   const { user } = useContext(MessagingContext);
@@ -49,6 +50,7 @@ function Messaging() {
                   />
                 ))}
             </div>
+            <MessageForm user={user} chat={chats[actualChat]} />
           </>
         ) : (
           <div>No messages to display.</div>
