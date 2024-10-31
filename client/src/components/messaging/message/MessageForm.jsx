@@ -2,24 +2,46 @@ import { useState } from 'react';
 import { Form } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-function MessageForm({ user, chat }) {
+function MessageForm({ chat }) {
   const [message, setMessage] = useState('');
   const updateMessage = (e) => {
     setMessage(e.target.value);
   };
+  const [file, setFile] = useState('');
+  const updateFile = (e) => {
+    setFile(e.target.files[0]);
+  };
+  const filesEmpty = !message && !file;
 
   return (
-    <Form method="post">
-      <input type="file" accept="image/*" />
+    <Form
+      method="post"
+      onSubmit={() => {
+        setFile('');
+        setMessage('');
+      }}
+    >
+      <input
+        type="file"
+        name="file"
+        multiple={false}
+        onChange={updateFile}
+        value={file}
+        accept="image/*"
+      />
       <textarea
         name="message"
         placeholder="Write a message"
         value={message}
         onChange={updateMessage}
       ></textarea>
-      <input type="hidden" name="userId" value={user.id} />
       <input type="hidden" name="chatId" value={chat.id} />
-      <button name="intent" value="send" aria-label="send message">
+      <button
+        type={filesEmpty ? 'button' : 'submit'}
+        name="intent"
+        value="send"
+        aria-label="send message"
+      >
         +
       </button>
     </Form>
@@ -27,7 +49,6 @@ function MessageForm({ user, chat }) {
 }
 
 MessageForm.propTypes = {
-  user: PropTypes.object.isRequired,
   chat: PropTypes.object.isRequired,
 };
 
