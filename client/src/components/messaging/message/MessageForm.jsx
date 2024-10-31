@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Form } from 'react-router-dom';
+import { Form, useActionData } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 function MessageForm({ chat }) {
+  const result = useActionData();
   const [message, setMessage] = useState('');
   const updateMessage = (e) => {
     setMessage(e.target.value);
@@ -21,6 +22,7 @@ function MessageForm({ chat }) {
         setMessage('');
       }}
     >
+      <div>{result && !result.success && result.error.message}</div>
       <input
         type="file"
         name="uploadfile"
