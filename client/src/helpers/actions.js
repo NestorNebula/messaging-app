@@ -36,4 +36,12 @@ const logInAction = async ({ request }) => {
   return redirect('/');
 };
 
-export { signUpAction, logInAction };
+const messagingAction = async ({ request }) => {
+  const data = await request.formData();
+  const intent = data.get('intent');
+  if (intent === 'send') {
+    // TODO
+  }
+};
+
+export { signUpAction, logInAction, messagingAction };
