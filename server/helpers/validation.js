@@ -69,4 +69,11 @@ const validateProfile = [
   body('link').trim().escape(),
 ];
 
-module.exports = { validateUser, validateUpdateUser, validateProfile };
+const validateMessage = [body('content').trim().escape()];
+
+module.exports = {
+  validateUser,
+  validateUpdateUser,
+  validateProfile,
+  validateMessage,
+};
