@@ -27,12 +27,15 @@ vi.mock('../src/helpers/loaders', async () => {
 });
 vi.mock('../src/hooks/useData', { spy: true });
 useData.mockImplementation(() => {
+  mockProfile.user = {
+    username: mockUser.username,
+  };
   return { data: mockProfile, error: null, loading: false };
 });
 
 describe('Account', () => {
   it('renders users main public infos', () => {
-    expect(screen.getByText(mockProfile.bio)).not.toBeNull();
+    expect(screen.queryByText(mockProfile.bio)).not.toBeNull();
     expect(screen.queryByText(mockProfile.displayName)).not.toBeNull();
     expect(screen.queryByText(mockProfile.link)).not.toBeNull();
     expect(screen.queryByText(`@${mockUser.username}`)).not.toBeNull();
