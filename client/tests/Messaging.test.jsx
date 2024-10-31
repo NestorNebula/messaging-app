@@ -107,4 +107,22 @@ describe('Messaging MessageForm', () => {
     expect(messagingAction).toHaveBeenCalled();
     expect(screen.getByText(/this is a testing message/i)).not.toBeNull();
   });
+
+  it('displays error when failing to post', async () => {
+    messagingAction.mockImplementationOnce(() => {
+      return {
+        success: false,
+        error: {
+          message: "Couldn't send message.",
+        },
+      };
+    });
+    const user = userEvent.setup();
+    const messageInput = screen.getByPlaceholderText(/message/i);
+    await user.type(messageInput, 'This is another testing message.');
+    const button = screen.getByRole('button', { name: /send/i });
+    await user.click(button);
+    expect(screen.queryByText(/this is another testing message/i)).toBeNull();
+    expect(screen.queryByText(/couldn't send message/i)).not.toBeNull();
+  });
 });
