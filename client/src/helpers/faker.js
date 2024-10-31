@@ -14,7 +14,7 @@ const getFakeProfile = (id = faker.number.int({ max: 100 }), name) => {
   return {
     displayName: name,
     avatar: 'default.png',
-    bio: faker.person.bio(),
+    bio: faker.lorem.paragraph(),
     link: faker.internet.url(),
     userId: id,
   };
