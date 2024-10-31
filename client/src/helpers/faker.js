@@ -47,4 +47,4 @@ const getFakeMessage = (userId, chatId, file) => {
   };
 };
 
-export { getFakeUser, getFakeChats };
+export { getFakeUser, getFakeProfile, getFakeChats };
