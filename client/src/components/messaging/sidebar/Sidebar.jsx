@@ -27,7 +27,7 @@ function Sidebar({ chats, error, loading, userId, updateActualChat }) {
                   return checkIdMatch(usr.id, userId) ? null : (
                     <img
                       key={`${usr.username}'s avatar`}
-                      src={`avatars/${usr.avatar}`}
+                      src={`avatars/${usr.profile.avatar}`}
                       alt=""
                     />
                   );
