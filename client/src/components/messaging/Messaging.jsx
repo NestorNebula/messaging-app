@@ -3,6 +3,7 @@ import { MessagingContext } from '../../context/MessagingContext';
 import { useData } from '../../hooks/useData';
 import { sortMessages } from '../../helpers/messagingUtils';
 import Sidebar from './sidebar/Sidebar';
+import Message from './message/Message';
 
 function Messaging() {
   const { user } = useContext(MessagingContext);
@@ -38,10 +39,14 @@ function Messaging() {
             <div>
               {chats[actualChat].messages.sort(sortMessages) &&
                 chats[actualChat].messages.map((message) => (
-                  <div key={`${message.id}content`}>
-                    <div>{message.content}</div>
-                    <div>{Date(message.creationDate)}</div>
-                  </div>
+                  <Message
+                    key={`${message.id}content`}
+                    message={message}
+                    author={chats[actualChat].users.find(
+                      (usr) => usr.id === message.userId
+                    )}
+                    user={user}
+                  />
                 ))}
             </div>
           </>
