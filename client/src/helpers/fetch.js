@@ -43,4 +43,22 @@ const getResponseJSON = async (response) => {
   return { result };
 };
 
-export { asyncFetch, asyncResponseFetch, getResponseJSON };
+const getFetchError = async (fetch, unauthorizedMessage) => {
+  if (fetch.error && fetch.response.status === 401) {
+    return {
+      success: false,
+      error: {
+        message: unauthorizedMessage,
+      },
+    };
+  }
+  const result = await getResponseJSON(fetch.response);
+  return {
+    success: false,
+    error: {
+      message: result.error.message,
+    },
+  };
+};
+
+export { asyncFetch, asyncResponseFetch, getResponseJSON, getFetchError };
