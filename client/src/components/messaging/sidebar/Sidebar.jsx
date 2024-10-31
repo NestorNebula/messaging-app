@@ -14,12 +14,12 @@ function Sidebar({ chats, error, loading, userId, updateActualChat }) {
           <Loading contentName="messages" />
         ) : (
           chats.sort(sortChats) &&
-          chats.map((chat) => (
+          chats.map((chat, index) => (
             <button
               aria-label={`open chat with ${chat.users.map(
                 (usr) => !checkIdMatch(usr) && `${usr.username} `
               )}`}
-              onClick={() => updateActualChat(chat.id)}
+              onClick={() => updateActualChat(index)}
               key={chat.id}
             >
               <div>

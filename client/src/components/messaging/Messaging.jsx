@@ -12,8 +12,8 @@ function Messaging() {
     loading,
   } = useData(`users/${user.id}/chats`, { method: 'get' }, []);
   const [actualChat, setActualChat] = useState(0);
-  const updateActualChat = (newActualChat) => {
-    setActualChat(newActualChat.id);
+  const updateActualChat = (id) => {
+    setActualChat(id);
   };
   return (
     <main>
