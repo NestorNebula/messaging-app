@@ -41,20 +41,20 @@ describe('Messaging Sidebar', () => {
 
 describe('Messaging Sidebar', () => {
   it('renders all chats', () => {
-    expect(screen.queryAllByRole('button', { name: /open/i }).length).toBe(
+    expect(screen.queryAllByRole('button', { name: /open chat/i }).length).toBe(
       mockChats.length
     );
   });
 
   it('renders chats in order', () => {
     expect(
-      screen.queryAllByRole('button', { name: /open/i })[0].ariaLabel
+      screen.queryAllByRole('button', { name: /open chat/i })[0].ariaLabel
     ).toMatch(mockChats[0].users[1]);
   });
 
   it('updates actual chat', async () => {
     const user = userEvent.setup();
-    const buttons = screen.getAllByRole('button', { name: /open/i });
+    const buttons = screen.getAllByRole('button', { name: /open chat/i });
     expect(screen.queryByText(mockChats[1].messages[0].content)).toBeNull();
     await user.click(buttons[1]);
     expect(screen.queryByText(mockChats[1].messages[0].content)).not.toBeNull();
