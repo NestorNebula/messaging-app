@@ -6,6 +6,7 @@ import routes from '../src/routes/routes';
 import { getFakeUser, getFakeChats } from '../src/helpers/faker';
 import { useData } from '../src/hooks/useData';
 import { sortChats } from '../src/helpers/messagingUtils';
+import { messagingAction } from '../src/helpers/actions';
 
 const mockUser = getFakeUser();
 const mockChats = getFakeChats(mockUser.id);
@@ -32,6 +33,7 @@ vi.mock('../src/hooks/useData', { spy: true });
 useData.mockImplementation(() => {
   return { data: mockChats, error: null, loading: false };
 });
+vi.mock('../src/helpers/actions', { spy: true });
 
 describe('Messaging Sidebar', () => {
   it('renders Messaging as App index route', () => {
@@ -73,5 +75,36 @@ describe('Messaging Chat', () => {
 describe('Messaging MessageForm', () => {
   it('renders message form', () => {
     expect(screen.queryByPlaceholderText(/message/i)).not.toBeNull();
+  });
+
+  it("doesn't send message when no content is provided", async () => {
+    const user = userEvent.setup();
+    const button = screen.getByRole('button', { name: /send/i });
+    await user.click(button);
+    expect(messagingAction).not.toHaveBeenCalled();
+  });
+
+  it('displays new message after posting it', async () => {
+    messagingAction.mockImplementationOnce(async ({ request }) => {
+      const data = await request.formData();
+      mockChats[0].messages.push({
+        id: Math.random() * 10000,
+        content: data.get('message'),
+        file: null,
+        creationDate: new Date(Date.now()),
+        userId: mockUser.id,
+        chatId: mockChats[0].id,
+      });
+      return {
+        success: true,
+      };
+    });
+    const user = userEvent.setup();
+    const messageInput = screen.getByPlaceholderText(/message/i);
+    await user.type(messageInput, 'This is a testing message.');
+    const button = screen.getByRole('button', { name: /send/i });
+    await user.click(button);
+    expect(messagingAction).toHaveBeenCalled();
+    expect(screen.getByText(/this is a testing message/i)).not.toBeNull();
   });
 });
