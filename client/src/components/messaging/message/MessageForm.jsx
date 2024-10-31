@@ -7,7 +7,7 @@ function MessageForm({ chat }) {
   const updateMessage = (e) => {
     setMessage(e.target.value);
   };
-  const [file, setFile] = useState('');
+  const [file, setFile] = useState(false);
   const updateFile = (e) => {
     setFile(e.target.files[0]);
   };
@@ -17,16 +17,15 @@ function MessageForm({ chat }) {
     <Form
       method="post"
       onSubmit={() => {
-        setFile('');
+        setFile(false);
         setMessage('');
       }}
     >
       <input
         type="file"
-        name="file"
+        name="uploadfile"
         multiple={false}
         onChange={updateFile}
-        value={file}
         accept="image/*"
       />
       <textarea
@@ -36,6 +35,7 @@ function MessageForm({ chat }) {
         onChange={updateMessage}
       ></textarea>
       <input type="hidden" name="chatId" value={chat.id} />
+      <input type="hidden" name="file" value={file} />
       <button
         type={filesEmpty ? 'button' : 'submit'}
         name="intent"
