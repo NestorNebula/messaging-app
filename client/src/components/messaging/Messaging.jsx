@@ -30,7 +30,7 @@ function Messaging() {
         updateActualChat={updateActualChat}
       />
       <section>
-        {chats ? (
+        {chats && chats.length ? (
           <>
             <h5>
               {chats[actualChat].users.map((usr) => (
@@ -50,7 +50,7 @@ function Messaging() {
                   />
                 ))}
             </div>
-            <MessageForm user={user} chat={chats[actualChat]} />
+            <MessageForm chat={chats[actualChat]} />
           </>
         ) : (
           <div>No messages to display.</div>

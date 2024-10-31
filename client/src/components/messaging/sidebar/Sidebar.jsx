@@ -12,6 +12,8 @@ function Sidebar({ chats, error, loading, userId, updateActualChat }) {
           <Error error={error} />
         ) : loading ? (
           <Loading contentName="messages" />
+        ) : !chats || !chats.length ? (
+          <div>No chats to display.</div>
         ) : (
           chats.sort(sortChats) &&
           chats.map((chat, index) => (
@@ -51,8 +53,8 @@ function Sidebar({ chats, error, loading, userId, updateActualChat }) {
 }
 
 Sidebar.propTypes = {
-  chats: PropTypes.array,
-  error: PropTypes.string,
+  chats: PropTypes.any,
+  error: PropTypes.any,
   loading: PropTypes.bool,
   userId: PropTypes.number.isRequired,
   updateActualChat: PropTypes.func.isRequired,
