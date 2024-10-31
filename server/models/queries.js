@@ -132,6 +132,13 @@ const disconnectUserFriend = async (id, friendId) => {
 const getProfile = async (userId) => {
   const profile = await prisma.profile.findUnique({
     where: { userId },
+    include: {
+      user: {
+        select: {
+          username: true,
+        },
+      },
+    },
   });
   return profile;
 };
