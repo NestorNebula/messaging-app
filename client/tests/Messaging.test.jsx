@@ -69,3 +69,9 @@ describe('Messaging Chat', () => {
     expect(screen.queryByText(mockChats[0].messages[0].content)).not.toBeNull();
   });
 });
+
+describe('Messaging MessageForm', () => {
+  it('renders message form', () => {
+    expect(screen.queryByPlaceholderText(/message/i)).not.toBeNull();
+  });
+});
