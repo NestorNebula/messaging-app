@@ -57,6 +57,7 @@ function InformationsForm({ user }) {
             update={updatePassword}
             validation={passwordValidation}
             type="password"
+            label="New Password"
           />
           <Input
             name="confirm"
@@ -64,10 +65,17 @@ function InformationsForm({ user }) {
             update={updateConfirm}
             validation={confirmValidation}
             type="password"
-            label="Confirm Password"
+            label="Confirm New Password"
           />
+          {passwordMatchValidation && <div>{passwordMatchValidation}</div>}
         </>
       )}
+      <label htmlFor="checkbox">Update Password ?</label>
+      <input
+        type="checkbox"
+        id="checkbox"
+        onClick={() => setIsUpdatingPassword(!isUpdatingPassword)}
+      />
       <button name="intent" value="update-informations">
         Submit
       </button>
