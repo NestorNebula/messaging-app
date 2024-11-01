@@ -62,6 +62,17 @@ const setPageToForm = async (form) => {
   return user;
 };
 
+const fillUsernameForm = async (user, username, email) => {
+  const usernameInput = screen.getByLabelText(/username/i);
+  const emailInput = screen.getByLabelText(/email/i);
+  await user.clear(usernameInput);
+  await user.clear(emailInput);
+  await user.type(usernameInput, username);
+  await user.type(emailInput, email);
+  const submitButton = screen.getByRole('button', { name: /submit/i });
+  await user.click(submitButton);
+};
+
 describe('Account', () => {
   it('renders users main public infos', () => {
     expect(screen.queryByText(mockProfile.bio)).not.toBeNull();
@@ -108,29 +119,28 @@ describe('Account InformationsForm', () => {
 
   it("doesn't submit form when data is invalid", async () => {
     const user = await setPageToForm('informations');
-    const usernameInput = screen.getByLabelText(/username/i);
-    const emailInput = screen.getByLabelText(/email/i);
-    await user.clear(usernameInput);
-    await user.clear(emailInput);
-    await user.type(usernameInput, 'newusername');
-    await user.type(emailInput, 'mynewemail@com');
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-    await user.click(submitButton);
-    console.log(emailInput.value);
+    await fillUsernameForm(user, 'newusername', 'mynewemail@email');
     expect(accountAction).not.toHaveBeenCalled();
   });
 
   it('submit form when data is valid', async () => {
     const user = await setPageToForm('informations');
-    const usernameInput = screen.getByLabelText(/username/i);
-    const emailInput = screen.getByLabelText(/email/i);
-    await user.clear(usernameInput);
-    await user.clear(emailInput);
-    await user.type(usernameInput, 'newusername');
-    await user.type(emailInput, 'mynewemail@email.com');
-    const submitButton = screen.getByRole('button', { name: /submit/i });
-    await user.click(submitButton);
-    console.log(emailInput.value);
+    await fillUsernameForm(user, 'newusername', 'mynewemail@email.com');
     expect(accountAction).toHaveBeenCalled();
+  });
+
+  it('displays errors after submitting form', async () => {
+    accountAction.mockImplementationOnce(() => {
+      return {
+        errors: [
+          {
+            msg: 'Username already taken.',
+          },
+        ],
+      };
+    });
+    const user = await setPageToForm('informations');
+    await fillUsernameForm(user, 'usernamealreadytaken', 'mynew@email.com');
+    expect(screen.queryByText(/username already taken/i)).not.toBeNull();
   });
 });
