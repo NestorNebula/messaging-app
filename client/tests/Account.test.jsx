@@ -5,6 +5,7 @@ import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import routes from '../src/routes/routes';
 import { getFakeUser, getFakeProfile } from '../src/helpers/faker';
 import { useData } from '../src/hooks/useData';
+import { accountAction } from '../src/helpers/actions';
 
 const mockUser = getFakeUser();
 const mockProfile = getFakeProfile(mockUser.id, mockUser.username);
@@ -44,6 +45,10 @@ useData.mockImplementation(() => {
     username: mockUser.username,
   };
   return { data: mockProfile, error: null, loading: false };
+});
+vi.mock('../src/helpers/actions', { spy: true });
+accountAction.mockImplementation(() => {
+  return null;
 });
 
 const setPageToForm = async (form) => {
@@ -99,5 +104,33 @@ describe('Account InformationsForm', () => {
     const pwdCheckbox = screen.getByRole('checkbox', { name: /password/i });
     await user.click(pwdCheckbox);
     expect(screen.queryByLabelText(/confirm/i)).not.toBeNull();
+  });
+
+  it("doesn't submit form when data is invalid", async () => {
+    const user = await setPageToForm('informations');
+    const usernameInput = screen.getByLabelText(/username/i);
+    const emailInput = screen.getByLabelText(/email/i);
+    await user.clear(usernameInput);
+    await user.clear(emailInput);
+    await user.type(usernameInput, 'newusername');
+    await user.type(emailInput, 'mynewemail@com');
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+    console.log(emailInput.value);
+    expect(accountAction).not.toHaveBeenCalled();
+  });
+
+  it('submit form when data is valid', async () => {
+    const user = await setPageToForm('informations');
+    const usernameInput = screen.getByLabelText(/username/i);
+    const emailInput = screen.getByLabelText(/email/i);
+    await user.clear(usernameInput);
+    await user.clear(emailInput);
+    await user.type(usernameInput, 'newusername');
+    await user.type(emailInput, 'mynewemail@email.com');
+    const submitButton = screen.getByRole('button', { name: /submit/i });
+    await user.click(submitButton);
+    console.log(emailInput.value);
+    expect(accountAction).toHaveBeenCalled();
   });
 });
