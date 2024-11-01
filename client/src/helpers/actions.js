@@ -69,6 +69,35 @@ const messagingAction = async ({ request }) => {
   }
 };
 
-const accountAction = () => {};
+const accountAction = async ({ request }) => {
+  const data = await request.formData();
+  const intent = data.get('intent');
+  if (intent === 'update-informations') {
+    const fetch = await asyncResponseFetch({
+      path: `/users/${data.get('userId')}`,
+      method: 'put',
+      body: {
+        username: data.get('username'),
+        email: data.get('email'),
+        password: data.get('password') || null,
+      },
+    });
+    if (fetch.error) {
+      if (fetch.response.status === 401) {
+        return {
+          error: {
+            message: "Couldn't update informations. Please reload page.",
+          },
+        };
+      } else {
+        const { result } = await getResponseJSON(fetch.response);
+        return result.errors
+          ? { errors: result.errors }
+          : { error: result.error };
+      }
+    }
+    return redirect('/account');
+  }
+};
 
 export { signUpAction, logInAction, messagingAction, accountAction };
