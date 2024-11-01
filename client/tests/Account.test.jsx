@@ -73,6 +73,14 @@ const fillUsernameForm = async (user, username, email) => {
   await user.click(submitButton);
 };
 
+const fillProfileForm = async (user, link) => {
+  const linkInput = screen.getByLabelText(/link/i);
+  await user.clear(linkInput);
+  await user.type(linkInput, link);
+  const submiButton = screen.getByRole('button', { name: /submit/i });
+  await user.click(submiButton);
+};
+
 describe('Account', () => {
   it('renders users main public infos', () => {
     expect(screen.queryByText(mockProfile.bio)).not.toBeNull();
@@ -142,5 +150,36 @@ describe('Account InformationsForm', () => {
     const user = await setPageToForm('informations');
     await fillUsernameForm(user, 'usernamealreadytaken', 'mynew@email.com');
     expect(screen.queryByText(/username already taken/i)).not.toBeNull();
+  });
+});
+
+describe('Account ProfileForm', () => {
+  it("doesn't submit form when data is invalid", async () => {
+    const user = await setPageToForm('profile');
+    await fillProfileForm(user, 'somewronglink');
+    expect(accountAction).not.toHaveBeenCalled();
+  });
+
+  it('submit form when data is valid', async () => {
+    const user = await setPageToForm('profile');
+    await fillProfileForm(user, 'https://somerandombutvalidlink.com');
+    expect(accountAction).toHaveBeenCalled();
+  });
+
+  it('displays errors after submitting form', async () => {
+    accountAction.mockImplementationOnce(() => {
+      return {
+        errors: [
+          {
+            msg: 'Display name must have a maximum of 30 characters.',
+          },
+        ],
+      };
+    });
+    const user = await setPageToForm('profile');
+    await fillProfileForm(user, 'https://correctlink.com');
+    expect(
+      screen.queryByText(/display name must have a maximum of 30 characters/i)
+    ).not.toBeNull();
   });
 });
