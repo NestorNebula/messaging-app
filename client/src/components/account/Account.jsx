@@ -16,7 +16,7 @@ function Account() {
   return (
     <>
       {displayForm ? (
-        (
+        <>
           <header>
             <button
               onClick={() => setDisplayForm(false)}
@@ -25,11 +25,14 @@ function Account() {
               <img src="" alt="" />
             </button>
           </header>
-        ) && displayForm === 'informations' ? (
-          <InformationsForm user={user} />
-        ) : (
-          <ProfileForm profile={profile} />
-        )
+          <section>
+            {displayForm === 'informations' ? (
+              <InformationsForm user={user} />
+            ) : (
+              <ProfileForm profile={profile} />
+            )}
+          </section>
+        </>
       ) : (
         <>
           <header>
