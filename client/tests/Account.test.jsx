@@ -6,6 +6,7 @@ import routes from '../src/routes/routes';
 import { getFakeUser, getFakeProfile } from '../src/helpers/faker';
 import { useData } from '../src/hooks/useData';
 import { accountAction } from '../src/helpers/actions';
+import avatars from '../src/utils/avatars';
 
 const mockUser = getFakeUser();
 const mockProfile = getFakeProfile(mockUser.id, mockUser.username);
@@ -181,5 +182,21 @@ describe('Account ProfileForm', () => {
     expect(
       screen.queryByText(/display name must have a maximum of 30 characters/i)
     ).not.toBeNull();
+  });
+
+  it('chooses avatar by clicking on its corresponding button', async () => {
+    accountAction.mockImplementationOnce(async ({ request }) => {
+      const data = await request.formData();
+      return {
+        avatar: data.get('avatar'),
+      };
+    });
+    const user = await setPageToForm('profile');
+    const avatarButtons = screen.getAllByRole('button', { name: /avatar/i });
+    await user.click(avatarButtons[1]);
+    await fillProfileForm(user, 'https://link.com');
+    expect(await accountAction.mock.results[0].value).toEqual({
+      avatar: avatars[1].file,
+    });
   });
 });
