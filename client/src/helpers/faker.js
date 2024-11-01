@@ -10,7 +10,10 @@ const getFakeUser = (id = faker.number.int({ max: 100 }), profile) => {
   };
 };
 
-const getFakeProfile = (id = faker.number.int({ max: 100 }), name) => {
+const getFakeProfile = (
+  id = faker.number.int({ max: 100 }),
+  name = faker.person.firstName()
+) => {
   return {
     displayName: name,
     avatar: 'default.png',
