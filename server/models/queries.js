@@ -50,7 +50,13 @@ const getUserFriends = async (userId) => {
   const friends = await prisma.user.findUnique({
     where: { id: userId },
     select: {
-      friends: true,
+      friends: {
+        select: {
+          id: true,
+          username: true,
+          profile: true,
+        },
+      },
     },
   });
   return friends;
