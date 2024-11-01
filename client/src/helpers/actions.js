@@ -47,7 +47,7 @@ const messagingAction = async ({ request }) => {
   if (intent === 'send') {
     const hasFile = !!data.get('file');
     const fetch = await asyncResponseFetch({
-      path: `/chats/${data.get('chatId')}/messages`,
+      path: `chats/${data.get('chatId')}/messages`,
       method: 'post',
       body: {
         content: data.get('message'),
@@ -70,17 +70,11 @@ const messagingAction = async ({ request }) => {
 };
 
 const accountAction = async ({ request }) => {
-  const data = await request.formData();
-  const intent = data.get('intent');
-  if (intent === 'update-informations') {
+  const putAccount = async (path, body) => {
     const fetch = await asyncResponseFetch({
-      path: `/users/${data.get('userId')}`,
+      path,
       method: 'put',
-      body: {
-        username: data.get('username'),
-        email: data.get('email'),
-        password: data.get('password') || null,
-      },
+      body,
     });
     if (fetch.error) {
       if (fetch.response.status === 401) {
@@ -97,6 +91,23 @@ const accountAction = async ({ request }) => {
       }
     }
     return redirect('/account');
+  };
+
+  const data = await request.formData();
+  const intent = data.get('intent');
+  if (intent === 'update-informations') {
+    return await putAccount(`users/${data.get('userId')}`, {
+      username: data.get('username'),
+      email: data.get('email'),
+      password: data.get('password') || null,
+    });
+  } else if (intent === 'update-profile') {
+    return await putAccount(`users/${data.get('userId')}/profile`, {
+      displayName: data.get('displayName'),
+      avatar: data.get('avatar'),
+      bio: data.get('bio'),
+      link: data.get('link'),
+    });
   }
 };
 
