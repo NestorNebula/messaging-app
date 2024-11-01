@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Form } from 'react-router-dom';
+import { Form, useActionData } from 'react-router-dom';
 import { useInput } from '../../../hooks/useInput';
 import {
   validateDisplayName,
@@ -9,12 +9,15 @@ import Input from '../../input/Input';
 import PropTypes from 'prop-types';
 import avatars from '../../../utils/avatars';
 
-function ProfileForm({ profile }) {
+function ProfileForm({ user, profile }) {
+  const result = useActionData();
   const {
     value: displayName,
     validation: displayNameValidation,
     updateValue: updateDisplayName,
   } = useInput(validateDisplayName, profile.displayName);
+
+  const [avatar, setAvatar] = useState(profile.avatar);
   const [bio, setBio] = useState('');
   const updateBio = (e) => {
     setBio(e.target.value);
@@ -24,8 +27,22 @@ function ProfileForm({ profile }) {
     validation: linkValidation,
     updateValue: updateLink,
   } = useInput(validateLink, profile.link);
+
+  const validations = [displayNameValidation, linkValidation];
+  const isValid =
+    validations.every((validation) => validation.isValid) &&
+    avatars.some((a) => a.file === avatar);
+
   return (
     <Form method="put" aria-label="update profile">
+      {result && result.error && <div>{result.error.message}</div>}
+      {result && result.errors && (
+        <div>
+          {result.errors.map((err) => (
+            <div key={err.msg}>{err.msg}</div>
+          ))}
+        </div>
+      )}
       <div>
         {avatars.map((avatar) => (
           <div key={avatar.file}>
@@ -34,7 +51,7 @@ function ProfileForm({ profile }) {
           </div>
         ))}
       </div>
-      <input type="hidden" name="avatar" />
+      <input type="hidden" name="avatar" value={avatar} />
       <Input
         name="displayName"
         value={displayName}
@@ -49,7 +66,12 @@ function ProfileForm({ profile }) {
         update={updateLink}
         validation={linkValidation}
       />
-      <button name="intent" value="update-profile">
+      <input type="hidden" name="userId" value={user.id} />
+      <button
+        type={isValid ? 'submit' : 'button'}
+        name="intent"
+        value="update-profile"
+      >
         Submit
       </button>
     </Form>
@@ -57,6 +79,7 @@ function ProfileForm({ profile }) {
 }
 
 ProfileForm.propTypes = {
+  user: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
 };
 

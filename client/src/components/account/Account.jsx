@@ -29,7 +29,7 @@ function Account() {
             {displayForm === 'informations' ? (
               <InformationsForm user={user} />
             ) : (
-              <ProfileForm profile={profile} />
+              <ProfileForm user={user} profile={profile} />
             )}
           </section>
         </>
