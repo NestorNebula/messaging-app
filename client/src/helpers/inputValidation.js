@@ -17,6 +17,14 @@ const validateUsername = (username) => {
   return message;
 };
 
+const validateDisplayName = (displayName) => {
+  let message = '';
+  if (displayName.length <= 2 || displayName.length > 30) {
+    message += 'Display Name must have between 3 and 30 characters.';
+  }
+  return message;
+};
+
 const validateEmail = (email) => {
   let message = '';
   const regex = new RegExp('^[\\w-\\.]+@[\\w]+\\.[\\w]{2,4}$');
@@ -53,10 +61,23 @@ const validatePasswordsMatch = (password, confirmPwd) => {
   return message;
 };
 
+const validateLink = (link) => {
+  let message = '';
+  if (!link.length) return message;
+  if (link.length > 255) {
+    message += 'Link cannot have more than 255 characters.';
+  }
+  const regex = new RegExp('^https:\\/\\/[\\w-\\/.]+\\.[a-z]{2,4}$');
+  message += testRegex(link, regex, 'Invalid link.');
+  return message;
+};
+
 export {
   validateUsername,
+  validateDisplayName,
   validateEmail,
   validateUsermail,
   validatePassword,
   validatePasswordsMatch,
+  validateLink,
 };
