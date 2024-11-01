@@ -86,11 +86,11 @@ describe('Account', () => {
 });
 
 describe('Account InformationsForm', () => {
-  it('renders password field only if user click on button', async () => {
+  it('renders password field only if user click on checkbox', async () => {
     const user = await setPageToForm('informations');
     expect(screen.queryByLabelText(/confirm/i)).toBeNull();
-    const pwdButton = screen.getByRole('button', { name: /password/i });
-    await user.click(pwdButton);
+    const pwdCheckbox = screen.getByRole('checkbox', { name: /password/i });
+    await user.click(pwdCheckbox);
     expect(screen.queryByLabelText(/confirm/i)).not.toBeNull();
   });
 });
