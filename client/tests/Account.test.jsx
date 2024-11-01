@@ -60,4 +60,24 @@ describe('Account', () => {
     await user.click(button);
     expect(screen.queryByRole('dialog')).not.toBeNull();
   });
+
+  it('displays private informations form when clicking on first dialog button', async () => {
+    const user = userEvent.setup();
+    const button = screen.getByRole('button', { name: /settings/i });
+    await user.click(button);
+    const firstButton = screen.getByRole('button', { name: /informations/i });
+    await user.click(firstButton);
+    expect(
+      screen.queryByRole('form', { name: /informations/i })
+    ).not.toBeNull();
+  });
+
+  it('displays profile form when clicking on second dialog button', async () => {
+    const user = userEvent.setup();
+    const button = screen.getByRole('button', { name: /settings/i });
+    await user.click(button);
+    const secondButton = screen.getByRole('button', { name: /profile/i });
+    await user.click(secondButton);
+    expect(screen.queryByRole('form', { name: /profile/i })).not.toBeNull();
+  });
 });
