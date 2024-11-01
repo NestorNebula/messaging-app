@@ -69,4 +69,6 @@ const messagingAction = async ({ request }) => {
   }
 };
 
-export { signUpAction, logInAction, messagingAction };
+const accountAction = () => {};
+
+export { signUpAction, logInAction, messagingAction, accountAction };
