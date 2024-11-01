@@ -83,6 +83,13 @@ describe('Account', () => {
     await setPageToForm('profile');
     expect(screen.queryByRole('form', { name: /profile/i })).not.toBeNull();
   });
+
+  it('display profile again when clicking on close button', async () => {
+    const user = await setPageToForm('profile');
+    const closeButton = screen.getByRole('button', { name: /close/i });
+    await user.click(closeButton);
+    expect(screen.queryByRole('form', { name: /profile/i })).toBeNull();
+  });
 });
 
 describe('Account InformationsForm', () => {
