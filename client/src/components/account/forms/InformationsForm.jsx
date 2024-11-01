@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Form } from 'react-router-dom';
+import { Form, useActionData } from 'react-router-dom';
 import { useInput } from '../../../hooks/useInput';
 import {
   validateUsername,
@@ -11,6 +11,7 @@ import Input from '../../input/Input';
 import PropTypes from 'prop-types';
 
 function InformationsForm({ user }) {
+  const result = useActionData();
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
   const {
     value: username,
@@ -33,9 +34,28 @@ function InformationsForm({ user }) {
     updateValue: updateConfirm,
   } = useInput(validatePassword);
   const passwordMatchValidation = validatePasswordsMatch(password, confirm);
+  const validations = isUpdatingPassword
+    ? [
+        usernameValidation,
+        emailValidation,
+        passwordValidation,
+        confirmValidation,
+      ]
+    : [usernameValidation, emailValidation];
+  const isValid =
+    validations.every((validation) => validation.isValid) &&
+    (!isUpdatingPassword || !passwordMatchValidation);
 
   return (
     <Form method="put" aria-label="update private informations">
+      {result && result.error && <div>{result.error.message}</div>}
+      {result && result.errors && (
+        <div>
+          {result.errors.map((err) => (
+            <div key={err.msg}>{err.msg}</div>
+          ))}
+        </div>
+      )}
       <Input
         name="username"
         value={username}
@@ -76,7 +96,12 @@ function InformationsForm({ user }) {
         id="checkbox"
         onClick={() => setIsUpdatingPassword(!isUpdatingPassword)}
       />
-      <button name="intent" value="update-informations">
+      <input type="hidden" name="userId" value={user.id} />
+      <button
+        type={isValid ? 'submit' : 'button'}
+        name="intent"
+        value="update-informations"
+      >
         Submit
       </button>
     </Form>
