@@ -46,6 +46,16 @@ useData.mockImplementation(() => {
   return { data: mockProfile, error: null, loading: false };
 });
 
+const setPageToForm = async (form) => {
+  const user = userEvent.setup();
+  const settingsButton = screen.getByRole('button', { name: /settings/i });
+  await user.click(settingsButton);
+  const button = screen.getByRole('button', {
+    name: form === 'informations' ? /informations/i : /profile/i,
+  });
+  await user.click(button);
+};
+
 describe('Account', () => {
   it('renders users main public infos', () => {
     expect(screen.queryByText(mockProfile.bio)).not.toBeNull();
@@ -62,22 +72,14 @@ describe('Account', () => {
   });
 
   it('displays private informations form when clicking on first dialog button', async () => {
-    const user = userEvent.setup();
-    const button = screen.getByRole('button', { name: /settings/i });
-    await user.click(button);
-    const firstButton = screen.getByRole('button', { name: /informations/i });
-    await user.click(firstButton);
+    await setPageToForm('informations');
     expect(
       screen.queryByRole('form', { name: /informations/i })
     ).not.toBeNull();
   });
 
   it('displays profile form when clicking on second dialog button', async () => {
-    const user = userEvent.setup();
-    const button = screen.getByRole('button', { name: /settings/i });
-    await user.click(button);
-    const secondButton = screen.getByRole('button', { name: /profile/i });
-    await user.click(secondButton);
+    await setPageToForm('profile');
     expect(screen.queryByRole('form', { name: /profile/i })).not.toBeNull();
   });
 });
