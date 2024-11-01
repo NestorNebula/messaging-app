@@ -47,7 +47,11 @@ function ProfileForm({ user, profile }) {
         {avatars.map((avatar) => (
           <div key={avatar.file}>
             <img src={`avatars/${avatar.file}`} alt={avatar.label} />
-            <button></button>
+            <button
+              type="button"
+              onClick={() => setAvatar(avatar.file)}
+              aria-label="choose avatar"
+            ></button>
           </div>
         ))}
       </div>
