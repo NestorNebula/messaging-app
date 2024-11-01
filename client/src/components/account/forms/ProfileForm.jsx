@@ -25,7 +25,7 @@ function ProfileForm({ profile }) {
     updateValue: updateLink,
   } = useInput(validateLink, profile.link);
   return (
-    <Form method="put">
+    <Form method="put" aria-label="update profile">
       <div>
         {avatars.map((avatar) => (
           <div key={avatar.file}>

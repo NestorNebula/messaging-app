@@ -35,7 +35,7 @@ function InformationsForm({ user }) {
   const passwordMatchValidation = validatePasswordsMatch(password, confirm);
 
   return (
-    <Form method="put">
+    <Form method="put" aria-label="update private informations">
       <Input
         name="username"
         value={username}
