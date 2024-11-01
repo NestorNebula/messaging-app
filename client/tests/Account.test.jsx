@@ -54,6 +54,7 @@ const setPageToForm = async (form) => {
     name: form === 'informations' ? /informations/i : /profile/i,
   });
   await user.click(button);
+  return user;
 };
 
 describe('Account', () => {
@@ -81,5 +82,15 @@ describe('Account', () => {
   it('displays profile form when clicking on second dialog button', async () => {
     await setPageToForm('profile');
     expect(screen.queryByRole('form', { name: /profile/i })).not.toBeNull();
+  });
+});
+
+describe('Account InformationsForm', () => {
+  it('renders password field only if user click on button', async () => {
+    const user = await setPageToForm('informations');
+    expect(screen.queryByLabelText(/confirm/i)).toBeNull();
+    const pwdButton = screen.getByRole('button', { name: /password/i });
+    await user.click(pwdButton);
+    expect(screen.queryByLabelText(/confirm/i)).not.toBeNull();
   });
 });
