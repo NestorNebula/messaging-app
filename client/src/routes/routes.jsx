@@ -3,8 +3,14 @@ import Auth from '../components/auth/Auth';
 import Signup from '../components/auth/signup/Signup';
 import Login from '../components/auth/login/Login';
 import Messaging from '../components/messaging/Messaging';
+import Account from '../components/account/Account';
 import { appLoader, authLoader } from '../helpers/loaders';
-import { signUpAction, logInAction, messagingAction } from '../helpers/actions';
+import {
+  signUpAction,
+  logInAction,
+  messagingAction,
+  accountAction,
+} from '../helpers/actions';
 
 const routes = [
   {
@@ -16,6 +22,11 @@ const routes = [
         index: true,
         element: <Messaging />,
         action: messagingAction,
+      },
+      {
+        path: '/account',
+        element: <Account />,
+        action: accountAction,
       },
     ],
   },
