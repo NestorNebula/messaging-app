@@ -7,12 +7,14 @@ import {
   getFakeUser,
   getFakeChats,
   getFakeFriends,
+  getFakeProfile,
 } from '../src/helpers/faker';
 import { useData } from '../src/hooks/useData';
 import { sortChats } from '../src/helpers/messagingUtils';
 import { messagingAction } from '../src/helpers/actions';
 
 const mockUser = getFakeUser();
+const mockUsers = [getFakeProfile(), getFakeProfile(), getFakeProfile()];
 const mockChats = getFakeChats(mockUser.id);
 const mockFriends = getFakeFriends();
 mockChats.sort(sortChats);
@@ -36,7 +38,9 @@ vi.mock('../src/helpers/loaders', async () => {
 });
 vi.mock('../src/hooks/useData', { spy: true });
 useData.mockImplementation((path) => {
-  return path === `users/${mockUser.id}/friends`
+  return path === 'profiles'
+    ? { data: mockUsers, error: null, loading: false }
+    : path === `users/${mockUser.id}/friends`
     ? { data: mockFriends, error: null, loading: false }
     : { data: mockChats, error: null, loading: false };
 });
@@ -145,6 +149,14 @@ describe('Messaging MessageForm', () => {
 
 describe('Messaging UsersList', () => {
   configure({ testIdAttribute: 'id' });
+  it('displays UsersList when clicking on search button', async () => {
+    const user = userEvent.setup();
+    const searchButton = screen.getByRole('button', { name: /search/i });
+    expect(screen.queryByText(mockUsers[0].displayName)).toBeNull();
+    await user.click(searchButton);
+    expect(screen.queryByText(mockUsers[0].displayName)).not.toBeNull();
+  });
+
   it('displays UsersList when clicking on button to add users', async () => {
     const user = userEvent.setup();
     const displayBtn = screen.getByRole('button', { name: /add someone/i });
