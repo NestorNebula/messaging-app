@@ -20,6 +20,9 @@ const getFakeProfile = (
     bio: faker.lorem.paragraph(),
     link: faker.internet.url(),
     userId: id,
+    user: {
+      username: name,
+    },
   };
 };
 
