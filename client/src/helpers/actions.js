@@ -111,4 +111,34 @@ const accountAction = async ({ request }) => {
   }
 };
 
-export { signUpAction, logInAction, messagingAction, accountAction };
+const userProfileAction = async ({ request }) => {
+  const data = await request.formData();
+  const intent = data.get('intent');
+  const fetch = await asyncResponseFetch({
+    path: `users/${data.get('userId')}/friends`,
+    method: 'put',
+    body: {
+      type: intent === 'add-friend' ? 'add' : 'remove',
+      friendId: data.get('friendId'),
+    },
+  });
+  if (fetch.error) {
+    return await getFetchError(
+      fetch,
+      "Couldn't update friendship status. Please reload the page."
+    );
+  }
+  const { result } = await getResponseJSON(fetch.response);
+  return {
+    success: true,
+    friends: result.friends,
+  };
+};
+
+export {
+  signUpAction,
+  logInAction,
+  messagingAction,
+  accountAction,
+  userProfileAction,
+};
