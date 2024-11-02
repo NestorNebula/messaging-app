@@ -9,11 +9,15 @@ import UsersList from '../usersList/UsersList';
 
 function Messaging() {
   const { user } = useContext(MessagingContext);
+  const [update, setUpdate] = useState(false);
+  const updateState = () => {
+    setUpdate(!update);
+  };
   const {
     data: chats,
     error,
     loading,
-  } = useData(`users/${user.id}/chats`, { method: 'get' }, []);
+  } = useData(`users/${user.id}/chats`, { method: 'get' }, [update]);
   const [actualChat, setActualChat] = useState(0);
   const [displayFriends, setDisplayFriends] = useState(false);
   const updateActualChat = (id) => {
@@ -66,7 +70,11 @@ function Messaging() {
           <div>No messages to display.</div>
         )}
         {displayFriends && (
-          <UsersList onlyFriends={true} chat={chats[actualChat]} />
+          <UsersList
+            onlyFriends={true}
+            chat={chats[actualChat]}
+            updateState={updateState}
+          />
         )}
       </section>
     </main>
