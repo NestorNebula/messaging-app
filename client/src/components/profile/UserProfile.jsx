@@ -44,6 +44,21 @@ function UserProfile() {
               </Form>
             )}
           </div>
+          <div>
+            {!profile.user.chats.some((chat) =>
+              chat.users.some(
+                (usr) => usr.id === user.id && chat.users.length === 2
+              )
+            ) && (
+              <Form method="post">
+                <input type="hidden" name="userId" value={user.id} />
+                <input type="hidden" name="friendId" value={profile.userId} />
+                <button name="intent" value="chat">
+                  Send a message
+                </button>
+              </Form>
+            )}
+          </div>
           <Profile profile={profile} />
         </>
       )}
