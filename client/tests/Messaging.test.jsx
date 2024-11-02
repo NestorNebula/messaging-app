@@ -3,13 +3,18 @@ import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import routes from '../src/routes/routes';
-import { getFakeUser, getFakeChats } from '../src/helpers/faker';
+import {
+  getFakeUser,
+  getFakeChats,
+  getFakeFriends,
+} from '../src/helpers/faker';
 import { useData } from '../src/hooks/useData';
 import { sortChats } from '../src/helpers/messagingUtils';
 import { messagingAction } from '../src/helpers/actions';
 
 const mockUser = getFakeUser();
 const mockChats = getFakeChats(mockUser.id);
+const mockFriends = getFakeFriends();
 mockChats.sort(sortChats);
 
 beforeEach(async () => {
@@ -30,8 +35,10 @@ vi.mock('../src/helpers/loaders', async () => {
   };
 });
 vi.mock('../src/hooks/useData', { spy: true });
-useData.mockImplementation(() => {
-  return { data: mockChats, error: null, loading: false };
+useData.mockImplementation((path) => {
+  return path === `users/${mockUser.id}/friends`
+    ? { data: mockFriends, error: null, loading: false }
+    : { data: mockChats, error: null, loading: false };
 });
 vi.mock('../src/helpers/actions', { spy: true });
 
@@ -124,5 +131,14 @@ describe('Messaging MessageForm', () => {
     await user.click(button);
     expect(screen.queryByText(/this is another testing message/i)).toBeNull();
     expect(screen.queryByText(/couldn't send message/i)).not.toBeNull();
+  });
+});
+
+describe('Messaging UsersList', () => {
+  it('displays UsersList when clicking on button to add users', async () => {
+    const user = userEvent.setup();
+    const addUserBtn = screen.getByRole('button', { name: /add user/i });
+    await user.click(addUserBtn);
+    expect(screen.queryByText(/your friends/i)).not.toBeNull();
   });
 });
