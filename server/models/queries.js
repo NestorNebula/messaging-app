@@ -143,6 +143,7 @@ const getProfile = async (userId) => {
         select: {
           username: true,
           friends: true,
+          chats: true,
         },
       },
     },
