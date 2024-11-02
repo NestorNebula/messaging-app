@@ -5,6 +5,7 @@ import { sortMessages } from '../../helpers/messagingUtils';
 import Sidebar from './sidebar/Sidebar';
 import Message from './message/Message';
 import MessageForm from './message/MessageForm';
+import UsersList from '../usersList/UsersList';
 
 function Messaging() {
   const { user } = useContext(MessagingContext);
@@ -14,6 +15,7 @@ function Messaging() {
     loading,
   } = useData(`users/${user.id}/chats`, { method: 'get' }, []);
   const [actualChat, setActualChat] = useState(0);
+  const [displayFriends, setDisplayFriends] = useState(false);
   const updateActualChat = (id) => {
     setActualChat(id);
   };
@@ -32,11 +34,19 @@ function Messaging() {
       <section>
         {chats && chats.length ? (
           <>
-            <h5>
-              {chats[actualChat].users.map((usr) => (
-                <span key={`${usr.username}title`}>{usr.username}</span>
-              ))}
-            </h5>
+            <div>
+              <h5>
+                {chats[actualChat].users.map((usr) => (
+                  <span key={`${usr.username}title`}>{usr.username}</span>
+                ))}
+              </h5>
+              <button
+                onClick={() => setDisplayFriends(true)}
+                aria-label="add someone to chat"
+              >
+                +
+              </button>
+            </div>
             <div>
               {chats[actualChat].messages.sort(sortMessages) &&
                 chats[actualChat].messages.map((message) => (
@@ -54,6 +64,9 @@ function Messaging() {
           </>
         ) : (
           <div>No messages to display.</div>
+        )}
+        {displayFriends && (
+          <UsersList onlyFriends={true} chat={chats[actualChat]} />
         )}
       </section>
     </main>
