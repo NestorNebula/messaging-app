@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import routes from '../src/routes/routes';
 import { getFakeProfile, getFakeUser } from '../src/helpers/faker';
+import { userProfileAction } from '../src/helpers/actions';
 
 const mockUser = getFakeUser();
 const mockUserProfile = getFakeProfile(undefined, undefined, true, mockUser.id);
@@ -36,7 +37,7 @@ vi.mock('../src/helpers/actions', async () => {
   const actual = await vi.importActual('../src/helpers/actions');
   return {
     ...actual,
-    userProfileAction: async ({ request }) => {
+    userProfileAction: vi.fn(async ({ request }) => {
       const data = await request.formData();
       if (data.get('intent') === 'remove-friend') {
         mockUserProfile.user.friends = mockUserProfile.user.friends.filter(
@@ -47,7 +48,7 @@ vi.mock('../src/helpers/actions', async () => {
         success: true,
         friends: mockUserProfile.user.friends,
       };
-    },
+    }),
   };
 });
 
@@ -68,5 +69,12 @@ describe('UserProfile', () => {
     await user.click(button);
     expect(screen.queryByRole('button', { name: /remove/i })).toBeNull();
     expect(screen.queryByRole('button', { name: /add/i })).not.toBeNull();
+  });
+
+  it('calls userProfile action for creating chat with user', async () => {
+    const user = userEvent.setup();
+    const button = screen.getByRole('button', { name: /message/i });
+    await user.click(button);
+    expect(userProfileAction).toHaveBeenCalled();
   });
 });
