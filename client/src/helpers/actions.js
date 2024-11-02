@@ -114,6 +114,22 @@ const accountAction = async ({ request }) => {
 const userProfileAction = async ({ request }) => {
   const data = await request.formData();
   const intent = data.get('intent');
+  if (intent === 'chat') {
+    const fetch = await asyncResponseFetch({
+      path: 'chats',
+      method: 'post',
+      body: {
+        users: JSON.stringify([data.get('friendId')]),
+      },
+    });
+    if (fetch.error) {
+      return await getFetchError(
+        fetch,
+        'Error when creating chat. Please reload the page.'
+      );
+    }
+    return redirect('/');
+  }
   const fetch = await asyncResponseFetch({
     path: `users/${data.get('userId')}/friends`,
     method: 'put',
