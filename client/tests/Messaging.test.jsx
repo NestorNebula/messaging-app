@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { screen, render } from '@testing-library/react';
+import { configure, screen, render, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import routes from '../src/routes/routes';
@@ -41,6 +41,15 @@ useData.mockImplementation((path) => {
     : { data: mockChats, error: null, loading: false };
 });
 vi.mock('../src/helpers/actions', { spy: true });
+vi.mock('../src/helpers/addUserToChat', () => {
+  return {
+    addUserToChat: (userId, chatId) => {
+      const chat = mockChats.find((chat) => chat.id === chatId);
+      const user = mockFriends.find((friend) => friend.id === userId);
+      chat.users.push(user);
+    },
+  };
+});
 
 describe('Messaging Sidebar', () => {
   it('renders Messaging as App index route', () => {
@@ -135,6 +144,7 @@ describe('Messaging MessageForm', () => {
 });
 
 describe('Messaging UsersList', () => {
+  configure({ testIdAttribute: 'id' });
   it('displays UsersList when clicking on button to add users', async () => {
     const user = userEvent.setup();
     const displayBtn = screen.getByRole('button', { name: /add someone/i });
@@ -150,7 +160,8 @@ describe('Messaging UsersList', () => {
       name: /add user/i,
     });
     await user.click(addUsersButtons[0]);
-    expect(screen.queryByText(mockFriends[1].username)).not.toBeNull();
-    expect(screen.queryByText(mockFriends[0].username)).toBeNull();
+    const section = screen.getByTestId('userslist');
+    expect(within(section).queryByText(mockFriends[1].username)).not.toBeNull();
+    expect(within(section).queryByText(mockFriends[0].username)).toBeNull();
   });
 });
