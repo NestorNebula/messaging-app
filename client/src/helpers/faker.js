@@ -12,7 +12,9 @@ const getFakeUser = (id = faker.number.int({ max: 100 }), profile) => {
 
 const getFakeProfile = (
   id = faker.number.int({ max: 100 }),
-  name = faker.person.firstName()
+  name = faker.person.firstName(),
+  friends,
+  friendId
 ) => {
   return {
     displayName: name,
@@ -22,6 +24,7 @@ const getFakeProfile = (
     userId: id,
     user: {
       username: name,
+      friends: friends ? getFakeFriends(friendId) : null,
     },
   };
 };
@@ -53,9 +56,9 @@ const getFakeMessage = (userId, chatId, file) => {
   };
 };
 
-const getFakeFriends = () => {
+const getFakeFriends = (userId) => {
   return [
-    getFakeUser(undefined, true),
+    getFakeUser(userId, true),
     getFakeUser(undefined, true),
     getFakeUser(undefined, true),
   ];
