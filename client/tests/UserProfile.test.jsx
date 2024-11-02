@@ -1,11 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import routes from '../src/routes/routes';
 import { getFakeProfile, getFakeUser } from '../src/helpers/faker';
 
 const mockUser = getFakeUser();
-const mockUserProfile = getFakeProfile();
+const mockUserProfile = getFakeProfile(undefined, undefined, true, mockUser.id);
 
 beforeEach(async () => {
   const router = createMemoryRouter(routes, {
@@ -37,5 +38,17 @@ describe('UserProfile', () => {
     expect(screen.getByText(mockUserProfile.displayName)).not.toBeNull();
     expect(screen.queryByText(mockUserProfile.user.username)).not.toBeNull();
     expect(screen.queryByText(mockUserProfile.bio)).not.toBeNull();
+  });
+
+  it('displays remove button when user in friends', () => {
+    expect(screen.queryByRole('button', { name: /remove/i })).not.toBeNull();
+  });
+
+  it('displays add button after removing friend', async () => {
+    const user = userEvent.setup();
+    const button = screen.getByRole('button', { name: /remove/i });
+    await user.click(button);
+    expect(screen.queryByRole('button', { name: /remove/i })).toBeNull();
+    expect(screen.queryByRole('button', { name: /add/i })).not.toBeNull();
   });
 });
