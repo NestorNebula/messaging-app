@@ -6,7 +6,7 @@ import Error from '../elements/Error';
 import Loading from '../elements/Loading';
 import PropTypes from 'prop-types';
 
-function UsersList({ onlyFriends }) {
+function UsersList({ onlyFriends, chat }) {
   const { user } = useContext(MessagingContext);
   const {
     data: users,
@@ -28,15 +28,17 @@ function UsersList({ onlyFriends }) {
           <div>
             {users.map((person) =>
               onlyFriends ? (
-                <div key={person.id}>
-                  <Link to={`profile/${person.id}`}>
-                    <img src={`avatars/${person.profile.avatar}`} alt="" />
-                  </Link>
-                  <div>
-                    <div>{person.profile.displayName}</div>
-                    <div>(@{person.username})</div>
+                (!chat || !chat.users.some((usr) => usr.id === person.id)) && (
+                  <div key={person.id}>
+                    <Link to={`profile/${person.id}`}>
+                      <img src={`avatars/${person.profile.avatar}`} alt="" />
+                    </Link>
+                    <div>
+                      <div>{person.profile.displayName}</div>
+                      <div>(@{person.username})</div>
+                    </div>
                   </div>
-                </div>
+                )
               ) : (
                 <div key={person.userId}>
                   <Link to={`profile/${person.userId}`}>
@@ -58,6 +60,7 @@ function UsersList({ onlyFriends }) {
 
 UsersList.propTypes = {
   onlyFriends: PropTypes.bool,
+  chat: PropTypes.object,
 };
 
 export default UsersList;
