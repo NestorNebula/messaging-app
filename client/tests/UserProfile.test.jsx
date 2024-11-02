@@ -7,7 +7,13 @@ import { getFakeProfile, getFakeUser } from '../src/helpers/faker';
 import { userProfileAction } from '../src/helpers/actions';
 
 const mockUser = getFakeUser();
-const mockUserProfile = getFakeProfile(undefined, undefined, true, mockUser.id);
+const mockUserProfile = getFakeProfile(
+  undefined,
+  undefined,
+  true,
+  true,
+  mockUser.id
+);
 
 beforeEach(async () => {
   const router = createMemoryRouter(routes, {

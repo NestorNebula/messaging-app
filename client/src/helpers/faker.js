@@ -14,6 +14,7 @@ const getFakeProfile = (
   id = faker.number.int({ max: 100 }),
   name = faker.person.firstName(),
   friends,
+  chats,
   friendId
 ) => {
   return {
@@ -25,6 +26,7 @@ const getFakeProfile = (
     user: {
       username: name,
       friends: friends ? getFakeFriends(friendId) : null,
+      chats: chats ? getFakeChats(id) : null,
     },
   };
 };
