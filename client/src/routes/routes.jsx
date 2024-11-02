@@ -4,12 +4,14 @@ import Signup from '../components/auth/signup/Signup';
 import Login from '../components/auth/login/Login';
 import Messaging from '../components/messaging/Messaging';
 import Account from '../components/account/Account';
+import UserProfile from '../components/profile/UserProfile';
 import { appLoader, authLoader } from '../helpers/loaders';
 import {
   signUpAction,
   logInAction,
   messagingAction,
   accountAction,
+  userProfileAction,
 } from '../helpers/actions';
 
 const routes = [
@@ -27,6 +29,11 @@ const routes = [
         path: '/account',
         element: <Account />,
         action: accountAction,
+      },
+      {
+        path: '/profile/:userId',
+        element: <UserProfile />,
+        action: userProfileAction,
       },
     ],
   },
