@@ -53,4 +53,12 @@ const getFakeMessage = (userId, chatId, file) => {
   };
 };
 
-export { getFakeUser, getFakeProfile, getFakeChats };
+const getFakeFriends = () => {
+  return [
+    getFakeUser(undefined, true),
+    getFakeUser(undefined, true),
+    getFakeUser(undefined, true),
+  ];
+};
+
+export { getFakeUser, getFakeProfile, getFakeChats, getFakeFriends };
