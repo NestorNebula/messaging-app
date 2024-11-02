@@ -4,6 +4,7 @@ import { useData } from '../src/hooks/useData';
 import { MemoryRouter } from 'react-router-dom';
 import UsersList from '../src/components/usersList/UsersList';
 import {
+  getFakeChat,
   getFakeFriends,
   getFakeProfile,
   getFakeUser,
@@ -12,6 +13,7 @@ import {
 const mockUser = getFakeUser();
 const mockUsers = [getFakeProfile(), getFakeProfile(), getFakeProfile()];
 const mockFriends = getFakeFriends();
+const mockChat = getFakeChat(mockFriends[0].id);
 
 vi.mock('react', async () => {
   const actual = await vi.importActual('react');
@@ -58,5 +60,20 @@ describe('Users List, Only Friends', () => {
     expect(
       screen.queryByText(mockFriends[2].profile.displayName)
     ).not.toBeNull();
+  });
+
+  it('renders only friends that are not in the chat when chat arg is provided', () => {
+    render(
+      <MemoryRouter>
+        <UsersList onlyFriends={true} chat={mockChat} />
+      </MemoryRouter>
+    );
+    expect(
+      screen.queryByText(mockFriends[1].profile.displayName)
+    ).not.toBeNull();
+    expect(
+      screen.queryByText(mockFriends[2].profile.displayName)
+    ).not.toBeNull();
+    expect(screen.queryByText(mockFriends[0].profile.displayName)).toBeNull();
   });
 });
