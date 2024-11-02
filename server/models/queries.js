@@ -142,6 +142,7 @@ const getProfile = async (userId) => {
       user: {
         select: {
           username: true,
+          friends: true,
         },
       },
     },
