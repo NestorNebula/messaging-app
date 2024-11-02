@@ -20,6 +20,7 @@ function Messaging() {
   } = useData(`users/${user.id}/chats`, { method: 'get' }, [update]);
   const [actualChat, setActualChat] = useState(0);
   const [displayFriends, setDisplayFriends] = useState(false);
+  const [displaySearch, setDisplaySearch] = useState(false);
   const updateActualChat = (id) => {
     setActualChat(id);
   };
@@ -27,6 +28,12 @@ function Messaging() {
     <main>
       <header>
         <img src="" alt="messages page" />
+        <button
+          onClick={() => setDisplaySearch(!displaySearch)}
+          aria-label="search users"
+        >
+          <img src="" alt="" />
+        </button>
       </header>
       <Sidebar
         chats={chats}
@@ -77,6 +84,7 @@ function Messaging() {
           />
         )}
       </section>
+      {displaySearch && <UsersList />}
     </main>
   );
 }
