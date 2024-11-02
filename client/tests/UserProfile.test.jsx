@@ -32,6 +32,24 @@ vi.mock('../src/hooks/useData', () => {
     },
   };
 });
+vi.mock('../src/helpers/actions', async () => {
+  const actual = await vi.importActual('../src/helpers/actions');
+  return {
+    ...actual,
+    userProfileAction: async ({ request }) => {
+      const data = await request.formData();
+      if (data.get('intent') === 'remove-friend') {
+        mockUserProfile.user.friends = mockUserProfile.user.friends.filter(
+          (friend) => friend.id !== mockUser.id
+        );
+      }
+      return {
+        success: true,
+        friends: mockUserProfile.user.friends,
+      };
+    },
+  };
+});
 
 describe('UserProfile', () => {
   it('renders profile of corresponding user', () => {
