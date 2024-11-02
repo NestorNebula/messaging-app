@@ -137,8 +137,20 @@ describe('Messaging MessageForm', () => {
 describe('Messaging UsersList', () => {
   it('displays UsersList when clicking on button to add users', async () => {
     const user = userEvent.setup();
-    const addUserBtn = screen.getByRole('button', { name: /add user/i });
-    await user.click(addUserBtn);
+    const displayBtn = screen.getByRole('button', { name: /add someone/i });
+    await user.click(displayBtn);
     expect(screen.queryByText(/your friends/i)).not.toBeNull();
+  });
+
+  it('removes user from list after adding him to chat', async () => {
+    const user = userEvent.setup();
+    const displayBtn = screen.getByRole('button', { name: /add someone/i });
+    await user.click(displayBtn);
+    const addUsersButtons = screen.getAllByRole('button', {
+      name: /add user/i,
+    });
+    await user.click(addUsersButtons[0]);
+    expect(screen.queryByText(mockFriends[1].username)).not.toBeNull();
+    expect(screen.queryByText(mockFriends[0].username)).toBeNull();
   });
 });
