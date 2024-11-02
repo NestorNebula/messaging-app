@@ -61,4 +61,10 @@ const getFakeFriends = () => {
   ];
 };
 
-export { getFakeUser, getFakeProfile, getFakeChats, getFakeFriends };
+export {
+  getFakeUser,
+  getFakeProfile,
+  getFakeChats,
+  getFakeChat,
+  getFakeFriends,
+};
