@@ -4,9 +4,10 @@ import { MessagingContext } from '../../context/MessagingContext';
 import { useData } from '../../hooks/useData';
 import Error from '../elements/Error';
 import Loading from '../elements/Loading';
+import { addUserToChat } from '../../helpers/addUserToChat';
 import PropTypes from 'prop-types';
 
-function UsersList({ onlyFriends, chat }) {
+function UsersList({ onlyFriends, chat, updateState }) {
   const { user } = useContext(MessagingContext);
   const {
     data: users,
@@ -17,7 +18,7 @@ function UsersList({ onlyFriends, chat }) {
   });
 
   return (
-    <section>
+    <section id="userslist">
       {error ? (
         <Error error={error} />
       ) : loading ? (
@@ -37,6 +38,15 @@ function UsersList({ onlyFriends, chat }) {
                       <div>{person.profile.displayName}</div>
                       <div>(@{person.username})</div>
                     </div>
+                    <button
+                      onClick={async () => {
+                        await addUserToChat(person.id, chat.id);
+                        updateState();
+                      }}
+                      aria-label="add user to chat"
+                    >
+                      +
+                    </button>
                   </div>
                 )
               ) : (
@@ -61,6 +71,7 @@ function UsersList({ onlyFriends, chat }) {
 UsersList.propTypes = {
   onlyFriends: PropTypes.bool,
   chat: PropTypes.object,
+  updateState: PropTypes.func,
 };
 
 export default UsersList;
