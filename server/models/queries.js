@@ -165,6 +165,13 @@ const getAllProfiles = async ({ userId, limit }) => {
         },
       },
     },
+    include: {
+      user: {
+        select: {
+          username: true,
+        },
+      },
+    },
     take: limit,
   });
   return profiles;
