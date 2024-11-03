@@ -25,6 +25,7 @@ const postChat = async (req, res, next) => {
     );
   }
   usersArray.unshift(req.user.id);
+  usersArray.forEach((user, index) => (usersArray[index] = +user));
   const chat = await prisma.createChat(usersArray);
   if (!chat) {
     return next(new Sperror('Server Error', 'Error when creating chat.', 500));
@@ -43,6 +44,7 @@ const putChat = async (req, res, next) => {
       )
     );
   }
+  usersArray.forEach((user, index) => (usersArray[index] = +user));
   const chatId = +req.params.chatId;
   const updatedChat = await prisma.updateChat(chatId, usersArray);
   if (!updatedChat) {
