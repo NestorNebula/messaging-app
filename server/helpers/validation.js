@@ -66,7 +66,7 @@ const validateProfile = [
     .withMessage('Display name must have a maximum of 30 characters.'),
   body('avatar').trim().blacklist('<>'),
   body('bio').trim().escape(),
-  body('link').trim().escape(),
+  body('link').trim().blacklist('<>'),
 ];
 
 const validateMessage = [body('content').trim().escape()];
