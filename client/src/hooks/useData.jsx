@@ -22,13 +22,14 @@ const useData = (path, options, dependencies = []) => {
           getResponseJSON(fetch.response).then(({ result }) => {
             setData(result);
             setError(false);
+            setLoading(false);
           });
         }
       })
       .catch((err) => {
         setError(err);
-      })
-      .finally(() => setLoading(false));
+        setLoading(false);
+      });
   }, dependencies);
 
   return { data, error, loading };
