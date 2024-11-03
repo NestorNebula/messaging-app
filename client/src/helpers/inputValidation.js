@@ -67,7 +67,7 @@ const validateLink = (link) => {
   if (link.length > 255) {
     message += 'Link cannot have more than 255 characters.';
   }
-  const regex = new RegExp('^https:\\/\\/[\\w-\\/.]+\\.[a-z]{2,4}$');
+  const regex = new RegExp('^https:\\/\\/[\\w-\\/.]+\\.[a-z]{2,4}[\\w-\\/.]*$');
   message += testRegex(link, regex, 'Invalid link.');
   return message;
 };
