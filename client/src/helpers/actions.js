@@ -90,7 +90,7 @@ const accountAction = async ({ request }) => {
           : { error: result.error };
       }
     }
-    return redirect('/account');
+    return redirect('/');
   };
 
   const data = await request.formData();
