@@ -26,10 +26,16 @@ function UserProfile() {
         <>
           {result && result.error && <div>{result.error.message}</div>}
           <div>
-            {profile.user.friends.some((friend) => friend.id === user.id) ? (
+            {profile.profile.user.friends.some(
+              (friend) => friend.id === user.id
+            ) ? (
               <Form method="put">
                 <input type="hidden" name="userId" value={user.id} />
-                <input type="hidden" name="friendId" value={profile.userId} />
+                <input
+                  type="hidden"
+                  name="friendId"
+                  value={profile.profile.userId}
+                />
                 <button name="intent" value="remove-friend">
                   Remove Friend
                 </button>
@@ -37,7 +43,11 @@ function UserProfile() {
             ) : (
               <Form method="put">
                 <input type="hidden" name="userId" value={user.id} />
-                <input type="hidden" name="friendId" value={profile.userId} />
+                <input
+                  type="hidden"
+                  name="friendId"
+                  value={profile.profile.userId}
+                />
                 <button name="intent" value="add-friend">
                   Add Friend
                 </button>
@@ -45,21 +55,25 @@ function UserProfile() {
             )}
           </div>
           <div>
-            {!profile.user.chats.some((chat) =>
+            {!profile.profile.user.chats.some((chat) =>
               chat.users.some(
                 (usr) => usr.id === user.id && chat.users.length === 2
               )
             ) && (
               <Form method="post">
                 <input type="hidden" name="userId" value={user.id} />
-                <input type="hidden" name="friendId" value={profile.userId} />
+                <input
+                  type="hidden"
+                  name="friendId"
+                  value={profile.profile.userId}
+                />
                 <button name="intent" value="chat">
                   Send a message
                 </button>
               </Form>
             )}
           </div>
-          <Profile profile={profile} />
+          <Profile profile={profile.profile} />
         </>
       )}
     </section>

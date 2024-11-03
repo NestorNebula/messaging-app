@@ -35,7 +35,11 @@ vi.mock('../src/helpers/loaders', async () => {
 vi.mock('../src/hooks/useData', () => {
   return {
     useData: () => {
-      return { data: mockUserProfile, error: null, loading: false };
+      return {
+        data: { profile: mockUserProfile },
+        error: null,
+        loading: false,
+      };
     },
   };
 });
