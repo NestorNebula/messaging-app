@@ -1,4 +1,4 @@
-import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
@@ -10,18 +10,6 @@ import avatars from '../src/utils/avatars';
 
 const mockUser = getFakeUser();
 const mockProfile = getFakeProfile(mockUser.id, mockUser.username);
-
-beforeAll(() => {
-  HTMLDialogElement.prototype.show = vi.fn(function () {
-    this.open = true;
-  });
-  HTMLDialogElement.prototype.showModal = vi.fn(function () {
-    this.open = true;
-  });
-  HTMLDialogElement.prototype.close = vi.fn(function () {
-    this.open = false;
-  });
-});
 
 beforeEach(async () => {
   const router = createMemoryRouter(routes, {
