@@ -10,7 +10,11 @@ import ProfileForm from './forms/ProfileForm';
 
 function Account() {
   const { user } = useContext(MessagingContext);
-  const { data: profile, error, loading } = useData(`users/${user.id}/profile`);
+  const {
+    data: profile,
+    error,
+    loading,
+  } = useData(`users/${user.id}/profile`, { method: 'get' });
   const { dialogRef, setOpen } = useDialog();
   const [displayForm, setDisplayForm] = useState(false);
   return (
@@ -29,7 +33,7 @@ function Account() {
             {displayForm === 'informations' ? (
               <InformationsForm user={user} />
             ) : (
-              <ProfileForm user={user} profile={profile} />
+              <ProfileForm user={user} profile={profile.profile} />
             )}
           </section>
         </>
@@ -53,7 +57,7 @@ function Account() {
           ) : loading ? (
             <Loading contentName="account" />
           ) : (
-            <Profile profile={profile} />
+            <Profile profile={profile.profile} />
           )}
         </>
       )}

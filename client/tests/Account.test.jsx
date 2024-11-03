@@ -33,7 +33,7 @@ useData.mockImplementation(() => {
   mockProfile.user = {
     username: mockUser.username,
   };
-  return { data: mockProfile, error: null, loading: false };
+  return { data: { profile: mockProfile }, error: null, loading: false };
 });
 vi.mock('../src/helpers/actions', { spy: true });
 accountAction.mockImplementation(() => {
