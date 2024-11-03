@@ -17,7 +17,7 @@ function Message({ message, author, user }) {
         {message.content && <div>{message.content}</div>}
         {message.file && <img src={message.file} />}
       </div>
-      <div>{Date(message.creationDate)}</div>
+      <div>{message.creationDate.toString()}</div>
     </div>
   );
 }
