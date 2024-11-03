@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Form, useActionData, useParams } from 'react-router-dom';
+import { Form, useActionData, useParams, Navigate } from 'react-router-dom';
 import { MessagingContext } from '../../context/MessagingContext';
 import { useData } from '../../hooks/useData';
 import Error from '../elements/Error';
@@ -18,6 +18,7 @@ function UserProfile() {
 
   return (
     <section>
+      {profile && user.id === profile.profile.userId && <Navigate to="/" />}
       {error ? (
         <Error error={error} />
       ) : loading ? (
