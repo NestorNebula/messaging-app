@@ -18,7 +18,7 @@ function ProfileForm({ user, profile }) {
   } = useInput(validateDisplayName, profile.displayName);
 
   const [avatar, setAvatar] = useState(profile.avatar);
-  const [bio, setBio] = useState('');
+  const [bio, setBio] = useState(profile.bio);
   const updateBio = (e) => {
     setBio(e.target.value);
   };
