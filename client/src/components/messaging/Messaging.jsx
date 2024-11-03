@@ -47,7 +47,7 @@ function Messaging() {
             </button>
             <UsersList
               onlyFriends={true}
-              chat={chats[actualChat]}
+              chat={chats.chats[actualChat]}
               updateState={updateState}
             />
           </>
@@ -77,11 +77,11 @@ function Messaging() {
         updateActualChat={updateActualChat}
       />
       <section>
-        {chats && chats.length ? (
+        {chats && chats.chats && chats.chats.length ? (
           <>
             <div>
               <h5>
-                {chats[actualChat].users.map((usr) => (
+                {chats.chats[actualChat].users.map((usr) => (
                   <span key={`${usr.username}title`}>{usr.username}</span>
                 ))}
               </h5>
@@ -93,19 +93,19 @@ function Messaging() {
               </button>
             </div>
             <div>
-              {chats[actualChat].messages.sort(sortMessages) &&
-                chats[actualChat].messages.map((message) => (
+              {chats.chats[actualChat].messages.sort(sortMessages) &&
+                chats.chats[actualChat].messages.map((message) => (
                   <Message
                     key={`${message.id}content`}
                     message={message}
-                    author={chats[actualChat].users.find(
+                    author={chats.chats[actualChat].users.find(
                       (usr) => usr.id === message.userId
                     )}
                     user={user}
                   />
                 ))}
             </div>
-            <MessageForm chat={chats[actualChat]} />
+            <MessageForm chat={chats.chats[actualChat]} />
           </>
         ) : (
           <div>No messages to display.</div>

@@ -12,11 +12,11 @@ function Sidebar({ chats, error, loading, userId, updateActualChat }) {
           <Error error={error} />
         ) : loading ? (
           <Loading contentName="messages" />
-        ) : !chats || !chats.length ? (
+        ) : !chats.chats || !chats.chats.length ? (
           <div>No chats to display.</div>
         ) : (
-          chats.sort(sortChats) &&
-          chats.map((chat, index) => (
+          chats.chats.sort(sortChats) &&
+          chats.chats.map((chat, index) => (
             <button
               aria-label={`open chat with ${chat.users.map(
                 (usr) => !checkIdMatch(usr) && `${usr.username} `
