@@ -28,7 +28,7 @@ function UsersList({ onlyFriends, chat, updateState }) {
           <div>{onlyFriends ? 'Your friends' : 'Popular users'}</div>
           <div>
             {onlyFriends
-              ? users.users.map(
+              ? users.friends.friends.map(
                   (person) =>
                     (!chat ||
                       !chat.users.some((usr) => usr.id === person.id)) && (

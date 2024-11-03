@@ -41,7 +41,11 @@ useData.mockImplementation((path) => {
   return path === 'profiles'
     ? { data: { profiles: mockUsers }, error: null, loading: false }
     : path === `users/${mockUser.id}/friends`
-    ? { data: { users: mockFriends }, error: null, loading: false }
+    ? {
+        data: { friends: { friends: mockFriends } },
+        error: null,
+        loading: false,
+      }
     : { data: { chats: mockChats }, error: null, loading: false };
 });
 vi.mock('../src/helpers/actions', { spy: true });
