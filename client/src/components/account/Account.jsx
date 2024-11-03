@@ -23,7 +23,10 @@ function Account() {
         <>
           <header>
             <button
-              onClick={() => setDisplayForm(false)}
+              onClick={() => {
+                setDisplayForm(false);
+                setOpen(false);
+              }}
               aria-label="close form"
             >
               <img src="" alt="" />
