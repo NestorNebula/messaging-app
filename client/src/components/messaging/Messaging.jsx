@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 import { MessagingContext } from '../../context/MessagingContext';
 import { useData } from '../../hooks/useData';
+import { useDialog } from '../../hooks/useDialog';
 import { sortMessages } from '../../helpers/messagingUtils';
 import Sidebar from './sidebar/Sidebar';
 import Message from './message/Message';
@@ -19,19 +20,45 @@ function Messaging() {
     loading,
   } = useData(`users/${user.id}/chats`, { method: 'get' }, [update]);
   const [actualChat, setActualChat] = useState(0);
-  const [displayFriends, setDisplayFriends] = useState(false);
-  const [displaySearch, setDisplaySearch] = useState(false);
+  const {
+    dialogRef: searchRef,
+    setOpen: setSearch,
+    open: search,
+  } = useDialog();
+  const {
+    dialogRef: friendsRef,
+    setOpen: setFriends,
+    open: friends,
+  } = useDialog();
   const updateActualChat = (id) => {
     setActualChat(id);
   };
+
   return (
     <main>
+      <dialog ref={friendsRef} onCancel={() => setFriends(false)}>
+        {friends && (
+          <>
+            <button aria-label="close friends menu">X</button>
+            <UsersList
+              onlyFriends={true}
+              chat={chats[actualChat]}
+              updateState={updateState}
+            />
+          </>
+        )}
+      </dialog>
+      <dialog ref={searchRef} onCancel={() => setSearch(false)}>
+        {search && (
+          <>
+            <button aria-label="close search">X</button>
+            <UsersList />
+          </>
+        )}
+      </dialog>
       <header>
         <img src="" alt="messages page" />
-        <button
-          onClick={() => setDisplaySearch(!displaySearch)}
-          aria-label="search users"
-        >
+        <button onClick={() => setSearch(true)} aria-label="search users">
           <img src="" alt="" />
         </button>
       </header>
@@ -52,7 +79,7 @@ function Messaging() {
                 ))}
               </h5>
               <button
-                onClick={() => setDisplayFriends(true)}
+                onClick={() => setFriends(true)}
                 aria-label="add someone to chat"
               >
                 +
@@ -76,15 +103,7 @@ function Messaging() {
         ) : (
           <div>No messages to display.</div>
         )}
-        {displayFriends && (
-          <UsersList
-            onlyFriends={true}
-            chat={chats[actualChat]}
-            updateState={updateState}
-          />
-        )}
       </section>
-      {displaySearch && <UsersList />}
     </main>
   );
 }
