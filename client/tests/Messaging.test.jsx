@@ -172,6 +172,7 @@ describe('Messaging UsersList', () => {
       name: /add user/i,
     });
     await user.click(addUsersButtons[0]);
+    await user.click(displayBtn);
     const section = screen.getByTestId('userslist');
     expect(within(section).queryByText(mockFriends[1].username)).not.toBeNull();
     expect(within(section).queryByText(mockFriends[0].username)).toBeNull();

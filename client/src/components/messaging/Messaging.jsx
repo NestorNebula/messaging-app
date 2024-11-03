@@ -39,7 +39,12 @@ function Messaging() {
       <dialog ref={friendsRef} onCancel={() => setFriends(false)}>
         {friends && (
           <>
-            <button aria-label="close friends menu">X</button>
+            <button
+              onClick={() => setFriends(false)}
+              aria-label="close friends menu"
+            >
+              X
+            </button>
             <UsersList
               onlyFriends={true}
               chat={chats[actualChat]}
@@ -51,7 +56,9 @@ function Messaging() {
       <dialog ref={searchRef} onCancel={() => setSearch(false)}>
         {search && (
           <>
-            <button aria-label="close search">X</button>
+            <button onClick={() => setSearch(false)} aria-label="close search">
+              X
+            </button>
             <UsersList />
           </>
         )}
