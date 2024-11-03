@@ -12,7 +12,8 @@ const mockUserProfile = getFakeProfile(
   undefined,
   true,
   true,
-  mockUser.id
+  mockUser.id,
+  true
 );
 
 beforeEach(async () => {
@@ -50,8 +51,9 @@ vi.mock('../src/helpers/actions', async () => {
     userProfileAction: vi.fn(async ({ request }) => {
       const data = await request.formData();
       if (data.get('intent') === 'remove-friend') {
-        mockUserProfile.user.friends = mockUserProfile.user.friends.filter(
-          (friend) => friend.id !== mockUser.id
+        console.log(mockUserProfile.user.followers, mockUser);
+        mockUserProfile.user.followers = mockUserProfile.user.followers.filter(
+          (follower) => follower.id !== mockUser.id
         );
       }
       return {

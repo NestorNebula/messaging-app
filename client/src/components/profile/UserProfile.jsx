@@ -27,7 +27,7 @@ function UserProfile() {
         <>
           {result && result.error && <div>{result.error.message}</div>}
           <div>
-            {profile.profile.user.friends.some(
+            {profile.profile.user.followers.some(
               (friend) => friend.id === user.id
             ) ? (
               <Form method="put">

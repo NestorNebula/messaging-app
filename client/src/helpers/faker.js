@@ -15,7 +15,8 @@ const getFakeProfile = (
   name = faker.person.firstName(),
   friends,
   chats,
-  friendId
+  friendId,
+  followers
 ) => {
   return {
     displayName: name,
@@ -27,6 +28,7 @@ const getFakeProfile = (
       username: name,
       friends: friends ? getFakeFriends(friendId) : null,
       chats: chats ? getFakeChats(id) : null,
+      followers: followers ? getFakeFriends(friendId) : null,
     },
   };
 };
