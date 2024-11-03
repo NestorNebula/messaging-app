@@ -27,8 +27,8 @@ vi.mock('react', async () => {
 vi.mock('../src/hooks/useData', { spy: true });
 useData.mockImplementation((path) => {
   return path === `profiles`
-    ? { data: mockUsers, error: null, loading: false }
-    : { data: mockFriends, error: null, loading: false };
+    ? { data: { profiles: mockUsers }, error: null, loading: false }
+    : { data: { users: mockFriends }, error: null, loading: false };
 });
 
 describe('Users List', () => {

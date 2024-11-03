@@ -27,40 +27,45 @@ function UsersList({ onlyFriends, chat, updateState }) {
         <>
           <div>{onlyFriends ? 'Your friends' : 'Popular users'}</div>
           <div>
-            {users.map((person) =>
-              onlyFriends ? (
-                (!chat || !chat.users.some((usr) => usr.id === person.id)) && (
-                  <div key={person.id}>
-                    <Link to={`profile/${person.id}`}>
-                      <img src={`avatars/${person.profile.avatar}`} alt="" />
+            {onlyFriends
+              ? users.users.map(
+                  (person) =>
+                    (!chat ||
+                      !chat.users.some((usr) => usr.id === person.id)) && (
+                      <div key={person.id}>
+                        <Link to={`profile/${person.id}`}>
+                          <img
+                            src={`avatars/${person.profile.avatar}`}
+                            alt=""
+                          />
+                        </Link>
+                        <div>
+                          <div>{person.profile.displayName}</div>
+                          <div>(@{person.username})</div>
+                        </div>
+                        <button
+                          onClick={async () => {
+                            await addUserToChat(person.id, chat.id);
+                            updateState();
+                          }}
+                          aria-label="add user to chat"
+                        >
+                          +
+                        </button>
+                      </div>
+                    )
+                )
+              : users.profiles.map((person) => (
+                  <div key={person.userId}>
+                    <Link to={`profile/${person.userId}`}>
+                      <img src={`avatars/${person.avatar}`} alt="" />
                     </Link>
                     <div>
-                      <div>{person.profile.displayName}</div>
-                      <div>(@{person.username})</div>
+                      <div>{person.displayName}</div>
+                      <div>(@{person.user.username})</div>
                     </div>
-                    <button
-                      onClick={async () => {
-                        await addUserToChat(person.id, chat.id);
-                        updateState();
-                      }}
-                      aria-label="add user to chat"
-                    >
-                      +
-                    </button>
                   </div>
-                )
-              ) : (
-                <div key={person.userId}>
-                  <Link to={`profile/${person.userId}`}>
-                    <img src={`avatars/${person.avatar}`} alt="" />
-                  </Link>
-                  <div>
-                    <div>{person.displayName}</div>
-                    <div>(@{person.user.username})</div>
-                  </div>
-                </div>
-              )
-            )}
+                ))}
           </div>
         </>
       )}

@@ -39,9 +39,9 @@ vi.mock('../src/helpers/loaders', async () => {
 vi.mock('../src/hooks/useData', { spy: true });
 useData.mockImplementation((path) => {
   return path === 'profiles'
-    ? { data: mockUsers, error: null, loading: false }
+    ? { data: { profiles: mockUsers }, error: null, loading: false }
     : path === `users/${mockUser.id}/friends`
-    ? { data: mockFriends, error: null, loading: false }
+    ? { data: { users: mockFriends }, error: null, loading: false }
     : { data: mockChats, error: null, loading: false };
 });
 vi.mock('../src/helpers/actions', { spy: true });
