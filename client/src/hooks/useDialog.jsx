@@ -8,7 +8,7 @@ const useDialog = () => {
     else dialogRef.current.close();
   }, [open]);
 
-  return { dialogRef, setOpen };
+  return { dialogRef, setOpen, open };
 };
 
 export { useDialog };
