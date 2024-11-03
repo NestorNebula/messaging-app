@@ -26,7 +26,7 @@ function ProfileForm({ user, profile }) {
     value: link,
     validation: linkValidation,
     updateValue: updateLink,
-  } = useInput(validateLink, profile.link);
+  } = useInput(validateLink, profile.link || '');
 
   const validations = [displayNameValidation, linkValidation];
   const isValid =
