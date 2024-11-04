@@ -38,6 +38,9 @@ function UsersList({ onlyFriends, chat, updateState }) {
                             src={`avatars/${person.profile.avatar}`}
                             alt=""
                           />
+                          <div>
+                            {person.profile.online ? 'Online' : 'Offline'}
+                          </div>
                         </Link>
                         <div>
                           <div>{person.profile.displayName}</div>

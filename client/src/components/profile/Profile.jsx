@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 function Profile({ profile }) {
   return (
     <section>
-      <img src={`avatars/${profile.avatar}`} alt="" />
+      <div>
+        <img src={`/avatars/${profile.avatar}`} alt="" />
+        <div>{profile.user.online ? 'Online' : 'Offline'}</div>
+      </div>
       <div>@{profile.user.username}</div>
       <div>{profile.displayName}</div>
       <div>{profile.bio}</div>
