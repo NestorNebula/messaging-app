@@ -10,7 +10,9 @@ function Profile({ profile }) {
       <div>@{profile.user.username}</div>
       <div>{profile.displayName}</div>
       <div>{profile.bio}</div>
-      <div>{profile.link}</div>
+      <a href={profile.link} target="_blank" rel="noopener noreferrer">
+        {profile.link}
+      </a>
     </section>
   );
 }
