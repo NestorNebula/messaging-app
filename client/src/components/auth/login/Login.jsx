@@ -1,4 +1,4 @@
-import { Form, useActionData } from 'react-router-dom';
+import { Form, useActionData, Link } from 'react-router-dom';
 import { useInput } from '../../../hooks/useInput';
 import Input from '../../input/Input';
 import {
@@ -22,24 +22,30 @@ function Login() {
   const valid = validations.every((validation) => validation.isValid);
 
   return (
-    <Form method="post" aria-label="log in">
-      {result && <div>{result.error.msg}</div>}
-      <Input
-        name="username"
-        value={usermail}
-        update={updateUsermail}
-        validation={usermailValidation}
-        label="Username or Email"
-      />
-      <Input
-        name="password"
-        value={password}
-        update={updatePassword}
-        validation={passwordValidation}
-        type="password"
-      />
-      <button type={valid ? 'submit' : 'button'}>Log In</button>
-    </Form>
+    <>
+      <Form method="post" aria-label="log in">
+        {result && <div>{result.error.msg}</div>}
+        <Input
+          name="username"
+          value={usermail}
+          update={updateUsermail}
+          validation={usermailValidation}
+          label="Username or Email"
+        />
+        <Input
+          name="password"
+          value={password}
+          update={updatePassword}
+          validation={passwordValidation}
+          type="password"
+        />
+        <button type={valid ? 'submit' : 'button'}>Log In</button>
+      </Form>
+      <div>
+        {`Doesn't have an account yet? `}
+        <Link to="/auth/signup">Sign Up</Link>
+      </div>
+    </>
   );
 }
 

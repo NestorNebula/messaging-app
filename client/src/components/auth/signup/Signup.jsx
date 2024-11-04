@@ -1,4 +1,4 @@
-import { Form, useActionData } from 'react-router-dom';
+import { Form, useActionData, Link } from 'react-router-dom';
 import { useInput } from '../../../hooks/useInput';
 import Input from '../../input/Input';
 import {
@@ -47,46 +47,52 @@ function Signup() {
   const valid = checkSubmitValidity();
 
   return (
-    <Form method="post" aria-label="sign up">
-      {result && result.error && <div>{result.error.msg}</div>}
-      {result && result.errors && (
-        <div>
-          {result.errors.map((err, index) => (
-            <div key={index}>{err.msg}</div>
-          ))}
-        </div>
-      )}
-      <Input
-        name="username"
-        value={username}
-        update={updateUsername}
-        validation={usernameValidation}
-      />
-      <Input
-        name="email"
-        value={email}
-        update={updateEmail}
-        validation={emailValidation}
-        type="email"
-      />
-      <Input
-        name="password"
-        value={password}
-        update={updatePassword}
-        validation={passwordValidation}
-        type="password"
-      />
-      <Input
-        name="confirm"
-        value={confirm}
-        update={updateConfirm}
-        validation={confirmValidation}
-        type="password"
-        label="Confirm Password"
-      />
-      {passwordMatchValidation && <div>{passwordMatchValidation}</div>}
-      <button type={valid ? 'submit' : 'button'}>Sign Up</button>
-    </Form>
+    <>
+      <Form method="post" aria-label="sign up">
+        {result && result.error && <div>{result.error.msg}</div>}
+        {result && result.errors && (
+          <div>
+            {result.errors.map((err, index) => (
+              <div key={index}>{err.msg}</div>
+            ))}
+          </div>
+        )}
+        <Input
+          name="username"
+          value={username}
+          update={updateUsername}
+          validation={usernameValidation}
+        />
+        <Input
+          name="email"
+          value={email}
+          update={updateEmail}
+          validation={emailValidation}
+          type="email"
+        />
+        <Input
+          name="password"
+          value={password}
+          update={updatePassword}
+          validation={passwordValidation}
+          type="password"
+        />
+        <Input
+          name="confirm"
+          value={confirm}
+          update={updateConfirm}
+          validation={confirmValidation}
+          type="password"
+          label="Confirm Password"
+        />
+        {passwordMatchValidation && <div>{passwordMatchValidation}</div>}
+        <button type={valid ? 'submit' : 'button'}>Sign Up</button>
+      </Form>
+      <div>
+        Already have an account?
+        <Link to="/auth/login">Log In</Link>
+      </div>
+    </>
   );
 }
 
