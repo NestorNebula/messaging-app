@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import { useActionData } from 'react-router-dom';
 import { MessagingContext } from '../../context/MessagingContext';
 import { useData } from '../../hooks/useData';
 import { useDialog } from '../../hooks/useDialog';
@@ -9,11 +10,19 @@ import MessageForm from './message/MessageForm';
 import UsersList from '../usersList/UsersList';
 
 function Messaging() {
+  const result = useActionData();
+  const [lastResult, setLastResult] = useState(result);
   const { user } = useContext(MessagingContext);
   const [update, setUpdate] = useState(false);
   const updateState = () => {
     setUpdate(!update);
   };
+  if (result) {
+    if (result !== lastResult) {
+      setLastResult(result);
+      if (result.success) updateState();
+    }
+  }
   const {
     data: chats,
     error,
