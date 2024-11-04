@@ -137,7 +137,7 @@ describe('Messaging MessageForm', () => {
       return {
         success: false,
         error: {
-          message: "Couldn't send message.",
+          msg: "Couldn't send message.",
         },
       };
     });

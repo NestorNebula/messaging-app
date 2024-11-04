@@ -22,7 +22,7 @@ function MessageForm({ chat }) {
         setMessage('');
       }}
     >
-      <div>{result && !result.success && result.error.message}</div>
+      <div>{result && !result.success && result.error.msg}</div>
       <input
         type="file"
         name="uploadfile"
