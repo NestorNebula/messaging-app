@@ -89,7 +89,7 @@ describe('Messaging Sidebar', () => {
 
 describe('Messaging Chat', () => {
   it('renders first chat messages', () => {
-    expect(screen.queryAllByRole('button', { name: /profile/ }).length).toBe(
+    expect(screen.queryAllByRole('link', { name: /profile/ }).length).toBe(
       mockChats[0].messages.length
     );
     expect(screen.queryByText(mockChats[0].messages[0].content)).not.toBeNull();

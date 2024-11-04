@@ -1,10 +1,12 @@
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 function Message({ message, author, user }) {
   const userIsAuthor = author.id === user.id;
   return (
     <div>
-      <button
+      <Link
+        to={`profile/${author.id}`}
         aria-label={
           userIsAuthor
             ? 'open your profile'
@@ -12,7 +14,7 @@ function Message({ message, author, user }) {
         }
       >
         <img src={`avatars/${author.profile.avatar}`} alt="" />
-      </button>
+      </Link>
       <div>
         {message.content && <div>{message.content}</div>}
         {message.file && <img src={message.file} />}
