@@ -55,6 +55,7 @@ const getUserFriends = async (userId) => {
           id: true,
           username: true,
           profile: true,
+          online: true,
         },
       },
     },
@@ -154,6 +155,7 @@ const getProfile = async (userId) => {
               id: true,
             },
           },
+          online: true,
         },
       },
     },
@@ -181,6 +183,7 @@ const getAllProfiles = async ({ userId, limit }) => {
       user: {
         select: {
           username: true,
+          online: true,
         },
       },
     },
