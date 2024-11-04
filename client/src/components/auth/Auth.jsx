@@ -4,8 +4,8 @@ import Navbar from '../navbar/Navbar';
 function Auth() {
   return (
     <>
-      <Outlet />
       <Navbar />
+      <Outlet />
     </>
   );
 }

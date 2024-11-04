@@ -8,7 +8,7 @@ function App() {
   return (
     <MessagingContext.Provider value={{ user }}>
       <Outlet />
-      <Navbar />
+      <Navbar user={user} />
     </MessagingContext.Provider>
   );
 }
