@@ -6,7 +6,7 @@ const getChats = async (req, res, next) => {
   if (req.user.id !== userId) {
     return next(new Sperror('Forbidden', "You can't acces this data.", 404));
   }
-  const chats = await prisma.getUserChats();
+  const chats = await prisma.getUserChats(req.user.id);
   if (!chats) {
     return next(new Sperror('Server Error', 'Error when fetching chats.', 500));
   }
