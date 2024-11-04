@@ -6,7 +6,7 @@ function Message({ message, author, user }) {
   return (
     <div>
       <Link
-        to={`profile/${author.id}`}
+        to={userIsAuthor ? `account` : `profile/${author.id}`}
         aria-label={
           userIsAuthor
             ? 'open your profile'
