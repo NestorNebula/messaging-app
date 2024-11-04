@@ -15,6 +15,11 @@ beforeAll(async () => {
   HTMLDialogElement.prototype.close = vi.fn(function () {
     this.open = false;
   });
+  vi.mock('../src/hooks/useStatus', async () => {
+    return {
+      useStatus: () => {},
+    };
+  });
 });
 
 afterEach(() => {
