@@ -52,7 +52,7 @@ const getFetchError = async (fetch, unauthorizedMessage) => {
       },
     };
   }
-  const result = await getResponseJSON(fetch.response);
+  const { result } = await getResponseJSON(fetch.response);
   return {
     success: false,
     error: {
