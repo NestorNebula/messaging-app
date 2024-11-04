@@ -3,6 +3,14 @@ import PropTypes from 'prop-types';
 
 function Message({ message, author, user }) {
   const userIsAuthor = author.id === user.id;
+  const messageDate = new Date(message.creationDate);
+  const setYesterday = () => {
+    const actual = new Date(Date.now());
+    actual.setDate(actual.getDate() - 1);
+    return actual;
+  };
+  const yesterday = setYesterday();
+  const sentToday = messageDate > yesterday ? true : false;
   return (
     <div>
       <Link
@@ -19,7 +27,11 @@ function Message({ message, author, user }) {
         {message.content && <div>{message.content}</div>}
         {message.file && <img src={message.file} />}
       </div>
-      <div>{message.creationDate.toString()}</div>
+      <div>
+        {sentToday
+          ? messageDate.toLocaleDateString()
+          : messageDate.toLocaleString()}
+      </div>
     </div>
   );
 }
