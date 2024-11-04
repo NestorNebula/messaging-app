@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Form, useActionData } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { convertFiletoB64String } from '../../../helpers/image';
 
 function MessageForm({ chat }) {
   const result = useActionData();
@@ -9,8 +10,10 @@ function MessageForm({ chat }) {
     setMessage(e.target.value);
   };
   const [file, setFile] = useState(false);
-  const updateFile = (e) => {
-    setFile(e.target.files[0]);
+  const updateFile = async (e) => {
+    const result = await convertFiletoB64String(e.target.files[0]);
+    if (!result) return;
+    setFile(result);
   };
   const filesEmpty = !message && !file;
 
