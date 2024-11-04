@@ -27,7 +27,7 @@ const postMessage = [
       chatId,
       userId: req.user.id,
       content: req.body.content || null,
-      file: result || null,
+      file: result ? result.secure_url : null,
     });
     res.status(201).json({ message });
   },
