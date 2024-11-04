@@ -73,7 +73,7 @@ function Messaging() {
         )}
       </dialog>
       <header>
-        <img src="" alt="messages page" />
+        <img src="icons/icon.png" alt="messages page" />
         <button onClick={() => setSearch(true)} aria-label="search users">
           <img src="" alt="" />
         </button>
