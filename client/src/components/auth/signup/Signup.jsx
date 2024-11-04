@@ -48,7 +48,7 @@ function Signup() {
 
   return (
     <Form method="post" aria-label="sign up">
-      {result && result.error && <div>{result.error.message}</div>}
+      {result && result.error && <div>{result.error.msg}</div>}
       {result && result.errors && (
         <div>
           {result.errors.map((err, index) => (

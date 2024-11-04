@@ -35,7 +35,7 @@ function ProfileForm({ user, profile }) {
 
   return (
     <Form method="put" aria-label="update profile">
-      {result && result.error && <div>{result.error.message}</div>}
+      {result && result.error && <div>{result.error.msg}</div>}
       {result && result.errors && (
         <div>
           {result.errors.map((err) => (

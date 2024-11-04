@@ -15,7 +15,7 @@ const useData = (path, options, dependencies = []) => {
             setError('Error when fetching data. Please reload the page.');
           } else {
             getResponseJSON(fetch.response).then(({ result }) => {
-              setError(result.message);
+              setError(result.msg);
             });
           }
         } else {

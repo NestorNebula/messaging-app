@@ -23,7 +23,7 @@ function Login() {
 
   return (
     <Form method="post" aria-label="log in">
-      {result && <div>{result.error.message}</div>}
+      {result && <div>{result.error.msg}</div>}
       <Input
         name="username"
         value={usermail}

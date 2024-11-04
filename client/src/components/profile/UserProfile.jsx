@@ -25,7 +25,7 @@ function UserProfile() {
         <Loading contentName="user profile" />
       ) : (
         <>
-          {result && result.error && <div>{result.error.message}</div>}
+          {result && result.error && <div>{result.error.msg}</div>}
           <div>
             {profile.profile.user.followers.some(
               (friend) => friend.id === user.id

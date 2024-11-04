@@ -48,7 +48,7 @@ const getFetchError = async (fetch, unauthorizedMessage) => {
     return {
       success: false,
       error: {
-        message: unauthorizedMessage,
+        msg: unauthorizedMessage,
       },
     };
   }
@@ -56,7 +56,7 @@ const getFetchError = async (fetch, unauthorizedMessage) => {
   return {
     success: false,
     error: {
-      message: result.error.message,
+      msg: result.error.msg,
     },
   };
 };

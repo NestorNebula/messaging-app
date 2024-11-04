@@ -97,7 +97,7 @@ describe('Login Action', () => {
       return {
         result: {
           error: {
-            message: 'Incorrect password.',
+            msg: 'Incorrect password.',
           },
         },
         error: true,

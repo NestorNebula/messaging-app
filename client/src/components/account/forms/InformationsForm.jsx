@@ -48,7 +48,7 @@ function InformationsForm({ user }) {
 
   return (
     <Form method="put" aria-label="update private informations">
-      {result && result.error && <div>{result.error.message}</div>}
+      {result && result.error && <div>{result.error.msg}</div>}
       {result && result.errors && (
         <div>
           {result.errors.map((err) => (
