@@ -65,11 +65,11 @@ const validateProfile = [
     .isLength({ max: 30 })
     .withMessage('Display name must have a maximum of 30 characters.'),
   body('avatar').trim().blacklist('<>'),
-  body('bio').trim().escape(),
+  body('bio').trim().blacklist('<>'),
   body('link').trim().blacklist('<>'),
 ];
 
-const validateMessage = [body('content').trim().escape()];
+const validateMessage = [body('content').trim().blacklist('<>')];
 
 module.exports = {
   validateUser,
