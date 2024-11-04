@@ -51,7 +51,6 @@ vi.mock('../src/helpers/actions', async () => {
     userProfileAction: vi.fn(async ({ request }) => {
       const data = await request.formData();
       if (data.get('intent') === 'remove-friend') {
-        console.log(mockUserProfile.user.followers, mockUser);
         mockUserProfile.user.followers = mockUserProfile.user.followers.filter(
           (follower) => follower.id !== mockUser.id
         );
