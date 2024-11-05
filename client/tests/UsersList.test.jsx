@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { useData } from '../src/hooks/useData';
 import { MemoryRouter } from 'react-router-dom';
 import UsersList from '../src/components/usersList/UsersList';
@@ -46,6 +47,19 @@ describe('Users List', () => {
     expect(screen.queryByText(mockUsers[1].displayName)).not.toBeNull();
     expect(screen.queryByText(mockUsers[2].displayName)).not.toBeNull();
   });
+
+  it('displays only searched user when typing its name into searchbar', async () => {
+    render(
+      <MemoryRouter>
+        <UsersList onlyFriends={false} />
+      </MemoryRouter>
+    );
+    const user = userEvent.setup();
+    const searchInput = screen.getByLabelText(/search/i);
+    await user.type(searchInput, mockUsers[0].user.username);
+    expect(screen.queryByText(mockUsers[0].displayName)).not.toBeNull();
+    expect(screen.queryByText(mockUsers[1].displayName)).toBeNull();
+  });
 });
 
 describe('Users List, Only Friends', () => {
@@ -79,5 +93,20 @@ describe('Users List, Only Friends', () => {
       screen.queryByText(mockFriends[2].profile.displayName)
     ).not.toBeNull();
     expect(screen.queryByText(mockFriends[0].profile.displayName)).toBeNull();
+  });
+
+  it('displays only searched friend when typing its name into searchbar', async () => {
+    render(
+      <MemoryRouter>
+        <UsersList onlyFriends={true} chat={mockChat} />
+      </MemoryRouter>
+    );
+    const user = userEvent.setup();
+    const searchInput = screen.getByLabelText(/search/i);
+    await user.type(searchInput, mockFriends[1].profile.displayName);
+    expect(
+      screen.queryByText(mockFriends[1].profile.displayName)
+    ).not.toBeNull();
+    expect(screen.queryByText(mockFriends[2].profile.displayName)).toBeNull();
   });
 });
