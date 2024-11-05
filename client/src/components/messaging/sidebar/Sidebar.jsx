@@ -2,12 +2,20 @@ import { checkIdMatch, sortChats } from '../../../helpers/messagingUtils';
 import Error from '../../elements/Error';
 import Loading from '../../elements/Loading';
 import PropTypes from 'prop-types';
+import styles from './Sidebar.module.css';
 
-function Sidebar({ chats, error, loading, userId, updateActualChat }) {
+function Sidebar({
+  chats,
+  error,
+  loading,
+  userId,
+  actualChat,
+  updateActualChat,
+}) {
   return (
-    <aside>
+    <aside className={styles.sidebar}>
       <div>Messages</div>
-      <div>
+      <div className={styles.chats}>
         {error ? (
           <Error error={error} />
         ) : loading ? (
@@ -23,8 +31,11 @@ function Sidebar({ chats, error, loading, userId, updateActualChat }) {
               )}`}
               onClick={() => updateActualChat(index)}
               key={chat.id}
+              className={`${styles.chat} ${
+                index === actualChat && styles.actualChat
+              }`}
             >
-              <div>
+              <div className={styles.chatAvatars}>
                 {chat.users.map((usr) => {
                   return checkIdMatch(usr.id, userId) ? null : (
                     <img
@@ -35,7 +46,7 @@ function Sidebar({ chats, error, loading, userId, updateActualChat }) {
                   );
                 })}
               </div>
-              <div>
+              <div className={styles.chatUsernames}>
                 {chat.users.map((usr) => {
                   return checkIdMatch(usr.id, userId) ? null : (
                     <span key={`${usr.username}name`}>
@@ -57,6 +68,7 @@ Sidebar.propTypes = {
   error: PropTypes.any,
   loading: PropTypes.bool,
   userId: PropTypes.number.isRequired,
+  actualChat: PropTypes.number.isRequired,
   updateActualChat: PropTypes.func.isRequired,
 };
 
