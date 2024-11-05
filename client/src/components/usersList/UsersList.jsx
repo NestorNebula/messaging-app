@@ -1,9 +1,10 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MessagingContext } from '../../context/MessagingContext';
 import { useData } from '../../hooks/useData';
 import Error from '../elements/Error';
 import Loading from '../elements/Loading';
+import Searchbar from '../searchbar/Searchbar';
 import { addUserToChat } from '../../helpers/addUserToChat';
 import PropTypes from 'prop-types';
 
@@ -16,6 +17,11 @@ function UsersList({ onlyFriends, chat, updateState }) {
   } = useData(onlyFriends ? `users/${user.id}/friends` : 'profiles', {
     method: 'get',
   });
+  const [search, setSearch] = useState('');
+  const updateSearch = (e) => {
+    setSearch(e.target.value);
+  };
+  const regex = new RegExp(search, 'i');
 
   return (
     <section id="userslist">
@@ -26,12 +32,15 @@ function UsersList({ onlyFriends, chat, updateState }) {
       ) : (
         <>
           <div>{onlyFriends ? 'Your friends' : 'Popular users'}</div>
+          <Searchbar value={search} updateValue={updateSearch} />
           <div>
             {onlyFriends
               ? users.friends.friends.map(
                   (person) =>
                     (!chat ||
-                      !chat.users.some((usr) => usr.id === person.id)) && (
+                      (!chat.users.some((usr) => usr.id === person.id) &&
+                        (regex.test(person.username) ||
+                          regex.test(person.profile.displayName)))) && (
                       <div key={person.id}>
                         <Link to={`profile/${person.id}`}>
                           <img
@@ -58,17 +67,21 @@ function UsersList({ onlyFriends, chat, updateState }) {
                       </div>
                     )
                 )
-              : users.profiles.map((person) => (
-                  <div key={person.userId}>
-                    <Link to={`profile/${person.userId}`}>
-                      <img src={`avatars/${person.avatar}`} alt="" />
-                    </Link>
-                    <div>
-                      <div>{person.displayName}</div>
-                      <div>(@{person.user.username})</div>
-                    </div>
-                  </div>
-                ))}
+              : users.profiles.map(
+                  (person) =>
+                    (regex.test(person.user.username) ||
+                      regex.test(person.displayName)) && (
+                      <div key={person.userId}>
+                        <Link to={`profile/${person.userId}`}>
+                          <img src={`avatars/${person.avatar}`} alt="" />
+                        </Link>
+                        <div>
+                          <div>{person.displayName}</div>
+                          <div>(@{person.user.username})</div>
+                        </div>
+                      </div>
+                    )
+                )}
           </div>
         </>
       )}
