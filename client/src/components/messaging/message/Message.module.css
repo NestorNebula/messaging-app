@@ -1,0 +1,78 @@
+.message {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ownmessage {
+  align-self: end;
+  flex-direction: row-reverse;
+}
+
+.ownmessage > .content > div {
+  background-color: var(--sky-blue);
+}
+
+.othermessage > .content > div {
+  background-color: var(--celadon);
+}
+
+.avatar {
+  width: 3rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.25rem;
+  gap: 0.25rem;
+  max-width: calc(100vw * 0.75 / 2);
+}
+
+.content > div {
+  width: fit-content;
+  max-width: 100%;
+  border-radius: 50px;
+  padding: 1rem;
+}
+
+.ownmessage > .content > div {
+  align-self: end;
+}
+
+.date {
+  font-weight: lighter;
+  align-self: end;
+}
+
+@media (min-width: 600px) {
+  .avatar {
+    width: 4.5rem;
+  }
+
+  .content {
+    font-size: 1.5rem;
+  }
+
+  .content > div {
+    padding: 1.25rem;
+  }
+
+  .date {
+    position: relative;
+    top: -2rem;
+  }
+}
+
+@media (min-width: 800px) {
+  .avatar {
+    width: 6.5rem;
+  }
+  .content {
+    font-size: 2rem;
+  }
+
+  .content > div {
+    padding: 1.5rem;
+  }
+}
