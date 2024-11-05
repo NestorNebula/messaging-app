@@ -8,6 +8,7 @@ import Sidebar from './sidebar/Sidebar';
 import Message from './message/Message';
 import MessageForm from './message/MessageForm';
 import UsersList from '../usersList/UsersList';
+import styles from './Messaging.module.css';
 
 function Messaging() {
   const result = useActionData();
@@ -44,7 +45,7 @@ function Messaging() {
   };
 
   return (
-    <main>
+    <main className={styles.main}>
       <dialog ref={friendsRef} onCancel={() => setFriends(false)}>
         {friends && (
           <>
@@ -72,9 +73,13 @@ function Messaging() {
           </>
         )}
       </dialog>
-      <header>
-        <img src="icons/icon.png" alt="messages page" />
-        <button onClick={() => setSearch(true)} aria-label="search users">
+      <header className={styles.header}>
+        <img src="icons/icon.png" alt="messages page" className={styles.icon} />
+        <button
+          onClick={() => setSearch(true)}
+          aria-label="search users"
+          className={styles.searchBtn}
+        >
           <img src="" alt="" />
         </button>
       </header>
@@ -83,12 +88,13 @@ function Messaging() {
         error={error}
         loading={loading}
         userId={user.id}
+        actualChat={actualChat}
         updateActualChat={updateActualChat}
       />
-      <section>
+      <section className={styles.chat}>
         {chats && chats.chats && chats.chats.length ? (
           <>
-            <div>
+            <div className={styles.chatHeader}>
               <h5>
                 {chats.chats[actualChat].users.map((usr) => (
                   <span key={`${usr.username}title`}>{usr.username}</span>
@@ -101,7 +107,7 @@ function Messaging() {
                 +
               </button>
             </div>
-            <div>
+            <div className={styles.chatMessages}>
               {chats.chats[actualChat].messages.sort(sortMessages) &&
                 chats.chats[actualChat].messages.map((message) => (
                   <Message
