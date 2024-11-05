@@ -74,7 +74,11 @@ function Footer() {
       </div>
       <div>
         © Noa Houssier{' '}
-        <a href="https://github.com/NestorNebula">
+        <a
+          href="https://github.com/NestorNebula"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <img src="icons/github.svg" alt="" />
         </a>{' '}
         2024
