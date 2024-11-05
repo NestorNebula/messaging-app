@@ -1,5 +1,6 @@
 .sidebar {
   background-color: var(--white);
+  overflow: scroll;
 }
 
 .sidebar > div:first-child {
@@ -25,6 +26,7 @@
 }
 
 .chatAvatars {
+  align-self: center;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(3vw, 1fr));
 }
