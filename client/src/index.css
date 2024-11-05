@@ -39,3 +39,28 @@ h5,
 h6 {
   overflow-wrap: break-word;
 }
+
+/* Common Styles */
+
+:root {
+  font-size: 62.5%;
+}
+
+#root {
+  max-height: 100vh;
+  display: grid;
+  --mint: #4ac798ff;
+  --picton-blue: #1db5f5ff;
+  --white: #f8fcfeff;
+  --celadon: #78e3aaff;
+  --sky-blue: #62e1fbff;
+}
+
+button {
+  border: none;
+  background-color: inherit;
+}
+
+button:hover {
+  cursor: pointer;
+}
