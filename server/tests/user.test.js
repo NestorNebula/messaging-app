@@ -1,11 +1,6 @@
 const { request, app } = require('./setup');
 const router = require('../routes/user');
 const { getFakeUser, getFakeFriend } = require('../helpers/faker');
-const {
-  connectUserFriend,
-  getUserFriends,
-  disconnectUserFriend,
-} = require('../models/queries');
 
 const user = getFakeUser();
 const mockUser = user;
@@ -103,7 +98,7 @@ describe('PUT user', () => {
   it('returns 400 when incorrect data is provided', (done) => {
     request(app)
       .put(`/${user.id}`)
-      .send({ username: 'new', email: user.email })
+      .send({ username: 'new', email: 'email@email' })
       .type('form')
       .expect(400, done);
   });
