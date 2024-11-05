@@ -47,7 +47,7 @@ h6 {
 }
 
 #root {
-  max-height: 100vh;
+  max-height: 110vh;
   display: grid;
   --mint: #4ac798ff;
   --picton-blue: #1db5f5ff;
