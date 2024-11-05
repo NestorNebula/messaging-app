@@ -1,17 +1,16 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {
+  differenceInCalendarDays,
+  format,
+  intlFormat,
+  isToday,
+} from 'date-fns';
 import styles from './Message.module.css';
 
 function Message({ message, author, user }) {
   const userIsAuthor = author.id === user.id;
   const messageDate = new Date(message.creationDate);
-  const setYesterday = () => {
-    const actual = new Date(Date.now());
-    actual.setDate(actual.getDate() - 1);
-    return actual;
-  };
-  const yesterday = setYesterday();
-  const sentToday = messageDate > yesterday ? true : false;
   return (
     <div
       className={`${styles.message} ${
@@ -37,9 +36,11 @@ function Message({ message, author, user }) {
         {message.file && <img src={message.file} />}
       </div>
       <div className={styles.date}>
-        {sentToday
-          ? messageDate.toLocaleDateString()
-          : messageDate.toLocaleString()}
+        {isToday(messageDate)
+          ? format(messageDate, 'HH:mm')
+          : differenceInCalendarDays(messageDate, new Date(Date.now())) < 7
+          ? format(messageDate, 'HH:mm (dd/MM/yyyy)')
+          : intlFormat(messageDate)}
       </div>
     </div>
   );
