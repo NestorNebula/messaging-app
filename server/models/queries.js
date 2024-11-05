@@ -257,7 +257,11 @@ const getUserChats = async (userId) => {
       },
     },
     include: {
-      messages: true,
+      messages: {
+        orderBy: {
+          creationDate: 'desc',
+        },
+      },
       users: {
         select: {
           id: true,
