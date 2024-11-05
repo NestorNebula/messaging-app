@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Form, useActionData } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { convertFiletoB64String } from '../../../helpers/image';
+import styles from './MessageForm.module.css';
 
 function MessageForm({ chat }) {
   const result = useActionData();
@@ -24,6 +25,7 @@ function MessageForm({ chat }) {
         setFile(false);
         setMessage('');
       }}
+      className={styles.messageForm}
     >
       <div>{result && !result.success && result.error.msg}</div>
       <input
