@@ -11,7 +11,9 @@ function MessageForm({ chat }) {
     setMessage(e.target.value);
   };
   const [file, setFile] = useState(false);
+  const [fileName, setFileName] = useState('');
   const updateFile = async (e) => {
+    setFileName(e.target.files[0].name);
     const result = await convertFiletoB64String(e.target.files[0]);
     if (!result) return;
     setFile(result);
@@ -23,18 +25,27 @@ function MessageForm({ chat }) {
       method="post"
       onSubmit={() => {
         setFile(false);
+        setFileName('');
         setMessage('');
       }}
       className={styles.messageForm}
     >
       <div>{result && !result.success && result.error.msg}</div>
-      <input
-        type="file"
-        name="uploadfile"
-        multiple={false}
-        onChange={updateFile}
-        accept="image/*"
-      />
+      <div>
+        <input
+          id="fileinput"
+          type="file"
+          name="uploadfile"
+          multiple={false}
+          onChange={updateFile}
+          accept="image/*"
+          className={styles.fileInput}
+        />
+        <label htmlFor="fileinput" className={styles.fileLabel}>
+          Choose image
+        </label>
+        <span>{fileName}</span>
+      </div>
       <textarea
         name="message"
         placeholder="Write a message"
