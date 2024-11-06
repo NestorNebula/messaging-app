@@ -1,0 +1,14 @@
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.input > label {
+  text-transform: capitalize;
+}
+
+.input > span {
+  font-size: 1.15rem;
+  color: var(--red);
+}

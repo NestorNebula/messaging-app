@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import styles from './Input.module.css';
 
 function Input({
   name,
@@ -9,7 +10,7 @@ function Input({
   label = name,
 }) {
   return (
-    <div>
+    <div className={styles.input}>
       <label htmlFor={name}>{label}</label>
       <input
         id={name}
