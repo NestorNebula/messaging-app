@@ -5,6 +5,7 @@ import {
   validateUsermail,
   validatePassword,
 } from '../../../helpers/inputValidation';
+import formStyles from '../../account/forms/Form.module.css';
 
 function Login() {
   const result = useActionData();
@@ -23,7 +24,7 @@ function Login() {
 
   return (
     <>
-      <Form method="post" aria-label="log in">
+      <Form method="post" aria-label="log in" className={formStyles.form}>
         {result && <div>{result.error.msg}</div>}
         <Input
           name="username"

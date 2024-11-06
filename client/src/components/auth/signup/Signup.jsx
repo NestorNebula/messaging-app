@@ -7,6 +7,7 @@ import {
   validatePassword,
   validatePasswordsMatch,
 } from '../../../helpers/inputValidation';
+import formStyles from '../../account/forms/Form.module.css';
 
 function Signup() {
   const result = useActionData();
@@ -48,7 +49,7 @@ function Signup() {
 
   return (
     <>
-      <Form method="post" aria-label="sign up">
+      <Form method="post" aria-label="sign up" className={formStyles.form}>
         {result && result.error && <div>{result.error.msg}</div>}
         {result && result.errors && (
           <div>
