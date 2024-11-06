@@ -87,9 +87,14 @@ function Signup() {
           label="Confirm Password"
         />
         {passwordMatchValidation && <div>{passwordMatchValidation}</div>}
-        <button type={valid ? 'submit' : 'button'}>Sign Up</button>
+        <button
+          type={valid ? 'submit' : 'button'}
+          className={formStyles.submitBtn}
+        >
+          Sign Up
+        </button>
       </Form>
-      <div>
+      <div className={formStyles.link}>
         Already have an account?
         <Link to="/auth/login">Log In</Link>
       </div>

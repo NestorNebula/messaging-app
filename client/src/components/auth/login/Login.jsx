@@ -40,9 +40,14 @@ function Login() {
           validation={passwordValidation}
           type="password"
         />
-        <button type={valid ? 'submit' : 'button'}>Log In</button>
+        <button
+          type={valid ? 'submit' : 'button'}
+          className={formStyles.submitBtn}
+        >
+          Log In
+        </button>
       </Form>
-      <div>
+      <div className={formStyles.link}>
         {`Doesn't have an account yet? `}
         <Link to="/auth/signup">Sign Up</Link>
       </div>
