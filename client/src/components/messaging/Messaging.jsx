@@ -80,7 +80,7 @@ function Messaging() {
           aria-label="search users"
           className={styles.searchBtn}
         >
-          <img src="" alt="" />
+          <img src="icons/search.png" alt="" />
         </button>
       </header>
       <Sidebar
@@ -103,8 +103,9 @@ function Messaging() {
               <button
                 onClick={() => setFriends(true)}
                 aria-label="add someone to chat"
+                className={styles.addBtn}
               >
-                +
+                Add friend to chat
               </button>
             </div>
             <div className={styles.chatMessages}>

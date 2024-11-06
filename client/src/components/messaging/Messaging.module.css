@@ -10,15 +10,13 @@
   justify-content: space-between;
 }
 
-.icon {
+.icon,
+.searchBtn > img {
   margin: 1rem;
-  height: calc(var(--main-height) * 0.2);
 }
 
-.searchBtn {
-  background-color: aliceblue;
-  width: 3rem;
-  height: 3rem;
+.searchBtn > img {
+  max-height: calc(100% - 2rem);
 }
 
 .chat {
@@ -30,12 +28,13 @@
   display: flex;
   justify-content: space-between;
   background-color: var(--white);
-  padding: 2rem;
-  font-size: 1.75rem;
+  padding: 1rem;
+  font-size: 1.5rem;
 }
 
 .chatHeader > h5 {
   display: flex;
+  align-items: center;
   gap: 0.5rem;
 }
 
@@ -45,6 +44,12 @@
 
 .chatHeader > h5 > span:last-child::after {
   content: '';
+}
+
+.addBtn {
+  background-color: var(--picton-blue);
+  padding: 0.5rem;
+  border-radius: 5px;
 }
 
 .chatMessages {
@@ -59,5 +64,10 @@
 @media (min-width: 800px) {
   .main {
     grid-template-columns: 1fr 4fr;
+  }
+
+  .chatHeader {
+    padding: 1.5rem;
+    font-size: 1.75rem;
   }
 }
