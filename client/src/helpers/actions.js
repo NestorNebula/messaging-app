@@ -80,7 +80,7 @@ const accountAction = async ({ request }) => {
       if (fetch.response.status === 401) {
         return {
           error: {
-            message: "Couldn't update informations. Please reload page.",
+            msg: "Couldn't update informations. Please reload page.",
           },
         };
       } else {
