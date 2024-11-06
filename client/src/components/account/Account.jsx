@@ -7,6 +7,7 @@ import Loading from '../elements/Loading';
 import Profile from '../profile/Profile';
 import InformationsForm from './forms/InformationsForm';
 import ProfileForm from './forms/ProfileForm';
+import styles from './Account.module.css';
 
 function Account() {
   const { user } = useContext(MessagingContext);
@@ -18,10 +19,10 @@ function Account() {
   const { dialogRef, setOpen } = useDialog();
   const [displayForm, setDisplayForm] = useState(false);
   return (
-    <>
+    <main className={styles.main}>
       {displayForm ? (
         <>
-          <header>
+          <header className={styles.header}>
             <button
               onClick={() => {
                 setDisplayForm(false);
@@ -29,10 +30,10 @@ function Account() {
               }}
               aria-label="close form"
             >
-              <img src="" alt="" />
+              <img src="icons/close.svg" alt="" />
             </button>
           </header>
-          <section>
+          <section className={styles.content}>
             {displayForm === 'informations' ? (
               <InformationsForm user={user} />
             ) : (
@@ -42,9 +43,9 @@ function Account() {
         </>
       ) : (
         <>
-          <header>
+          <header className={styles.header}>
             <button onClick={() => setOpen(true)} aria-label="settings">
-              <img src="" alt="" />
+              <img src="icons/settings.svg" alt="" />
             </button>
           </header>
           <dialog onCancel={() => setOpen(false)} ref={dialogRef}>
@@ -55,16 +56,18 @@ function Account() {
               Update Profile
             </button>
           </dialog>
-          {error ? (
-            <Error error={error} />
-          ) : loading ? (
-            <Loading contentName="account" />
-          ) : (
-            <Profile profile={profile.profile} />
-          )}
+          <section className={styles.content}>
+            {error ? (
+              <Error error={error} />
+            ) : loading ? (
+              <Loading contentName="account" />
+            ) : (
+              <Profile profile={profile.profile} />
+            )}
+          </section>
         </>
       )}
-    </>
+    </main>
   );
 }
 

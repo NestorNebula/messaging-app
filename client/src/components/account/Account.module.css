@@ -1,0 +1,23 @@
+.main {
+  height: 90vh;
+  display: grid;
+  grid-template-rows: calc(90vh * 0.15) calc(90vh * 0.85);
+}
+
+.header {
+  display: grid;
+  justify-items: end;
+}
+
+.header > button {
+  height: 100%;
+}
+
+.header img {
+  height: inherit;
+  padding: 2rem;
+}
+
+.content {
+  justify-self: center;
+}
