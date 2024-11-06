@@ -1,0 +1,51 @@
+.profileForm {
+  max-width: 50vw !important;
+  max-height: 90%;
+  overflow: scroll;
+}
+
+.avatarChoice {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+}
+
+.avatar {
+  padding: 1.5rem;
+  position: relative;
+}
+
+.avatar > button {
+  --avatarbtn-size: 2rem;
+  height: var(--avatarbtn-size);
+  width: var(--avatarbtn-size);
+  border-radius: var(--avatarbtn-size);
+  background-color: var(--picton-blue);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: grid;
+  place-content: center;
+}
+
+.selected {
+  --selected-size: calc(var(--avatarbtn-size) * 0.6);
+  height: var(--selected-size);
+  width: var(--selected-size);
+  border-radius: var(--selected-size);
+  background-color: var(--white);
+  animation: selected 1s ease-out infinite alternate;
+}
+
+.profileForm > textarea {
+  resize: none;
+  min-height: 5rem;
+}
+
+@keyframes selected {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.25);
+  }
+}

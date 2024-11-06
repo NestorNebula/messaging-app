@@ -6,9 +6,11 @@ import {
   validateLink,
 } from '../../../helpers/inputValidation';
 import Input from '../../input/Input';
+import { updateAreaMinHeight } from '../../../helpers/textarea';
 import PropTypes from 'prop-types';
 import avatars from '../../../utils/avatars';
 import formStyles from './Form.module.css';
+import styles from './ProfileForm.module.css';
 
 function ProfileForm({ user, profile }) {
   const result = useActionData();
@@ -19,6 +21,7 @@ function ProfileForm({ user, profile }) {
   } = useInput(validateDisplayName, profile.displayName);
 
   const [avatar, setAvatar] = useState(profile.avatar);
+  const getAvatar = () => avatar;
   const [bio, setBio] = useState(profile.bio);
   const updateBio = (e) => {
     setBio(e.target.value);
@@ -35,7 +38,11 @@ function ProfileForm({ user, profile }) {
     avatars.some((a) => a.file === avatar);
 
   return (
-    <Form method="put" aria-label="update profile" className={formStyles.form}>
+    <Form
+      method="put"
+      aria-label="update profile"
+      className={`${formStyles.form} ${styles.profileForm}`}
+    >
       {result && result.error && <div>{result.error.msg}</div>}
       {result && result.errors && (
         <div>
@@ -44,15 +51,20 @@ function ProfileForm({ user, profile }) {
           ))}
         </div>
       )}
-      <div>
+      <div>Choose an avatar</div>
+      <div className={styles.avatarChoice}>
         {avatars.map((avatar) => (
-          <div key={avatar.file}>
+          <div key={avatar.file} className={`${styles.avatar}`}>
             <img src={`avatars/${avatar.file}`} alt={avatar.label} />
             <button
               type="button"
               onClick={() => setAvatar(avatar.file)}
               aria-label="choose avatar"
-            ></button>
+            >
+              {avatar.file == getAvatar() && (
+                <div className={styles.selected}></div>
+              )}
+            </button>
           </div>
         ))}
       </div>
@@ -64,7 +76,12 @@ function ProfileForm({ user, profile }) {
         validation={displayNameValidation}
         label="Display Name"
       />
-      <textarea name="bio" value={bio} onChange={updateBio}></textarea>
+      <textarea
+        name="bio"
+        value={bio}
+        onChange={updateBio}
+        onKeyUp={updateAreaMinHeight}
+      ></textarea>
       <Input
         name="link"
         value={link}
@@ -76,6 +93,7 @@ function ProfileForm({ user, profile }) {
         type={isValid ? 'submit' : 'button'}
         name="intent"
         value="update-profile"
+        className={formStyles.submitBtn}
       >
         Submit
       </button>
