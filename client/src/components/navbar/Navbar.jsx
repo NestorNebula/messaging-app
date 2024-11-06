@@ -6,7 +6,7 @@ import account from '../../assets/icons/account.svg';
 import styles from './Navbar.module.css';
 function Navbar({ user }) {
   return (
-    <nav className={styles.nav}>
+    <nav className={`${styles.nav} ${!user ? styles.auth : ''}`}>
       <ul>
         <li>
           {user ? (

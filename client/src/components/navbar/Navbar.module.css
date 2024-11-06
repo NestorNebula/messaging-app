@@ -11,6 +11,12 @@
   padding: 0;
 }
 
+.auth > ul {
+  justify-content: space-between;
+  font-size: 2rem;
+  margin: 0 2rem;
+}
+
 .nav li {
   list-style: none;
 }
