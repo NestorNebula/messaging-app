@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Form, useActionData } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { convertFiletoB64String } from '../../../helpers/image';
+import { updateAreaHeight } from '../../../helpers/textarea';
 import styles from './MessageForm.module.css';
 
 function MessageForm({ chat }) {
@@ -23,13 +24,6 @@ function MessageForm({ chat }) {
     setFile(result);
   };
   const filesEmpty = !message && !file;
-
-  const updateAreaHeight = (e) => {
-    e.target.style.height =
-      e.target.scrollHeight > e.target.clientHeight
-        ? e.target.scrollHeight + 'px'
-        : 'auto';
-  };
 
   return (
     <Form
