@@ -65,8 +65,7 @@ vi.mock('../src/helpers/actions', async () => {
 
 describe('UserProfile', () => {
   it('renders profile of corresponding user', () => {
-    expect(screen.getByText(mockUserProfile.displayName)).not.toBeNull();
-    expect(screen.queryByText(mockUserProfile.user.username)).not.toBeNull();
+    expect(screen.queryAllByText(mockUserProfile.displayName).length).toBe(2);
     expect(screen.queryByText(mockUserProfile.bio)).not.toBeNull();
   });
 

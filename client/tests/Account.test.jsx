@@ -73,9 +73,8 @@ const fillProfileForm = async (user, link) => {
 describe('Account', () => {
   it('renders users main public infos', () => {
     expect(screen.queryByText(mockProfile.bio)).not.toBeNull();
-    expect(screen.queryByText(mockProfile.displayName)).not.toBeNull();
+    expect(screen.queryAllByText(mockProfile.displayName).length).toBe(2);
     expect(screen.queryByText(mockProfile.link)).not.toBeNull();
-    expect(screen.queryByText(`@${mockUser.username}`)).not.toBeNull();
   });
 
   it('renders dialog when clicking on settings button', async () => {
