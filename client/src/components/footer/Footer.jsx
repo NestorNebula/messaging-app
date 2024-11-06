@@ -1,3 +1,4 @@
+import gh from '../../assets/icons/github.svg';
 import styles from './Footer.module.css';
 
 function Footer() {
@@ -86,7 +87,7 @@ function Footer() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img src="icons/github.svg" alt="" />
+          <img src={gh} alt="" />
         </a>{' '}
         2024
       </div>
