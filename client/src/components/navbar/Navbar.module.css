@@ -1,0 +1,36 @@
+.nav {
+  height: 10vh;
+  display: grid;
+  background-color: var(--white);
+}
+
+.nav > ul {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0;
+}
+
+.nav li {
+  list-style: none;
+}
+
+.nav img {
+  height: 7vh;
+}
+
+.icon {
+  filter: invert(67%) sepia(29%) saturate(212%) hue-rotate(175deg)
+    brightness(91%) contrast(88%);
+}
+
+.icon:hover {
+  filter: brightness(0) saturate(100%) invert(62%) sepia(72%) saturate(310%)
+    hue-rotate(106deg) brightness(94%) contrast(94%);
+}
+
+.icon:focus,
+.icon:active {
+  filter: brightness(0) saturate(100%) invert(76%) sepia(56%) saturate(5168%)
+    hue-rotate(164deg) brightness(98%) contrast(97%);
+}
