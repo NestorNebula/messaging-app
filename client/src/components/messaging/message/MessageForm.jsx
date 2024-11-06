@@ -13,12 +13,23 @@ function MessageForm({ chat }) {
   const [file, setFile] = useState(false);
   const [fileName, setFileName] = useState('');
   const updateFile = async (e) => {
+    if (!e.target.files[0]) {
+      setFileName('');
+      return;
+    }
     setFileName(e.target.files[0].name);
     const result = await convertFiletoB64String(e.target.files[0]);
     if (!result) return;
     setFile(result);
   };
   const filesEmpty = !message && !file;
+
+  const updateAreaHeight = (e) => {
+    e.target.style.height =
+      e.target.scrollHeight > e.target.clientHeight
+        ? e.target.scrollHeight + 'px'
+        : 'auto';
+  };
 
   return (
     <Form
@@ -30,8 +41,10 @@ function MessageForm({ chat }) {
       }}
       className={styles.messageForm}
     >
-      <div>{result && !result.success && result.error.msg}</div>
-      <div>
+      <div className={result && result.error && styles.error}>
+        {result && !result.success && result.error.msg}
+      </div>
+      <div className={styles.fileWrapper}>
         <input
           id="fileinput"
           type="file"
@@ -42,7 +55,7 @@ function MessageForm({ chat }) {
           className={styles.fileInput}
         />
         <label htmlFor="fileinput" className={styles.fileLabel}>
-          Choose image
+          <img src="icons/camera.png" alt="" aria-label="add image" />
         </label>
         <span>{fileName}</span>
       </div>
@@ -51,6 +64,8 @@ function MessageForm({ chat }) {
         placeholder="Write a message"
         value={message}
         onChange={updateMessage}
+        onKeyUp={updateAreaHeight}
+        className={styles.textarea}
       ></textarea>
       <input type="hidden" name="chatId" value={chat.id} />
       <input type="hidden" name="file" value={file} />
@@ -60,7 +75,7 @@ function MessageForm({ chat }) {
         value="send"
         aria-label="send message"
       >
-        +
+        <img src="icons/send.png" alt="" />
       </button>
     </Form>
   );

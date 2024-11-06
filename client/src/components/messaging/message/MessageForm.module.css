@@ -1,0 +1,70 @@
+.messageForm {
+  align-self: end;
+  background-color: var(--white);
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+}
+
+.messageForm > div:first-child {
+  grid-column: 1 / 4;
+  color: white;
+}
+
+.error {
+  background-color: var(--red);
+  padding: 1rem;
+  font-size: 1.25rem;
+}
+
+.fileWrapper {
+  max-width: 10rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.fileInput {
+  display: none;
+}
+
+.fileLabel,
+.messageForm > button > img {
+  max-width: clamp(3rem, 5%, 10vw);
+}
+
+.fileLabel:hover {
+  cursor: pointer;
+}
+
+.fileLabel > img {
+  max-width: inherit;
+}
+
+.fileWrapper > span {
+  align-self: center;
+}
+
+.textarea {
+  resize: none;
+  font-size: 1.25rem;
+  padding: 0.5rem;
+}
+
+.messageForm > button {
+  max-width: 5rem;
+}
+
+@media (min-width: 600px) {
+  .textarea {
+    resize: none;
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 800px) {
+  .textarea {
+    resize: none;
+    font-size: 2rem;
+  }
+}
