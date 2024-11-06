@@ -8,6 +8,7 @@ import {
 import Input from '../../input/Input';
 import PropTypes from 'prop-types';
 import avatars from '../../../utils/avatars';
+import formStyles from './Form.module.css';
 
 function ProfileForm({ user, profile }) {
   const result = useActionData();
@@ -34,7 +35,7 @@ function ProfileForm({ user, profile }) {
     avatars.some((a) => a.file === avatar);
 
   return (
-    <Form method="put" aria-label="update profile">
+    <Form method="put" aria-label="update profile" className={formStyles.form}>
       {result && result.error && <div>{result.error.msg}</div>}
       {result && result.errors && (
         <div>

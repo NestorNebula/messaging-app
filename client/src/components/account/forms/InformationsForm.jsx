@@ -9,6 +9,7 @@ import {
 } from '../../../helpers/inputValidation';
 import Input from '../../input/Input';
 import PropTypes from 'prop-types';
+import formStyles from './Form.module.css';
 
 function InformationsForm({ user }) {
   const result = useActionData();
@@ -47,7 +48,11 @@ function InformationsForm({ user }) {
     (!isUpdatingPassword || !passwordMatchValidation);
 
   return (
-    <Form method="put" aria-label="update private informations">
+    <Form
+      method="put"
+      aria-label="update private informations"
+      className={formStyles.form}
+    >
       {result && result.error && <div>{result.error.msg}</div>}
       {result && result.errors && (
         <div>
