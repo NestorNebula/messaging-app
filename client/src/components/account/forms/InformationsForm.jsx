@@ -10,6 +10,7 @@ import {
 import Input from '../../input/Input';
 import PropTypes from 'prop-types';
 import formStyles from './Form.module.css';
+import styles from './InformationsForm.module.css';
 
 function InformationsForm({ user }) {
   const result = useActionData();
@@ -95,17 +96,21 @@ function InformationsForm({ user }) {
           {passwordMatchValidation && <div>{passwordMatchValidation}</div>}
         </>
       )}
-      <label htmlFor="checkbox">Update Password ?</label>
       <input
         type="checkbox"
         id="checkbox"
         onClick={() => setIsUpdatingPassword(!isUpdatingPassword)}
+        className={styles.checkboxInput}
       />
+      <label htmlFor="checkbox" className={styles.checkbox}>
+        Update Password ?
+      </label>
       <input type="hidden" name="userId" value={user.id} />
       <button
         type={isValid ? 'submit' : 'button'}
         name="intent"
         value="update-informations"
+        className={formStyles.submitBtn}
       >
         Submit
       </button>
