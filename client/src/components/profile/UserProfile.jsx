@@ -5,6 +5,7 @@ import { useData } from '../../hooks/useData';
 import Error from '../elements/Error';
 import Loading from '../elements/Loading';
 import Profile from './Profile';
+import styles from './UserProfile.module.css';
 
 function UserProfile() {
   const { user } = useContext(MessagingContext);
@@ -17,45 +18,48 @@ function UserProfile() {
   } = useData(`users/${userId}/profile`, { method: 'get' }, [result]);
 
   return (
-    <section>
-      {profile && user.id === profile.profile.userId && <Navigate to="/" />}
+    <main className={styles.main}>
+      {profile && user.id === profile.profile.userId && (
+        <Navigate to="/account" />
+      )}
       {error ? (
         <Error error={error} />
       ) : loading ? (
         <Loading contentName="user profile" />
       ) : (
-        <>
+        <section>
           {result && result.error && <div>{result.error.msg}</div>}
-          <div>
-            {profile.profile.user.followers.some(
-              (friend) => friend.id === user.id
-            ) ? (
-              <Form method="put">
-                <input type="hidden" name="userId" value={user.id} />
-                <input
-                  type="hidden"
-                  name="friendId"
-                  value={profile.profile.userId}
-                />
-                <button name="intent" value="remove-friend">
-                  Remove Friend
-                </button>
-              </Form>
-            ) : (
-              <Form method="put">
-                <input type="hidden" name="userId" value={user.id} />
-                <input
-                  type="hidden"
-                  name="friendId"
-                  value={profile.profile.userId}
-                />
-                <button name="intent" value="add-friend">
-                  Add Friend
-                </button>
-              </Form>
-            )}
-          </div>
-          <div>
+          <Profile profile={profile.profile} />
+          <div className={styles.btns}>
+            <div>
+              {profile.profile.user.followers.some(
+                (friend) => friend.id === user.id
+              ) ? (
+                <Form method="put">
+                  <input type="hidden" name="userId" value={user.id} />
+                  <input
+                    type="hidden"
+                    name="friendId"
+                    value={profile.profile.userId}
+                  />
+                  <button name="intent" value="remove-friend">
+                    Remove Friend
+                  </button>
+                </Form>
+              ) : (
+                <Form method="put">
+                  <input type="hidden" name="userId" value={user.id} />
+                  <input
+                    type="hidden"
+                    name="friendId"
+                    value={profile.profile.userId}
+                  />
+                  <button name="intent" value="add-friend">
+                    Add Friend
+                  </button>
+                </Form>
+              )}
+            </div>
             {!profile.profile.user.chats.some((chat) =>
               chat.users.some(
                 (usr) => usr.id === user.id && chat.users.length === 2
@@ -74,10 +78,9 @@ function UserProfile() {
               </Form>
             )}
           </div>
-          <Profile profile={profile.profile} />
-        </>
+        </section>
       )}
-    </section>
+    </main>
   );
 }
 
