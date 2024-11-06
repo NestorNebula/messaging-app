@@ -8,6 +8,7 @@ import Sidebar from './sidebar/Sidebar';
 import Message from './message/Message';
 import MessageForm from './message/MessageForm';
 import UsersList from '../usersList/UsersList';
+import dialogStyles from '../elements/Dialog.module.css';
 import styles from './Messaging.module.css';
 
 function Messaging() {
@@ -46,32 +47,49 @@ function Messaging() {
 
   return (
     <main className={styles.main}>
-      <dialog ref={friendsRef} onCancel={() => setFriends(false)}>
-        {friends && (
-          <>
-            <button
-              onClick={() => setFriends(false)}
-              aria-label="close friends menu"
-            >
-              X
-            </button>
-            <UsersList
-              onlyFriends={true}
-              chat={chats.chats[actualChat]}
-              updateState={updateState}
-            />
-          </>
-        )}
+      <dialog
+        ref={searchRef}
+        onCancel={() => setSearch(false)}
+        className={dialogStyles.dialog}
+      >
+        <div className={dialogStyles.dialogContent}>
+          {search && (
+            <>
+              <button
+                onClick={() => setSearch(false)}
+                aria-label="close search"
+                className={dialogStyles.closeDialogBtn}
+              >
+                X
+              </button>
+              <UsersList />
+            </>
+          )}
+        </div>
       </dialog>
-      <dialog ref={searchRef} onCancel={() => setSearch(false)}>
-        {search && (
-          <>
-            <button onClick={() => setSearch(false)} aria-label="close search">
-              X
-            </button>
-            <UsersList />
-          </>
-        )}
+      <dialog
+        ref={friendsRef}
+        onCancel={() => setFriends(false)}
+        className={dialogStyles.dialog}
+      >
+        <div className={dialogStyles.dialogContent}>
+          {friends && (
+            <>
+              <button
+                onClick={() => setFriends(false)}
+                aria-label="close friends menu"
+                className={dialogStyles.closeDialogBtn}
+              >
+                X
+              </button>
+              <UsersList
+                onlyFriends={true}
+                chat={chats.chats[actualChat]}
+                updateState={updateState}
+              />
+            </>
+          )}
+        </div>
       </dialog>
       <header className={styles.header}>
         <img src="icons/icon.png" alt="messages page" className={styles.icon} />

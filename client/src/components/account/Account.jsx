@@ -7,6 +7,7 @@ import Loading from '../elements/Loading';
 import Profile from '../profile/Profile';
 import InformationsForm from './forms/InformationsForm';
 import ProfileForm from './forms/ProfileForm';
+import dialogStyles from '../elements/Dialog.module.css';
 import styles from './Account.module.css';
 
 function Account() {
@@ -48,13 +49,25 @@ function Account() {
               <img src="icons/settings.svg" alt="" />
             </button>
           </header>
-          <dialog onCancel={() => setOpen(false)} ref={dialogRef}>
-            <button onClick={() => setDisplayForm('informations')}>
-              Update Private Informations
-            </button>
-            <button onClick={() => setDisplayForm('profile')}>
-              Update Profile
-            </button>
+          <dialog
+            onCancel={() => setOpen(false)}
+            ref={dialogRef}
+            className={dialogStyles.dialog}
+          >
+            <div className={dialogStyles.dialogContent}>
+              <button
+                onClick={() => setDisplayForm('informations')}
+                className={dialogStyles.dialogBtn}
+              >
+                Update Private Informations
+              </button>
+              <button
+                onClick={() => setDisplayForm('profile')}
+                className={dialogStyles.dialogBtn}
+              >
+                Update Profile
+              </button>
+            </div>
           </dialog>
           <section className={styles.content}>
             {error ? (
