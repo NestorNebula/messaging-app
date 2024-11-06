@@ -1,15 +1,23 @@
 import PropTypes from 'prop-types';
+import styles from './Profile.module.css';
 
 function Profile({ profile }) {
   return (
-    <section>
-      <div>
+    <section className={styles.profile}>
+      <div className={styles.profileAvatar}>
         <img src={`/avatars/${profile.avatar}`} alt="" />
-        <div>{profile.user.online ? 'Online' : 'Offline'}</div>
+        <div
+          className={`${styles.status} ${
+            profile.user.online ? styles.online : styles.offline
+          }`}
+        ></div>
       </div>
-      <div>@{profile.user.username}</div>
-      <div>{profile.displayName}</div>
-      <div>{profile.bio}</div>
+      <div className={styles.username}>
+        <div>@</div>
+        <div>{profile.user.username}</div>
+      </div>
+      <div className={styles.displayName}>{profile.displayName}</div>
+      <div className={styles.bio}>{profile.bio}</div>
       <a href={profile.link} target="_blank" rel="noopener noreferrer">
         {profile.link}
       </a>
