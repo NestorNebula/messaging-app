@@ -5,6 +5,7 @@ import Login from '../components/auth/login/Login';
 import Messaging from '../components/messaging/Messaging';
 import Account from '../components/account/Account';
 import UserProfile from '../components/profile/UserProfile';
+import ErrorElement from '../components/elements/ErrorElement';
 import { appLoader, authLoader } from '../helpers/loaders';
 import {
   signUpAction,
@@ -36,6 +37,7 @@ const routes = [
         action: userProfileAction,
       },
     ],
+    errorElement: <ErrorElement />,
   },
   {
     path: '/auth',
@@ -53,6 +55,7 @@ const routes = [
         action: logInAction,
       },
     ],
+    errorElement: <ErrorElement />,
   },
 ];
 
