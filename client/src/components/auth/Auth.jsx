@@ -6,7 +6,15 @@ function Auth() {
   return (
     <>
       <Navbar />
-      <main style={{ height: '80vh', display: 'grid', placeContent: 'center' }}>
+      <main
+        style={{
+          height: '80vh',
+          display: 'grid',
+          placeContent: 'center',
+          marginTop: '5vh',
+          overflow: 'scroll',
+        }}
+      >
         <Outlet />
       </main>
       <Footer />
