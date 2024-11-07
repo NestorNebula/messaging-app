@@ -55,7 +55,7 @@ describe('Users List', () => {
       </MemoryRouter>
     );
     const user = userEvent.setup();
-    const searchInput = screen.getByLabelText(/search/i);
+    const searchInput = screen.getByPlaceholderText(/search/i);
     await user.type(searchInput, mockUsers[0].user.username);
     expect(screen.queryByText(mockUsers[0].displayName)).not.toBeNull();
     expect(screen.queryByText(mockUsers[1].displayName)).toBeNull();
@@ -102,7 +102,7 @@ describe('Users List, Only Friends', () => {
       </MemoryRouter>
     );
     const user = userEvent.setup();
-    const searchInput = screen.getByLabelText(/search/i);
+    const searchInput = screen.getByPlaceholderText(/search/i);
     await user.type(searchInput, mockFriends[1].profile.displayName);
     expect(
       screen.queryByText(mockFriends[1].profile.displayName)
