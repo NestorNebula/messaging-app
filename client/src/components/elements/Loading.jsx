@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
+import styles from './Loading.module.css';
 
 function Loading({ contentName }) {
-  return <div>Loading {contentName}...</div>;
+  return <div className={styles.loading}>Loading {contentName}...</div>;
 }
 
 Loading.propTypes = {

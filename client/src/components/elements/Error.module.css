@@ -1,0 +1,16 @@
+.error {
+  font-size: 1.25rem;
+  padding: 1rem;
+}
+
+@media (min-width: 800px) {
+  .error {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 1000px) {
+  .error {
+    font-size: 2rem;
+  }
+}
