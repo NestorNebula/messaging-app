@@ -32,7 +32,6 @@
   height: var(--status-size);
   width: var(--status-size);
   border-radius: var(--status-size);
-  z-index: 2;
 }
 
 .online {
