@@ -78,12 +78,16 @@ function ProfileForm({ user, profile }) {
         validation={displayNameValidation}
         label="Display Name"
       />
-      <textarea
-        name="bio"
-        value={bio}
-        onChange={updateBio}
-        onKeyUp={updateAreaMinHeight}
-      ></textarea>
+      <div className={styles.bio}>
+        <label htmlFor="bio">Bio</label>
+        <textarea
+          id="bio"
+          name="bio"
+          value={bio}
+          onChange={updateBio}
+          onKeyUp={updateAreaMinHeight}
+        ></textarea>
+      </div>
       <Input
         name="link"
         value={link}

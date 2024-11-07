@@ -36,6 +36,11 @@
   animation: selected 1s ease-out infinite alternate;
 }
 
+.bio {
+  display: flex;
+  flex-direction: column;
+}
+
 .profileForm > textarea {
   resize: none;
   min-height: 5rem;
