@@ -25,7 +25,7 @@ function Login() {
   return (
     <>
       <Form method="post" aria-label="log in" className={formStyles.form}>
-        {result && <div>{result.error.msg}</div>}
+        {result && <div className={formStyles.error}>{result.error.msg}</div>}
         <Input
           name="username"
           value={usermail}

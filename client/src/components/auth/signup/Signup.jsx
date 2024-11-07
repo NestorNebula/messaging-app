@@ -50,9 +50,11 @@ function Signup() {
   return (
     <>
       <Form method="post" aria-label="sign up" className={formStyles.form}>
-        {result && result.error && <div>{result.error.msg}</div>}
+        {result && result.error && (
+          <div className={formStyles.error}>{result.error.msg}</div>
+        )}
         {result && result.errors && (
-          <div>
+          <div className={formStyles.errors}>
             {result.errors.map((err, index) => (
               <div key={index}>{err.msg}</div>
             ))}

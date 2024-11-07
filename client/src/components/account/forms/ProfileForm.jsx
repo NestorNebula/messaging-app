@@ -43,9 +43,11 @@ function ProfileForm({ user, profile }) {
       aria-label="update profile"
       className={`${formStyles.form} ${styles.profileForm}`}
     >
-      {result && result.error && <div>{result.error.msg}</div>}
+      {result && result.error && (
+        <div className={formStyles.error}>{result.error.msg}</div>
+      )}
       {result && result.errors && (
-        <div>
+        <div className={formStyles.errors}>
           {result.errors.map((err) => (
             <div key={err.msg}>{err.msg}</div>
           ))}

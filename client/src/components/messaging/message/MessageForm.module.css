@@ -12,12 +12,6 @@
   color: white;
 }
 
-.error {
-  background-color: var(--red);
-  padding: 1rem;
-  font-size: 1.25rem;
-}
-
 .fileWrapper {
   max-width: 10rem;
   display: flex;

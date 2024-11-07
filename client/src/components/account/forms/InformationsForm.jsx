@@ -54,9 +54,11 @@ function InformationsForm({ user }) {
       aria-label="update private informations"
       className={formStyles.form}
     >
-      {result && result.error && <div>{result.error.msg}</div>}
+      {result && result.error && (
+        <div className={formStyles.error}>{result.error.msg}</div>
+      )}
       {result && result.errors && (
-        <div>
+        <div className={formStyles.errors}>
           {result.errors.map((err) => (
             <div key={err.msg}>{err.msg}</div>
           ))}
