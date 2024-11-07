@@ -57,6 +57,7 @@ function UsersList({ onlyFriends, chat, updateState }) {
                             className={`${styles.status} ${
                               person.online ? styles.online : styles.offline
                             }`}
+                            aria-label={person.online ? 'online' : 'offline'}
                           ></div>
                         </Link>
                         <div>

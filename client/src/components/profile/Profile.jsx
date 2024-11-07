@@ -10,6 +10,7 @@ function Profile({ profile }) {
           className={`${styles.status} ${
             profile.user.online ? styles.online : styles.offline
           }`}
+          aria-label={profile.user.online ? 'online' : 'offline'}
         ></div>
       </div>
       <div className={styles.username}>
