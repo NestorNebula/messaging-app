@@ -1,0 +1,66 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem 3rem;
+}
+
+.title {
+  font-size: 2rem;
+  align-self: center;
+}
+
+.section > input {
+  font-size: 1.5rem;
+}
+
+.usersList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.friend,
+.user {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: 2rem;
+  font-size: 1.75rem;
+}
+
+.link {
+  --link-max-width: min(10vh, 100px);
+  max-width: var(--link-max-width);
+  position: relative;
+}
+
+.status {
+  --status-size: calc(var(--link-max-width) / 3);
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: var(--status-size);
+  width: var(--status-size);
+  border-radius: var(--status-size);
+}
+
+.online {
+  background-color: var(--celadon);
+}
+
+.offline {
+  background-color: var(--white);
+  border: calc(var(--status-size) / 8) solid lightgray;
+}
+
+.friend button {
+  justify-self: end;
+  background-color: var(--picton-blue);
+  --button-size: 4rem;
+  height: var(--button-size);
+  width: var(--button-size);
+  border-radius: var(--button-size);
+  font-size: calc(var(--button-size) / 2);
+  color: var(--white);
+}

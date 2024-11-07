@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 function Searchbar({ value, updateValue, label = 'search' }) {
   return (
     <>
-      <label htmlFor={label}>{label}</label>
       <input
         id={label}
         type="text"

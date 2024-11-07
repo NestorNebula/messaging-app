@@ -6,6 +6,7 @@ import Error from '../elements/Error';
 import Loading from '../elements/Loading';
 import Searchbar from '../searchbar/Searchbar';
 import { addUserToChat } from '../../helpers/addUserToChat';
+import styles from './UsersList.module.css';
 import PropTypes from 'prop-types';
 
 function UsersList({ onlyFriends, chat, updateState }) {
@@ -24,16 +25,18 @@ function UsersList({ onlyFriends, chat, updateState }) {
   const regex = new RegExp(search, 'i');
 
   return (
-    <section id="userslist">
+    <section id="userslist" className={styles.section}>
       {error ? (
         <Error error={error} />
       ) : loading ? (
         <Loading contentName={onlyFriends ? 'friends' : 'users'} />
       ) : (
         <>
-          <div>{onlyFriends ? 'Your friends' : 'Popular users'}</div>
+          <div className={styles.title}>
+            {onlyFriends ? 'Your friends' : 'Popular users'}
+          </div>
           <Searchbar value={search} updateValue={updateSearch} />
-          <div>
+          <div className={styles.usersList}>
             {onlyFriends
               ? users.friends.friends.map(
                   (person) =>
@@ -41,15 +44,20 @@ function UsersList({ onlyFriends, chat, updateState }) {
                       (!chat.users.some((usr) => usr.id === person.id) &&
                         (regex.test(person.username) ||
                           regex.test(person.profile.displayName)))) && (
-                      <div key={person.id}>
-                        <Link to={`profile/${person.id}`}>
+                      <div key={person.id} className={styles.friend}>
+                        <Link
+                          to={`profile/${person.id}`}
+                          className={styles.link}
+                        >
                           <img
                             src={`avatars/${person.profile.avatar}`}
                             alt=""
                           />
-                          <div>
-                            {person.profile.online ? 'Online' : 'Offline'}
-                          </div>
+                          <div
+                            className={`${styles.status} ${
+                              person.online ? styles.online : styles.offline
+                            }`}
+                          ></div>
                         </Link>
                         <div>
                           <div>{person.profile.displayName}</div>
@@ -71,8 +79,11 @@ function UsersList({ onlyFriends, chat, updateState }) {
                   (person) =>
                     (regex.test(person.user.username) ||
                       regex.test(person.displayName)) && (
-                      <div key={person.userId}>
-                        <Link to={`profile/${person.userId}`}>
+                      <div key={person.userId} className={styles.user}>
+                        <Link
+                          to={`profile/${person.userId}`}
+                          className={styles.link}
+                        >
                           <img src={`avatars/${person.avatar}`} alt="" />
                         </Link>
                         <div>
