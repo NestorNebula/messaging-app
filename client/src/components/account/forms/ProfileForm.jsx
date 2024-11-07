@@ -93,6 +93,7 @@ function ProfileForm({ user, profile }) {
         value={link}
         update={updateLink}
         validation={linkValidation}
+        required={false}
       />
       <input type="hidden" name="userId" value={user.id} />
       <button

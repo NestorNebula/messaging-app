@@ -8,6 +8,7 @@ function Input({
   validation,
   type = 'text',
   label = name,
+  required,
 }) {
   return (
     <div className={styles.input}>
@@ -18,7 +19,7 @@ function Input({
         type={type}
         onChange={update}
         value={value}
-        required
+        required={required !== false}
       />
       <span>{!validation.isValid ? validation.message : null}</span>
     </div>
@@ -32,6 +33,7 @@ Input.propTypes = {
   validation: PropTypes.object.isRequired,
   type: PropTypes.string,
   label: PropTypes.string,
+  required: PropTypes.bool,
 };
 
 export default Input;
