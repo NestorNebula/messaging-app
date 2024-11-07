@@ -49,6 +49,11 @@
   content: '';
 }
 
+.noChats {
+  place-self: center;
+  font-size: 1.5rem;
+}
+
 @media (min-width: 1000px) {
   .chat {
     grid-template-columns: 0.35fr 1fr;

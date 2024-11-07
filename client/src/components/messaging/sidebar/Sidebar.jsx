@@ -21,7 +21,7 @@ function Sidebar({
         ) : loading ? (
           <Loading contentName="messages" />
         ) : !chats.chats || !chats.chats.length ? (
-          <div>No chats to display.</div>
+          <div className={styles.noChats}>No chats to display.</div>
         ) : (
           chats.chats.sort(sortChats) &&
           chats.chats.map((chat, index) => (

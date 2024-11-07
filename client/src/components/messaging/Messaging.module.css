@@ -50,6 +50,11 @@
   content: '';
 }
 
+.noMessages {
+  justify-self: center;
+  font-size: 1.5rem;
+}
+
 .addBtn {
   background-color: rgba(29, 180, 245, 0.251);
   border-radius: 5px;

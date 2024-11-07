@@ -142,7 +142,7 @@ function Messaging() {
             <MessageForm chat={chats.chats[actualChat]} />
           </>
         ) : (
-          <div>No messages to display.</div>
+          <div className={styles.noMessages}>No messages to display.</div>
         )}
       </section>
     </main>
