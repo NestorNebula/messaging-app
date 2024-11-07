@@ -271,6 +271,9 @@ const getUserChats = async (userId) => {
         },
       },
     },
+    orderBy: {
+      updatedAt: 'desc',
+    },
   });
   return chats;
 };
