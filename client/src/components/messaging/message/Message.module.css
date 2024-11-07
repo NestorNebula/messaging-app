@@ -10,11 +10,11 @@
 }
 
 .ownmessage > .content > div {
-  background-color: var(--sky-blue);
+  background-color: #bae6fd;
 }
 
 .othermessage > .content > div {
-  background-color: var(--celadon);
+  background-color: #a7f3d0;
 }
 
 .avatar {

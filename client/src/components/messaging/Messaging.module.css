@@ -8,6 +8,7 @@
   grid-column: 1 / 3;
   display: flex;
   justify-content: space-between;
+  background-color: white;
 }
 
 .icon,
@@ -47,7 +48,7 @@
 }
 
 .addBtn {
-  background-color: var(--picton-blue);
+  background-color: rgba(29, 180, 245, 0.251);
   padding: 0.5rem;
   border-radius: 5px;
 }
