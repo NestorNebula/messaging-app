@@ -34,6 +34,7 @@
   max-width: 100%;
   border-radius: 50px;
   padding: 1rem;
+  white-space: pre-wrap;
 }
 
 .ownmessage > .content > div {
