@@ -29,7 +29,7 @@
 }
 
 .credits > div:first-child::after {
-  content: '-';
+  content: ' -';
 }
 
 .credits a::after {
@@ -54,7 +54,7 @@
   width: 2rem;
 }
 
-@media (min-width: 650px) {
+@media (min-width: 1200px) {
   .credits {
     flex-direction: row;
   }

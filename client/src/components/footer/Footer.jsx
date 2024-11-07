@@ -75,6 +75,23 @@ function Footer() {
           </a>{' '}
           - Flaticon
         </div>
+        <div>
+          <a
+            href="https://www.flaticon.com/free-icons/camera"
+            title="camera icons"
+          >
+            Camera icons created by manshagraphics - Flaticon
+          </a>
+          <a href="https://www.flaticon.com/free-icons/send" title="send icons">
+            Send icons created by Freepik - Flaticon
+          </a>
+          <a
+            href="https://www.flaticon.com/free-icons/search"
+            title="search icons"
+          >
+            Search icons created by Freepik - Flaticon
+          </a>
+        </div>
       </div>
       <div>
         Please keep in mind that this app is a learning project. Do not
