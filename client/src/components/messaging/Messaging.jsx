@@ -60,7 +60,7 @@ function Messaging() {
                 aria-label="close search"
                 className={dialogStyles.closeDialogBtn}
               >
-                X
+                <img src="icons/close.svg" alt="" />
               </button>
               <UsersList />
             </>
@@ -80,7 +80,7 @@ function Messaging() {
                 aria-label="close friends menu"
                 className={dialogStyles.closeDialogBtn}
               >
-                X
+                <img src="icons/close.svg" alt="" />
               </button>
               <UsersList
                 onlyFriends={true}

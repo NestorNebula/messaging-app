@@ -13,11 +13,23 @@
 
 .closeDialogBtn {
   align-self: end;
+  width: 5rem;
+  padding-top: 2rem;
+  padding-right: 2rem;
 }
 
 .dialogBtn {
   background-color: var(--mint);
   padding: 1rem;
+  margin: 0 1rem;
   font-size: 2rem;
   border-radius: 5px;
+}
+
+.dialogBtn:first-child {
+  margin-top: 1rem;
+}
+
+.dialogBtn:last-child {
+  margin-bottom: 1rem;
 }
