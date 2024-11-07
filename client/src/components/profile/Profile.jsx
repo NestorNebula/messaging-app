@@ -19,7 +19,7 @@ function Profile({ profile }) {
       <div className={styles.displayName}>{profile.displayName}</div>
       <div className={styles.bio}>{profile.bio}</div>
       <a href={profile.link} target="_blank" rel="noopener noreferrer">
-        {profile.link.split('https://')[1]}
+        {profile.link ? profile.link.split('https://')[1] : ''}
       </a>
     </section>
   );
