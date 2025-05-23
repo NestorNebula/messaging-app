@@ -56,10 +56,10 @@ Users also have the possibility to great group chats with multiple users and to 
 
    ```
    # SSH:
-   git remote add upstream git@github.com:messaging-app/<repo name>.git
+   git remote add upstream git@github.com:NestorNebula/messaging-app.git
 
    # HTTPS:
-   git remote add upstream https://github.com/messaging-app/<repo name>.git
+   git remote add upstream https://github.com/NestorNebula/messaging-app.git
    ```
 
 4. Go to the server directory
